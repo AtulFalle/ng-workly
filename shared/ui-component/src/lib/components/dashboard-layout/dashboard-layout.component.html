@@ -11,11 +11,11 @@
         [showSearch]="showSearch()"
         [title]="pageTitle()"
         [subtitle]="pageSubtitle()"
-        (onToggleSidebar)="toggleSidebar()"
-        (onUserMenuClick)="handleUserMenuClick()"
-        (onNotificationClick)="handleNotificationClick($event)"
-        (onLogout)="handleLogout()"
-        (onSearch)="handleSearch($event)">
+        (toggleSidebar)="toggleSidebar()"
+        (userMenuClick)="handleUserMenuClick()"
+        (notificationClick)="handleNotificationClick($event)"
+        (logoutClick)="handleLogout()"
+        (searchQuery)="handleSearch($event)">
       </lib-header>
     </header>
   }

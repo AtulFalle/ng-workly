@@ -26,11 +26,11 @@ export class DashboardLayoutComponent {
   sidebarCollapsed = input<boolean>(false);
 
   // Outputs
-  onSidebarToggle = output<boolean>();
-  onUserMenuClick = output<void>();
-  onNotificationClick = output<NotificationItem>();
-  onLogout = output<void>();
-  onSearch = output<string>();
+  sidebarToggle = output<boolean>();
+  userMenuClick = output<void>();
+  notificationClick = output<NotificationItem>();
+  logoutClick = output<void>();
+  searchQuery = output<string>();
 
   // Local state
   isSidebarCollapsed = signal(false);
@@ -41,22 +41,22 @@ export class DashboardLayoutComponent {
 
   toggleSidebar(): void {
     this.isSidebarCollapsed.set(!this.isSidebarCollapsed());
-    this.onSidebarToggle.emit(this.isSidebarCollapsed());
+    this.sidebarToggle.emit(this.isSidebarCollapsed());
   }
 
   handleUserMenuClick(): void {
-    this.onUserMenuClick.emit();
+    this.userMenuClick.emit();
   }
 
   handleNotificationClick(notification: NotificationItem): void {
-    this.onNotificationClick.emit(notification);
+    this.notificationClick.emit(notification);
   }
 
   handleLogout(): void {
-    this.onLogout.emit();
+    this.logoutClick.emit();
   }
 
   handleSearch(query: string): void {
-    this.onSearch.emit(query);
+    this.searchQuery.emit(query);
   }
 }

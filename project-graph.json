@@ -1,0 +1,756 @@
+{
+  "graph": {
+    "nodes": {
+      "attendance": {
+        "name": "attendance",
+        "type": "app",
+        "data": {
+          "root": "apps/frontend/features/attendance",
+          "name": "attendance",
+          "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+          "projectType": "application",
+          "prefix": "app",
+          "sourceRoot": "apps/frontend/features/attendance/src",
+          "tags": [
+            "app:ui:attendance"
+          ],
+          "targets": {
+            "build": {
+              "executor": "@nx/angular:webpack-browser",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/apps/frontend/features/attendance",
+                "index": "apps/frontend/features/attendance/src/index.html",
+                "main": "apps/frontend/features/attendance/src/main.ts",
+                "polyfills": [
+                  "zone.js"
+                ],
+                "tsConfig": "apps/frontend/features/attendance/tsconfig.app.json",
+                "inlineStyleLanguage": "scss",
+                "assets": [
+                  {
+                    "glob": "**/*",
+                    "input": "apps/frontend/features/attendance/public"
+                  }
+                ],
+                "styles": [
+                  "apps/frontend/features/attendance/src/styles.scss"
+                ],
+                "customWebpackConfig": {
+                  "path": "apps/frontend/features/attendance/webpack.config.ts"
+                }
+              },
+              "configurations": {
+                "production": {
+                  "budgets": [
+                    {
+                      "type": "initial",
+                      "maximumWarning": "500kb",
+                      "maximumError": "1mb"
+                    },
+                    {
+                      "type": "anyComponentStyle",
+                      "maximumWarning": "4kb",
+                      "maximumError": "8kb"
+                    }
+                  ],
+                  "outputHashing": "all",
+                  "customWebpackConfig": {
+                    "path": "apps/frontend/features/attendance/webpack.prod.config.ts"
+                  }
+                },
+                "development": {
+                  "buildOptimizer": false,
+                  "optimization": false,
+                  "vendorChunk": true,
+                  "extractLicenses": false,
+                  "sourceMap": true,
+                  "namedChunks": true
+                }
+              },
+              "defaultConfiguration": "production",
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production",
+                {
+                  "env": "NX_MF_DEV_REMOTES"
+                }
+              ]
+            },
+            "serve": {
+              "continuous": true,
+              "executor": "@nx/angular:dev-server",
+              "options": {
+                "port": 4202,
+                "publicHost": "http://localhost:4202"
+              },
+              "configurations": {
+                "production": {
+                  "buildTarget": "attendance:build:production"
+                },
+                "development": {
+                  "buildTarget": "attendance:build:development"
+                }
+              },
+              "defaultConfiguration": "development",
+              "dependsOn": [
+                "workly-ui:serve"
+              ],
+              "parallelism": true
+            },
+            "extract-i18n": {
+              "executor": "@angular-devkit/build-angular:extract-i18n",
+              "options": {
+                "buildTarget": "attendance:build"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "cache": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/.eslintignore",
+                "{workspaceRoot}/eslint.config.mjs"
+              ]
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{workspaceRoot}/coverage/{projectRoot}"
+              ],
+              "options": {
+                "jestConfig": "apps/frontend/features/attendance/jest.config.ts",
+                "tsConfig": "apps/frontend/features/attendance/tsconfig.spec.json",
+                "passWithNoTests": true
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                }
+              },
+              "parallelism": true,
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ]
+            },
+            "serve-static": {
+              "continuous": true,
+              "executor": "@nx/web:file-server",
+              "defaultConfiguration": "production",
+              "options": {
+                "buildTarget": "attendance:build",
+                "port": 4202,
+                "watch": false
+              },
+              "configurations": {
+                "development": {
+                  "buildTarget": "attendance:build:development"
+                },
+                "production": {
+                  "buildTarget": "attendance:build:production"
+                }
+              },
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "authenticationUi": {
+        "name": "authenticationUi",
+        "type": "app",
+        "data": {
+          "root": "apps/frontend/features/auth",
+          "name": "authenticationUi",
+          "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+          "projectType": "application",
+          "prefix": "app",
+          "sourceRoot": "apps/frontend/features/auth/src",
+          "tags": [
+            "app:remote:auth"
+          ],
+          "targets": {
+            "build": {
+              "executor": "@nx/angular:webpack-browser",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/apps/frontend/features/auth",
+                "index": "apps/frontend/features/auth/src/index.html",
+                "main": "apps/frontend/features/auth/src/main.ts",
+                "polyfills": [
+                  "zone.js"
+                ],
+                "tsConfig": "apps/frontend/features/auth/tsconfig.app.json",
+                "inlineStyleLanguage": "scss",
+                "assets": [
+                  {
+                    "glob": "**/*",
+                    "input": "apps/frontend/features/auth/public"
+                  }
+                ],
+                "styles": [
+                  "apps/frontend/features/auth/src/styles.scss"
+                ],
+                "stylePreprocessorOptions": {
+                  "includePaths": [
+                    "dist/libs/src"
+                  ]
+                },
+                "customWebpackConfig": {
+                  "path": "apps/frontend/features/auth/webpack.config.ts"
+                }
+              },
+              "configurations": {
+                "production": {
+                  "budgets": [
+                    {
+                      "type": "initial",
+                      "maximumWarning": "500kb",
+                      "maximumError": "1mb"
+                    },
+                    {
+                      "type": "anyComponentStyle",
+                      "maximumWarning": "4kb",
+                      "maximumError": "8kb"
+                    }
+                  ],
+                  "outputHashing": "all",
+                  "customWebpackConfig": {
+                    "path": "apps/frontend/features/auth/webpack.prod.config.ts"
+                  }
+                },
+                "development": {
+                  "buildOptimizer": false,
+                  "optimization": false,
+                  "vendorChunk": true,
+                  "extractLicenses": false,
+                  "sourceMap": true,
+                  "namedChunks": true
+                }
+              },
+              "defaultConfiguration": "production",
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production",
+                {
+                  "env": "NX_MF_DEV_REMOTES"
+                }
+              ]
+            },
+            "serve": {
+              "continuous": true,
+              "executor": "@nx/angular:dev-server",
+              "options": {
+                "port": 4201,
+                "publicHost": "http://localhost:4201"
+              },
+              "configurations": {
+                "production": {
+                  "buildTarget": "authenticationUi:build:production"
+                },
+                "development": {
+                  "buildTarget": "authenticationUi:build:development"
+                }
+              },
+              "defaultConfiguration": "development",
+              "dependsOn": [
+                "workly-ui:serve"
+              ],
+              "parallelism": true
+            },
+            "extract-i18n": {
+              "executor": "@angular-devkit/build-angular:extract-i18n",
+              "options": {
+                "buildTarget": "authenticationUi:build"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "cache": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/.eslintignore",
+                "{workspaceRoot}/eslint.config.mjs"
+              ]
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{workspaceRoot}/coverage/{projectRoot}"
+              ],
+              "options": {
+                "jestConfig": "apps/frontend/features/auth/jest.config.ts",
+                "tsConfig": "apps/frontend/features/auth/tsconfig.spec.json",
+                "passWithNoTests": true
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                }
+              },
+              "parallelism": true,
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ]
+            },
+            "serve-static": {
+              "continuous": true,
+              "executor": "@nx/web:file-server",
+              "defaultConfiguration": "production",
+              "options": {
+                "buildTarget": "authenticationUi:build",
+                "port": 4201,
+                "watch": false
+              },
+              "configurations": {
+                "development": {
+                  "buildTarget": "authenticationUi:build:development"
+                },
+                "production": {
+                  "buildTarget": "authenticationUi:build:production"
+                }
+              },
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "workly-ui": {
+        "name": "workly-ui",
+        "type": "app",
+        "data": {
+          "root": "apps/frontend/shell/workly",
+          "name": "workly-ui",
+          "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+          "projectType": "application",
+          "prefix": "app",
+          "sourceRoot": "apps/frontend/shell/workly/src",
+          "tags": [
+            "app:shell:workly-ui"
+          ],
+          "targets": {
+            "build": {
+              "executor": "@nx/angular:webpack-browser",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/apps/frontend/shell/workly",
+                "index": "apps/frontend/shell/workly/src/index.html",
+                "main": "apps/frontend/shell/workly/src/main.ts",
+                "polyfills": [
+                  "zone.js"
+                ],
+                "tsConfig": "apps/frontend/shell/workly/tsconfig.app.json",
+                "inlineStyleLanguage": "scss",
+                "assets": [
+                  {
+                    "glob": "**/*",
+                    "input": "apps/frontend/shell/workly/public"
+                  }
+                ],
+                "styles": [
+                  "apps/frontend/shell/workly/src/styles.scss"
+                ],
+                "customWebpackConfig": {
+                  "path": "apps/frontend/shell/workly/webpack.config.ts"
+                },
+                "stylePreprocessorOptions": {
+                  "includePaths": [
+                    "dist/libs/src"
+                  ]
+                }
+              },
+              "configurations": {
+                "production": {
+                  "budgets": [
+                    {
+                      "type": "initial",
+                      "maximumWarning": "500kb",
+                      "maximumError": "1mb"
+                    },
+                    {
+                      "type": "anyComponentStyle",
+                      "maximumWarning": "10kb",
+                      "maximumError": "20kb"
+                    }
+                  ],
+                  "outputHashing": "all"
+                },
+                "development": {
+                  "buildOptimizer": false,
+                  "optimization": false,
+                  "vendorChunk": true,
+                  "extractLicenses": false,
+                  "sourceMap": true,
+                  "namedChunks": true
+                }
+              },
+              "defaultConfiguration": "production",
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production",
+                {
+                  "env": "NX_MF_DEV_REMOTES"
+                }
+              ]
+            },
+            "serve": {
+              "continuous": true,
+              "executor": "@nx/angular:module-federation-dev-server",
+              "options": {
+                "port": 4200,
+                "publicHost": "http://localhost:4200"
+              },
+              "configurations": {
+                "production": {
+                  "buildTarget": "workly-ui:build:production"
+                },
+                "development": {
+                  "buildTarget": "workly-ui:build:development"
+                }
+              },
+              "defaultConfiguration": "development",
+              "parallelism": true
+            },
+            "extract-i18n": {
+              "executor": "@angular-devkit/build-angular:extract-i18n",
+              "options": {
+                "buildTarget": "workly-ui:build"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "cache": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/.eslintignore",
+                "{workspaceRoot}/eslint.config.mjs"
+              ]
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{workspaceRoot}/coverage/{projectRoot}"
+              ],
+              "options": {
+                "jestConfig": "apps/frontend/shell/workly/jest.config.ts",
+                "tsConfig": "apps/frontend/shell/workly/tsconfig.spec.json",
+                "passWithNoTests": true
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                }
+              },
+              "parallelism": true,
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ]
+            },
+            "serve-static": {
+              "continuous": true,
+              "executor": "@nx/web:file-server",
+              "options": {
+                "buildTarget": "workly-ui:build",
+                "port": 4200,
+                "spa": true
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "ui-component": {
+        "name": "ui-component",
+        "type": "lib",
+        "data": {
+          "root": "shared/ui-component",
+          "name": "ui-component",
+          "tags": [
+            "npm:public",
+            "shared:ui:component"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@workly/ui-component",
+              "packageVersion": "0.0.1",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "targets": {
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/angular:ng-packagr-lite",
+              "outputs": [
+                "{workspaceRoot}/dist/{projectRoot}"
+              ],
+              "options": {
+                "project": "shared/ui-component/ng-package.json",
+                "tsConfig": "shared/ui-component/tsconfig.lib.json"
+              },
+              "configurations": {
+                "production": {
+                  "tsConfig": "shared/ui-component/tsconfig.lib.prod.json"
+                },
+                "development": {}
+              },
+              "defaultConfiguration": "production",
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{workspaceRoot}/coverage/{projectRoot}"
+              ],
+              "options": {
+                "jestConfig": "shared/ui-component/jest.config.ts",
+                "tsConfig": "shared/ui-component/tsconfig.spec.json",
+                "passWithNoTests": true
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                }
+              },
+              "parallelism": true,
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ]
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "cache": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/.eslintignore",
+                "{workspaceRoot}/eslint.config.mjs"
+              ]
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "shared/ui-component/src",
+          "prefix": "lib",
+          "projectType": "library",
+          "implicitDependencies": []
+        }
+      },
+      "ui": {
+        "name": "ui",
+        "type": "lib",
+        "data": {
+          "root": "libs",
+          "name": "ui",
+          "tags": [
+            "npm:public",
+            "shared:ui"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@workly/ui",
+              "packageVersion": "0.0.1",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "targets": {
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/angular:ng-packagr-lite",
+              "outputs": [
+                "{workspaceRoot}/dist/{projectRoot}"
+              ],
+              "options": {
+                "project": "libs/ng-package.json",
+                "tsConfig": "libs/tsconfig.lib.json"
+              },
+              "configurations": {
+                "production": {
+                  "tsConfig": "libs/tsconfig.lib.prod.json"
+                },
+                "development": {}
+              },
+              "defaultConfiguration": "production",
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{workspaceRoot}/coverage/{projectRoot}"
+              ],
+              "options": {
+                "jestConfig": "libs/jest.config.ts",
+                "tsConfig": "libs/tsconfig.spec.json",
+                "passWithNoTests": true
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                }
+              },
+              "parallelism": true,
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js"
+              ]
+            },
+            "lint": {
+              "executor": "@nx/eslint:lint",
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "cache": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/.eslintignore",
+                "{workspaceRoot}/eslint.config.mjs"
+              ]
+            }
+          },
+          "$schema": "../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "libs/src",
+          "prefix": "lib",
+          "projectType": "library",
+          "implicitDependencies": []
+        }
+      }
+    },
+    "dependencies": {
+      "attendance": [
+        {
+          "source": "attendance",
+          "target": "ui",
+          "type": "static"
+        }
+      ],
+      "authenticationUi": [
+        {
+          "source": "authenticationUi",
+          "target": "ui",
+          "type": "static"
+        }
+      ],
+      "workly-ui": [
+        {
+          "source": "workly-ui",
+          "target": "ui",
+          "type": "static"
+        },
+        {
+          "source": "workly-ui",
+          "target": "authenticationUi",
+          "type": "static"
+        },
+        {
+          "source": "workly-ui",
+          "target": "attendance",
+          "type": "static"
+        },
+        {
+          "source": "workly-ui",
+          "target": "ui-component",
+          "type": "static"
+        }
+      ],
+      "ui-component": [],
+      "ui": []
+    }
+  }
+}

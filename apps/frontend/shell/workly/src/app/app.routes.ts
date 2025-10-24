@@ -9,7 +9,7 @@ export const appRoutes: Route[] = [
     loadChildren: () =>
       loadRemote<typeof import('authenticationUi/Routes')>(
         'authenticationUi/Routes'
-      ).then((m) => m!.remoteRoutes),
+      ).then((m) => m?.remoteRoutes || []),
   },
 
   // Dashboard route (with layout) - will load remote apps for child routes
@@ -21,14 +21,14 @@ export const appRoutes: Route[] = [
         path: 'attendance',
         loadChildren: () =>
           loadRemote<typeof import('attendance/Routes')>('attendance/Routes').then(
-            (m) => m!.remoteRoutes
+            (m) => m?.remoteRoutes || []
           ),
       },
       {
         path: 'attendance/reports',
         loadChildren: () =>
           loadRemote<typeof import('attendance/Routes')>('attendance/Routes').then(
-            (m) => m!.remoteRoutes
+            (m) => m?.remoteRoutes || []
           ),
       },
     ],

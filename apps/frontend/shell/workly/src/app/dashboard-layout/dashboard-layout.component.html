@@ -11,11 +11,11 @@
     [showNotifications]="true"
     [showUserMenu]="true"
     [sidebarCollapsed]="isSidebarCollapsed()"
-    (onSidebarToggle)="onHrmSidebarToggle($event)"
-    (onUserMenuClick)="onHrmUserMenuClick()"
-    (onNotificationClick)="onHrmNotificationClick($event)"
-    (onLogout)="onHrmLogout()"
-    (onSearch)="onHrmSearch($event)">
+    (sidebarToggle)="onHrmSidebarToggle($event)"
+    (userMenuClick)="onHrmUserMenuClick()"
+    (notificationClick)="onHrmNotificationClick($event)"
+    (logoutClick)="onHrmLogout()"
+    (searchQuery)="onHrmSearch($event)">
 
     <!-- Router Outlet for Child Routes -->
     <router-outlet></router-outlet>
