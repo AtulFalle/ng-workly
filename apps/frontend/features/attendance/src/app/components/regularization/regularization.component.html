@@ -1,0 +1,337 @@
+<!-- Regularization Management Component -->
+<div class="regularization">
+  <!-- Header -->
+  <div class="regularization-header">
+    <h1 class="regularization-title">Attendance Regularization</h1>
+    <div class="regularization-actions">
+      <p-button 
+        label="Dashboard" 
+        icon="pi pi-home"
+        [outlined]="true"
+        routerLink="dashboard">
+      </p-button>
+      <p-button 
+        label="Attendance List" 
+        icon="pi pi-list"
+        [outlined]="true"
+        routerLink="list">
+      </p-button>
+      <p-button 
+        label="New Request" 
+        icon="pi pi-plus"
+        (onClick)="handleNewRequest()">
+      </p-button>
+      <p-button 
+        label="Export" 
+        icon="pi pi-download"
+        [outlined]="true">
+      </p-button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <p-card class="filters-card">
+    <div class="filters-content">
+      <div class="filter-group">
+        <label class="filter-label">Status Filter</label>
+        <input 
+          type="text" 
+          pInputText 
+          [ngModel]="selectedStatus()"
+          placeholder="Enter status"
+          class="filter-input">
+      </div>
+    </div>
+  </p-card>
+
+  <!-- Regularization Requests Table -->
+  <p-card class="table-card">
+    <p-table 
+      [value]="getFilteredRequests()"
+      [loading]="loading()"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[5, 10, 25, 50]"
+      dataKey="id"
+      styleClass="p-datatable-sm"
+      [scrollable]="true"
+      scrollHeight="600px">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Employee</th>
+          <th>Date</th>
+          <th>Original Times</th>
+          <th>Requested Times</th>
+          <th>Reason</th>
+          <th>Status</th>
+          <th>Requested</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-request>
+        <tr>
+          <td>
+            <div class="employee-info">
+              <div class="employee-name">{{ request.employeeName }}</div>
+              <div class="employee-id">{{ request.employeeId }}</div>
+              <div class="employee-department">{{ request.department }}</div>
+            </div>
+          </td>
+          <td>{{ formatDate(request.date) }}</td>
+          <td>
+            <div class="time-comparison">
+              <div class="time-row">
+                <span class="time-label">In:</span>
+                <span class="time-value">{{ formatTime(request.originalCheckIn) }}</span>
+              </div>
+              <div class="time-row">
+                <span class="time-label">Out:</span>
+                <span class="time-value">{{ formatTime(request.originalCheckOut) }}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="time-comparison">
+              <div class="time-row">
+                <span class="time-label">In:</span>
+                <span class="time-value">{{ formatTime(request.requestedCheckIn) }}</span>
+                @if (request.originalCheckIn) {
+                  <span class="time-diff" [class]="getTimeDifference(request.originalCheckIn, request.requestedCheckIn).startsWith('+') ? 'positive' : 'negative'">
+                    {{ getTimeDifference(request.originalCheckIn, request.requestedCheckIn) }}
+                  </span>
+                }
+              </div>
+              <div class="time-row">
+                <span class="time-label">Out:</span>
+                <span class="time-value">{{ formatTime(request.requestedCheckOut) }}</span>
+                @if (request.originalCheckOut) {
+                  <span class="time-diff" [class]="getTimeDifference(request.originalCheckOut, request.requestedCheckOut).startsWith('+') ? 'positive' : 'negative'">
+                    {{ getTimeDifference(request.originalCheckOut, request.requestedCheckOut) }}
+                  </span>
+                }
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="reason-text">
+              {{ request.reason }}
+            </div>
+            @if (request.attachments && request.attachments.length > 0) {
+              <div class="attachments">
+                <i class="pi pi-paperclip"></i>
+                <span>{{ request.attachments.length }} attachment(s)</span>
+              </div>
+            }
+          </td>
+          <td>
+            <p-badge 
+              [value]="getStatusLabel(request.status)" 
+              [severity]="getStatusSeverity(request.status)"
+              size="small">
+            </p-badge>
+            @if (request.reviewedBy) {
+              <div class="review-info">
+                <small>by {{ request.reviewedBy }}</small>
+              </div>
+            }
+          </td>
+          <td>
+            <div class="request-info">
+              <div class="request-by">{{ request.requestedBy }}</div>
+              <div class="request-date">{{ formatDate(request.requestedAt) }}</div>
+            </div>
+          </td>
+          <td>
+            <div class="action-buttons">
+              @if (request.status === 'pending') {
+                <p-button 
+                  icon="pi pi-check"
+                  size="small"
+                  [text]="true"
+                  pTooltip="Approve"
+                  (onClick)="handleReviewRequest(request)">
+                </p-button>
+                <p-button 
+                  icon="pi pi-times"
+                  size="small"
+                  [text]="true"
+                  pTooltip="Reject"
+                  (onClick)="handleReviewRequest(request)">
+                </p-button>
+              }
+              
+              @if (request.status === 'pending') {
+                <p-button 
+                  icon="pi pi-trash"
+                  size="small"
+                  [text]="true"
+                  pTooltip="Cancel Request"
+                  (onClick)="handleCancelRequest(request)">
+                </p-button>
+              }
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8" class="empty-message">
+            <div class="empty-state">
+              <i class="pi pi-calendar-times"></i>
+              <p>No regularization requests found</p>
+              <p class="empty-subtitle">Try adjusting your filters or create a new request</p>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+
+  <!-- New Request Dialog -->
+  <p-dialog 
+    header="New Regularization Request" 
+    [visible]="showRequestDialog()"
+    [modal]="true" 
+    [style]="{width: '600px'}"
+    [closable]="true">
+    
+    <div class="request-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          <input 
+            type="date" 
+            pInputText 
+            [(ngModel)]="requestForm().date"
+            class="form-input">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Original Check-in</label>
+          <input 
+            type="datetime-local" 
+            pInputText 
+            [(ngModel)]="requestForm().originalCheckIn"
+            placeholder="Original check-in time"
+            class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Original Check-out</label>
+          <input 
+            type="datetime-local" 
+            pInputText 
+            [(ngModel)]="requestForm().originalCheckOut"
+            placeholder="Original check-out time"
+            class="form-input">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Requested Check-in</label>
+          <input 
+            type="datetime-local" 
+            pInputText 
+            [(ngModel)]="requestForm().requestedCheckIn"
+            placeholder="Requested check-in time"
+            class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Requested Check-out</label>
+          <input 
+            type="datetime-local" 
+            pInputText 
+            [(ngModel)]="requestForm().requestedCheckOut"
+            placeholder="Requested check-out time"
+            class="form-input">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Reason</label>
+        <textarea 
+          pInputTextarea 
+          [(ngModel)]="requestForm().reason"
+          placeholder="Please provide a detailed reason for the regularization request"
+          rows="4"
+          class="form-input">
+        </textarea>
+      </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <p-button 
+        label="Cancel" 
+        icon="pi pi-times"
+        [text]="true"
+        (onClick)="showRequestDialog.set(false)">
+      </p-button>
+      <p-button 
+        label="Submit Request" 
+        icon="pi pi-check"
+        (onClick)="handleSubmitRequest()">
+      </p-button>
+    </ng-template>
+  </p-dialog>
+
+  <!-- Review Dialog -->
+  <p-dialog 
+    header="Review Regularization Request" 
+    [visible]="showReviewDialog()"
+    [modal]="true" 
+    [style]="{width: '500px'}"
+    [closable]="true">
+    
+    @if (selectedRequest()) {
+      <div class="review-content">
+        <div class="request-summary">
+          <h4>{{ selectedRequest()!.employeeName }} - {{ formatDate(selectedRequest()!.date) }}</h4>
+          <p><strong>Reason:</strong> {{ selectedRequest()!.reason }}</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Review Decision</label>
+          <select 
+            pInputText 
+            [(ngModel)]="reviewForm().status"
+            class="form-input">
+            <option value="approved">Approve</option>
+            <option value="rejected">Reject</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Comments</label>
+          <textarea 
+            pInputTextarea 
+            [(ngModel)]="reviewForm().comments"
+            placeholder="Add review comments"
+            rows="3"
+            class="form-input">
+          </textarea>
+        </div>
+      </div>
+    }
+
+    <ng-template pTemplate="footer">
+      <p-button 
+        label="Cancel" 
+        icon="pi pi-times"
+        [text]="true"
+        (onClick)="showReviewDialog.set(false)">
+      </p-button>
+      <p-button 
+        label="Submit Review" 
+        icon="pi pi-check"
+        (onClick)="handleSubmitReview()">
+      </p-button>
+    </ng-template>
+  </p-dialog>
+</div>
+
+<p-toast></p-toast>

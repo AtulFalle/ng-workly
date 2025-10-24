@@ -1,0 +1,276 @@
+<!-- Attendance List Component -->
+<div class="attendance-list">
+  <!-- Header -->
+  <div class="list-header">
+    <h1 class="list-title">Attendance Records</h1>
+    <div class="list-actions">
+      <p-button 
+        label="Dashboard" 
+        icon="pi pi-home"
+        [outlined]="true"
+        routerLink="dashboard">
+      </p-button>
+      <p-button 
+        label="Regularization" 
+        icon="pi pi-calendar-plus"
+        [outlined]="true"
+        routerLink="regularization">
+      </p-button>
+      <p-button 
+        label="Export" 
+        icon="pi pi-download"
+        [outlined]="true"
+        (onClick)="handleExportData()">
+      </p-button>
+      <p-button 
+        label="Refresh" 
+        icon="pi pi-refresh"
+        [outlined]="true"
+        (onClick)="loadAttendanceData()">
+      </p-button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <p-card class="filters-card">
+    <ng-template pTemplate="header">
+      <h3 class="card-title">Filters</h3>
+    </ng-template>
+
+    <div class="filters-grid">
+      <div class="filter-group">
+        <label class="filter-label">Date Range</label>
+        <input 
+          type="text" 
+          pInputText 
+          [(ngModel)]="filters().dateRange"
+          placeholder="Select date range"
+          class="filter-input">
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Department</label>
+        <input 
+          type="text" 
+          pInputText 
+          [(ngModel)]="filters().department"
+          placeholder="Enter department"
+          class="filter-input">
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Status</label>
+        <input 
+          type="text" 
+          pInputText 
+          [(ngModel)]="filters().status"
+          placeholder="Enter status"
+          class="filter-input">
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Employee</label>
+        <input 
+          type="text" 
+          pInputText 
+          [(ngModel)]="filters().employee"
+          placeholder="Search employee name or ID"
+          class="filter-input">
+      </div>
+
+      <div class="filter-actions">
+        <p-button 
+          label="Apply Filters" 
+          icon="pi pi-filter"
+          (onClick)="applyFilters()">
+        </p-button>
+        <p-button 
+          label="Clear" 
+          icon="pi pi-times"
+          [text]="true"
+          (onClick)="clearFilters()">
+        </p-button>
+      </div>
+    </div>
+  </p-card>
+
+  <!-- Bulk Actions -->
+  @if (selectedRecords().length > 0) {
+    <p-card class="bulk-actions-card">
+      <div class="bulk-actions">
+        <span class="bulk-info">{{ selectedRecords().length }} records selected</span>
+        <div class="bulk-buttons">
+          <p-button 
+            label="Approve All" 
+            icon="pi pi-check"
+            size="small"
+            (onClick)="handleBulkAction('Approve')">
+          </p-button>
+          <p-button 
+            label="Reject All" 
+            icon="pi pi-times"
+            size="small"
+            [outlined]="true"
+            (onClick)="handleBulkAction('Reject')">
+          </p-button>
+          <p-button 
+            label="Export Selected" 
+            icon="pi pi-download"
+            size="small"
+            [text]="true"
+            (onClick)="handleBulkAction('Export')">
+          </p-button>
+        </div>
+      </div>
+    </p-card>
+  }
+
+  <!-- Attendance Table -->
+  <p-card class="table-card">
+    <p-table 
+      [value]="filteredRecords()"
+      [loading]="loading()"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[5, 10, 25, 50]"
+      [globalFilterFields]="['employeeName', 'employeeId', 'department']"
+      [selection]="selectedRecords()"
+      [selectAll]="false"
+      dataKey="id"
+      styleClass="p-datatable-sm"
+      [scrollable]="true"
+      scrollHeight="600px">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th pSortableColumn="employeeName">
+            Employee
+            <p-sortIcon field="employeeName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="department">
+            Department
+            <p-sortIcon field="department"></p-sortIcon>
+          </th>
+          <th pSortableColumn="date">
+            Date
+            <p-sortIcon field="date"></p-sortIcon>
+          </th>
+          <th>Check In</th>
+          <th>Check Out</th>
+          <th>Total Hours</th>
+          <th pSortableColumn="status">
+            Status
+            <p-sortIcon field="status"></p-sortIcon>
+          </th>
+          <th>Location</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-record>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="record"></p-tableCheckbox>
+          </td>
+          <td>
+            <div class="employee-info">
+              <div class="employee-name">{{ record.employeeName }}</div>
+              <div class="employee-id">{{ record.employeeId }}</div>
+            </div>
+          </td>
+          <td>{{ record.department }}</td>
+          <td>{{ formatDate(record.date) }}</td>
+          <td>
+            <div class="time-cell">
+              <span class="time-value">{{ formatTime(record.checkIn) }}</span>
+              @if (record.device) {
+                <span class="device-info">{{ record.device }}</span>
+              }
+            </div>
+          </td>
+          <td>
+            <div class="time-cell">
+              <span class="time-value">{{ formatTime(record.checkOut) }}</span>
+              @if (record.location) {
+                <span class="location-info">{{ record.location }}</span>
+              }
+            </div>
+          </td>
+          <td>
+            <span class="hours-value">{{ formatDuration(record.totalHours) }}</span>
+          </td>
+          <td>
+            <p-badge 
+              [value]="getStatusLabel(record.status)" 
+              [severity]="getStatusSeverity(record.status)"
+              size="small">
+            </p-badge>
+            @if (record.regularizationRequest) {
+              <div class="regularization-info">
+                <p-badge 
+                  [value]="record.regularizationRequest.status.toUpperCase()" 
+                  [severity]="getRegularizationSeverity(record.regularizationRequest.status)"
+                  size="small">
+                </p-badge>
+              </div>
+            }
+          </td>
+          <td>
+            @if (record.location) {
+              <span class="location-badge">{{ record.location }}</span>
+            } @else {
+              <span class="no-location">--</span>
+            }
+          </td>
+          <td>
+            <div class="action-buttons">
+              @if (record.status === 'absent' || record.status === 'late') {
+                <p-button 
+                  icon="pi pi-calendar-plus"
+                  size="small"
+                  [text]="true"
+                  pTooltip="Request Regularization"
+                  (onClick)="handleRegularizationRequest(record)">
+                </p-button>
+              }
+              
+              @if (record.regularizationRequest && record.regularizationRequest.status === 'pending') {
+                <p-button 
+                  icon="pi pi-check"
+                  size="small"
+                  [text]="true"
+                  pTooltip="Approve"
+                  (onClick)="handleApproveRegularization(record)">
+                </p-button>
+                <p-button 
+                  icon="pi pi-times"
+                  size="small"
+                  [text]="true"
+                  pTooltip="Reject"
+                  (onClick)="handleRejectRegularization(record)">
+                </p-button>
+              }
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="10" class="empty-message">
+            <div class="empty-state">
+              <i class="pi pi-calendar-times"></i>
+              <p>No attendance records found</p>
+              <p class="empty-subtitle">Try adjusting your filters or date range</p>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>
+
+<p-toast></p-toast>

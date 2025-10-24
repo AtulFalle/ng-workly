@@ -1,64 +1,25 @@
-<div class="dashboard-layout">
-  <!-- Header -->
-  <lib-header
-    [title]="title"
-    [menuItems]="headerMenuItems()"
+  <!-- HRM-Next Inspired Dashboard Layout with Full-Width Header -->
+  <lib-dashboard-layout
     [userProfile]="userProfile()"
+    [sidebarSections]="sidebarSections()"
+    [notifications]="notifications()"
+    [pageTitle]="'HRM Dashboard'"
+    [pageSubtitle]="'Human Resource Management System'"
+    [showSidebar]="true"
+    [showHeader]="true"
     [showSearch]="true"
     [showNotifications]="true"
     [showUserMenu]="true"
-    [showColorPalette]="true"
-    [sticky]="true"
-    (menuClick)="onHeaderMenuClick($event)"
-    (userMenuClick)="onUserMenuClick($event)"
-    (searchChange)="onSearchChange($event)"
-    (notificationClick)="onNotificationClick()">
-  </lib-header>
+    [sidebarCollapsed]="isSidebarCollapsed()"
+    (onSidebarToggle)="onHrmSidebarToggle($event)"
+    (onUserMenuClick)="onHrmUserMenuClick()"
+    (onNotificationClick)="onHrmNotificationClick($event)"
+    (onLogout)="onHrmLogout()"
+    (onSearch)="onHrmSearch($event)">
 
-  <!-- Main Content Area with Sidebar -->
-  <div class="main-content-area" [class.sidebar-collapsed]="isSidebarCollapsed()">
-    <!-- Sidebar -->
-    <lib-sidebar
-      [sections]="sidebarSections()"
-      [userProfile]="userProfile()"
-      [logo]="'/assets/logo.png'"
-      [logoText]="'Workly'"
-      [showUserProfile]="false"
-      [showSearch]="false"
-      [showLogo]="false"
-      [collapsed]="isSidebarCollapsed()"
-      [width]="'280px'"
-      [collapsedWidth]="'60px'"
-      [theme]="selectedTheme() === 'dark' ? 'dark' : 'light'"
-      [position]="'left'"
-      (menuClick)="onSidebarMenuClick($event)"
-      (userMenuClick)="onUserMenuClick($event)"
-      (searchChange)="onSearchChange($event)"
-      (toggleCollapse)="onSidebarToggleCollapse($event)"
-      (sectionToggle)="onSidebarSectionToggle($event)">
-    </lib-sidebar>
-
-    <!-- Dashboard Content -->
-    <main class="dashboard-content">
-      <div class="content-wrapper">
-        <!-- Router outlet for remote dashboard apps -->
-        <router-outlet></router-outlet>
-      </div>
-    </main>
-  </div>
-
-  <!-- Footer -->
-  <lib-footer
-    [companyName]="'Workly'"
-    [description]="'Building amazing applications with modern Angular and PrimeNG components.'"
-    [sections]="footerSections()"
-    [socialLinks]="socialLinks()"
-    [showNewsletter]="false"
-    [showSocialLinks]="false"
-    [showBackToTop]="false"
-    (linkClick)="onFooterLinkClick($event)"
-    (socialClick)="onSocialClick($event)"
-    (newsletterSubscribe)="onNewsletterSubscribe($event)"
-    (backToTop)="onBackToTop()">
-  </lib-footer>
-</div>
+    <!-- Router Outlet for Child Routes -->
+    <router-outlet></router-outlet>
+    
+    <!-- Default HRM Dashboard Content when no child route is active -->
+    <app-hrm-dashboard *ngIf="!hasChildRoute()"></app-hrm-dashboard>
+  </lib-dashboard-layout>

@@ -1,0 +1,46 @@
+<!-- HRM-Next Inspired Dashboard Layout with Full-Width Header -->
+<div class="dashboard-layout" [class.sidebar-collapsed]="isSidebarCollapsed()">
+  <!-- Full-Width Header -->
+  @if (showHeader()) {
+    <header class="full-width-header">
+      <lib-header
+        [userProfile]="userProfile()"
+        [notifications]="notifications()"
+        [showNotifications]="showNotifications()"
+        [showUserMenu]="showUserMenu()"
+        [showSearch]="showSearch()"
+        [title]="pageTitle()"
+        [subtitle]="pageSubtitle()"
+        (onToggleSidebar)="toggleSidebar()"
+        (onUserMenuClick)="handleUserMenuClick()"
+        (onNotificationClick)="handleNotificationClick($event)"
+        (onLogout)="handleLogout()"
+        (onSearch)="handleSearch($event)">
+      </lib-header>
+    </header>
+  }
+
+  <!-- Content Area with Sidebar -->
+  <div class="content-area">
+    <!-- Sidebar -->
+    @if (showSidebar()) {
+      <aside class="sidebar-wrapper" [class.collapsed]="isSidebarCollapsed()">
+        <lib-sidebar
+          [sections]="sidebarSections()"
+          [userProfile]="userProfile()"
+          [collapsed]="isSidebarCollapsed()"
+          [showUserProfile]="true"
+          [showSearch]="false"
+          [showLogo]="true"
+          logoText="Workly"
+          theme="light">
+        </lib-sidebar>
+      </aside>
+    }
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <ng-content></ng-content>
+    </main>
+  </div>
+</div>

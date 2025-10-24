@@ -1,21 +1,21 @@
 import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ThemingService, Theme } from '@workly/theming';
 import { ColorPaletteService } from '@workly/theming/color-palette.service';
 
 // Shared UI Components
 import { 
-  HeaderComponent, 
-  FooterComponent, 
-  SidebarComponent,
-  HeaderMenuItem, 
+  DashboardLayoutComponent as UIDashboardLayoutComponent,
   UserProfile, 
   FooterSection, 
   SocialLink,
-  SidebarMenuItem,
-  SidebarSection
+  SidebarSection,
+  NotificationItem
 } from '@workly/ui-component';
+
+// HRM Components
+import { HrmDashboardComponent } from '../components/hrm/hrm-dashboard/hrm-dashboard.component';
 
 // PrimeNG Components
 import { ButtonModule } from 'primeng/button';
@@ -30,9 +30,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule, 
     RouterModule, 
     FormsModule,
-    HeaderComponent,
-    FooterComponent,
-    SidebarComponent,
+    UIDashboardLayoutComponent,
+    HrmDashboardComponent,
     ButtonModule,
     ToastModule,
   ],
@@ -47,6 +46,8 @@ export class DashboardLayoutComponent {
   themingService = inject(ThemingService);
   colorPaletteService = inject(ColorPaletteService);
   messageService = inject(MessageService);
+  router = inject(Router);
+  route = inject(ActivatedRoute);
   
   availableThemes: Theme[] = this.themingService.availableThemes;
   currentTheme = this.themingService.currentTheme;
@@ -55,44 +56,50 @@ export class DashboardLayoutComponent {
   // Sidebar state
   isSidebarCollapsed = signal(false);
   
-  // Header configuration
-  headerMenuItems = signal<HeaderMenuItem[]>([
-    {
-      label: 'Dashboard',
-      icon: 'pi pi-home',
-      routerLink: '/dashboard'
-    },
-    {
-      label: 'Analytics',
-      icon: 'pi pi-chart-bar',
-      routerLink: '/dashboard/analytics'
-    },
-    {
-      label: 'Projects',
-      icon: 'pi pi-folder',
-      routerLink: '/dashboard/projects'
-    },
-    {
-      label: 'Settings',
-      icon: 'pi pi-cog',
-      routerLink: '/dashboard/settings'
-    }
-  ]);
+  // HRM Dashboard configuration
 
   userProfile = signal<UserProfile>({
     name: 'John Doe',
-    email: 'john.doe@workly.com',
+    email: 'admin@hrm.com',
     role: 'Administrator',
     avatar: 'https://via.placeholder.com/40'
   });
 
-  // Sidebar configuration
+  // HRM Notifications
+  notifications = signal<NotificationItem[]>([
+    {
+      id: '1',
+      title: 'New Employee Onboarded',
+      message: 'Sarah Johnson has been added to the system',
+      timestamp: new Date(Date.now() - 5 * 60 * 1000), // 5 minutes ago
+      read: false,
+      type: 'success'
+    },
+    {
+      id: '2',
+      title: 'Leave Request Pending',
+      message: 'Mike Wilson has requested 3 days leave',
+      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
+      read: false,
+      type: 'info'
+    },
+    {
+      id: '3',
+      title: 'Payroll Processing',
+      message: 'Monthly payroll has been processed successfully',
+      timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
+      read: true,
+      type: 'success'
+    }
+  ]);
+
+  // HRM Sidebar configuration
   sidebarSections = signal<SidebarSection[]>([
     {
-      title: 'Main',
+      title: 'Dashboard',
       items: [
         {
-          label: 'Dashboard',
+          label: 'Overview',
           icon: 'pi pi-home',
           routerLink: '/dashboard'
         },
@@ -100,53 +107,86 @@ export class DashboardLayoutComponent {
           label: 'Analytics',
           icon: 'pi pi-chart-bar',
           routerLink: '/dashboard/analytics'
-        },
-        {
-          label: 'Projects',
-          icon: 'pi pi-folder',
-          routerLink: '/dashboard/projects',
-          badge: '3',
-          badgeClass: 'info'
         }
       ]
     },
     {
-      title: 'Management',
+      title: 'Employee Management',
       items: [
         {
-          label: 'Users',
+          label: 'All Employees',
           icon: 'pi pi-users',
-          routerLink: '/dashboard/users'
+          routerLink: '/dashboard/employees'
         },
         {
-          label: 'Teams',
-          icon: 'pi pi-users',
-          routerLink: '/dashboard/teams'
+          label: 'Add Employee',
+          icon: 'pi pi-user-plus',
+          routerLink: '/dashboard/employees/add'
         },
         {
-          label: 'Settings',
-          icon: 'pi pi-cog',
-          routerLink: '/dashboard/settings'
+          label: 'Departments',
+          icon: 'pi pi-building',
+          routerLink: '/dashboard/departments'
         }
       ]
     },
     {
-      title: 'Tools',
+      title: 'Attendance',
       items: [
+        {
+          label: 'Time Tracking',
+          icon: 'pi pi-clock',
+          routerLink: '/dashboard/attendance'
+        },
         {
           label: 'Reports',
           icon: 'pi pi-file-pdf',
-          routerLink: '/dashboard/reports'
+          routerLink: '/dashboard/attendance/reports'
+        }
+      ]
+    },
+    {
+      title: 'Leave Management',
+      items: [
+        {
+          label: 'Leave Requests',
+          icon: 'pi pi-calendar',
+          routerLink: '/dashboard/leave'
         },
         {
-          label: 'Integrations',
-          icon: 'pi pi-link',
-          routerLink: '/dashboard/integrations'
+          label: 'Leave Balance',
+          icon: 'pi pi-calendar-plus',
+          routerLink: '/dashboard/leave/balance'
+        }
+      ]
+    },
+    {
+      title: 'Payroll',
+      items: [
+        {
+          label: 'Salary Management',
+          icon: 'pi pi-dollar',
+          routerLink: '/dashboard/payroll'
         },
         {
-          label: 'API Keys',
-          icon: 'pi pi-key',
-          routerLink: '/dashboard/api-keys'
+          label: 'Payslips',
+          icon: 'pi pi-file',
+          routerLink: '/dashboard/payroll/payslips'
+        }
+      ]
+    },
+    {
+      title: 'Settings',
+      items: [
+        {
+          label: 'Company Settings',
+          icon: 'pi pi-cog',
+          routerLink: '/dashboard/settings'
+        },
+        {
+          label: 'User Management',
+          icon: 'pi pi-shield',
+          routerLink: '/dashboard/settings/users'
         }
       ]
     }
@@ -200,44 +240,43 @@ export class DashboardLayoutComponent {
     this.selectedTheme.set(this.themingService.getCurrentTheme());
   }
 
-  // Sidebar event handlers
-  onSidebarToggleCollapse(collapsed: boolean): void {
+  // HRM Event Handlers
+
+  // HRM Demo Event Handlers
+  onHrmSidebarToggle(collapsed: boolean): void {
     this.isSidebarCollapsed.set(collapsed);
-    console.log('Sidebar collapsed:', collapsed);
+    console.log('HRM Sidebar collapsed:', collapsed);
   }
 
-  onSidebarMenuClick(item: SidebarMenuItem): void {
-    console.log('Sidebar menu clicked:', item);
+  onHrmUserMenuClick(): void {
+    console.log('HRM User menu clicked');
     this.messageService.add({
       severity: 'info',
-      summary: 'Navigation',
-      detail: `Navigating to: ${item.label}`
+      summary: 'User Menu',
+      detail: 'User menu action triggered'
     });
   }
 
-  onSidebarSectionToggle(section: SidebarSection): void {
-    console.log('Sidebar section toggled:', section);
-  }
-
-  // Header Event Handlers
-  onHeaderMenuClick(item: HeaderMenuItem): void {
-    console.log('Header menu clicked:', item);
-    if (item.command) {
-      item.command();
-    }
-  }
-
-  onUserMenuClick(action: string): void {
-    console.log('User menu action:', action);
+  onHrmNotificationClick(notification: NotificationItem): void {
+    console.log('HRM Notification clicked:', notification);
     this.messageService.add({
       severity: 'info',
-      summary: 'User Action',
-      detail: `User selected: ${action}`
+      summary: 'Notification',
+      detail: `Clicked: ${notification.title}`
     });
   }
 
-  onSearchChange(query: string): void {
-    console.log('Search query:', query);
+  onHrmLogout(): void {
+    console.log('HRM Logout clicked');
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Logout',
+      detail: 'User logged out successfully'
+    });
+  }
+
+  onHrmSearch(query: string): void {
+    console.log('HRM Search query:', query);
     this.messageService.add({
       severity: 'info',
       summary: 'Search',
@@ -245,49 +284,8 @@ export class DashboardLayoutComponent {
     });
   }
 
-  onNotificationClick(): void {
-    console.log('Notification clicked');
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Notifications',
-      detail: 'You have 3 new notifications'
-    });
-  }
-
-  // Footer Event Handlers
-  onFooterLinkClick(link: any): void {
-    console.log('Footer link clicked:', link);
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Navigation',
-      detail: `Navigating to: ${link.label}`
-    });
-  }
-
-  onSocialClick(social: SocialLink): void {
-    console.log('Social link clicked:', social);
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Social Media',
-      detail: `Opening ${social.name}`
-    });
-  }
-
-  onNewsletterSubscribe(email: string): void {
-    console.log('Newsletter subscription:', email);
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Newsletter',
-      detail: `Subscribed with: ${email}`
-    });
-  }
-
-  onBackToTop(): void {
-    console.log('Back to top clicked');
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Navigation',
-      detail: 'Scrolling to top'
-    });
+  hasChildRoute(): boolean {
+    // Check if there are any child routes active
+    return this.route.firstChild !== null;
   }
 }

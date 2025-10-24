@@ -1,0 +1,362 @@
+// Attendance List Component Styles
+.attendance-list {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--spacing-6);
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--surface-100);
+    border-radius: var(--border-radius-sm);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--surface-300);
+    border-radius: var(--border-radius-sm);
+
+    &:hover {
+      background: var(--surface-400);
+    }
+  }
+}
+
+// List Header
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-6);
+
+  .list-title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  .list-actions {
+    display: flex;
+    gap: var(--spacing-3);
+  }
+}
+
+// Filters Card
+.filters-card {
+  margin-bottom: var(--spacing-6);
+
+  .card-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  .filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-4);
+    align-items: end;
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-2);
+
+      .filter-label {
+        font-weight: var(--font-weight-medium);
+        color: var(--text-color);
+        font-size: var(--font-size-sm);
+      }
+
+      .filter-input {
+        width: 100%;
+      }
+    }
+
+    .filter-actions {
+      display: flex;
+      gap: var(--spacing-2);
+      align-items: center;
+    }
+  }
+}
+
+// Bulk Actions
+.bulk-actions-card {
+  margin-bottom: var(--spacing-6);
+
+  .bulk-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .bulk-info {
+      font-weight: var(--font-weight-medium);
+      color: var(--text-color);
+    }
+
+    .bulk-buttons {
+      display: flex;
+      gap: var(--spacing-2);
+    }
+  }
+}
+
+// Table Card
+.table-card {
+  .employee-info {
+    .employee-name {
+      font-weight: var(--font-weight-semibold);
+      color: var(--text-color);
+      font-size: var(--font-size-sm);
+    }
+
+    .employee-id {
+      font-size: var(--font-size-xs);
+      color: var(--text-color-secondary);
+    }
+  }
+
+  .time-cell {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+
+    .time-value {
+      font-weight: var(--font-weight-medium);
+      color: var(--text-color);
+      font-size: var(--font-size-sm);
+    }
+
+    .device-info,
+    .location-info {
+      font-size: var(--font-size-xs);
+      color: var(--text-color-secondary);
+      background: var(--surface-100);
+      padding: var(--spacing-1) var(--spacing-2);
+      border-radius: var(--border-radius-sm);
+      display: inline-block;
+    }
+  }
+
+  .hours-value {
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-color);
+    font-size: var(--font-size-sm);
+  }
+
+  .regularization-info {
+    margin-top: var(--spacing-1);
+  }
+
+  .location-badge {
+    background: var(--surface-100);
+    color: var(--text-color-secondary);
+    padding: var(--spacing-1) var(--spacing-2);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-xs);
+  }
+
+  .no-location {
+    color: var(--text-color-secondary);
+    font-style: italic;
+    font-size: var(--font-size-sm);
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: var(--spacing-1);
+  }
+
+  .empty-message {
+    text-align: center;
+    padding: var(--spacing-8);
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-3);
+      color: var(--text-color-secondary);
+
+      i {
+        font-size: var(--font-size-4xl);
+        color: var(--surface-300);
+      }
+
+      p {
+        margin: 0;
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-medium);
+      }
+
+      .empty-subtitle {
+        font-size: var(--font-size-sm);
+        color: var(--text-color-secondary);
+      }
+    }
+  }
+}
+
+// Table Customizations
+:host ::ng-deep {
+  .p-datatable {
+    .p-datatable-header {
+      background: var(--surface-50);
+      border-bottom: 1px solid var(--surface-200);
+    }
+
+    .p-datatable-tbody > tr {
+      transition: background-color var(--transition-normal);
+
+      &:hover {
+        background-color: var(--surface-50);
+      }
+
+      &.p-selectable-row.p-highlight {
+        background-color: var(--primary-50);
+        color: var(--primary-700);
+      }
+    }
+
+    .p-datatable-tbody > tr > td {
+      border-bottom: 1px solid var(--surface-200);
+      padding: var(--spacing-3);
+    }
+
+    .p-datatable-thead > tr > th {
+      background: var(--surface-100);
+      border-bottom: 1px solid var(--surface-200);
+      padding: var(--spacing-3);
+      font-weight: var(--font-weight-semibold);
+      color: var(--text-color);
+    }
+
+    .p-paginator {
+      background: var(--surface-50);
+      border-top: 1px solid var(--surface-200);
+      padding: var(--spacing-3);
+    }
+  }
+
+  .p-badge {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .p-button {
+    &.p-button-sm {
+      padding: var(--spacing-1) var(--spacing-2);
+      font-size: var(--font-size-xs);
+    }
+  }
+
+  .p-calendar,
+  .p-dropdown,
+  .p-inputtext {
+    width: 100%;
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .attilters-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-3);
+  }
+
+  .bulk-actions {
+    flex-direction: column;
+    gap: var(--spacing-3);
+    align-items: flex-start;
+
+    .bulk-buttons {
+      width: 100%;
+      justify-content: flex-start;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .attendance-list {
+    padding: var(--spacing-4);
+  }
+
+  .list-header {
+    flex-direction: column;
+    gap: var(--spacing-4);
+    align-items: flex-start;
+
+    .list-actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+
+  .filters-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-3);
+  }
+
+  .filter-actions {
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+}
+
+@media (max-width: 480px) {
+  .attendance-list {
+    padding: var(--spacing-2);
+  }
+
+  .list-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: var(--spacing-1);
+  }
+}
+
+// Dark theme support
+.attendance-list.dark-theme {
+  :host ::ng-deep {
+    .p-datatable {
+      .p-datatable-header {
+        background: var(--surface-800);
+        border-bottom-color: var(--surface-700);
+      }
+
+      .p-datatable-tbody > tr:hover {
+        background-color: var(--surface-800);
+      }
+
+      .p-datatable-tbody > tr.p-highlight {
+        background-color: var(--primary-900);
+        color: var(--primary-100);
+      }
+
+      .p-datatable-tbody > tr > td {
+        border-bottom-color: var(--surface-700);
+      }
+
+      .p-datatable-thead > tr > th {
+        background: var(--surface-800);
+        border-bottom-color: var(--surface-700);
+      }
+
+      .p-paginator {
+        background: var(--surface-800);
+        border-top-color: var(--surface-700);
+      }
+    }
+  }
+}

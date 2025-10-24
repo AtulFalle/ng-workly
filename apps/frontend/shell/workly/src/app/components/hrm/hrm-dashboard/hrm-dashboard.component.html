@@ -1,0 +1,173 @@
+<!-- HRM Dashboard Component -->
+<div class="hrm-dashboard">
+  <!-- Welcome Section -->
+  <p-card class="welcome-section">
+    <ng-template pTemplate="header">
+      <div class="welcome-header">
+        <h1 class="welcome-title">Welcome back, John Doe!</h1>
+        <p class="welcome-subtitle">Here's what's happening in your HRM system today.</p>
+      </div>
+    </ng-template>
+  </p-card>
+
+  <!-- Stats Cards -->
+  <app-stats-cards
+    [cards]="statsCards()"
+    [loading]="statsLoading()"
+    [showTrends]="true"
+    [columns]="4">
+  </app-stats-cards>
+
+  <!-- Main Content Grid -->
+  <div class="dashboard-grid">
+    <!-- Left Column - Activity Feed -->
+    <div class="dashboard-column dashboard-column--left">
+      <app-activity-feed
+        [activities]="activities()"
+        [loading]="activitiesLoading()"
+        [maxItems]="5"
+        [showUserInfo]="true"
+        [showActions]="true"
+        title="Recent Activity"
+        (onActivityClick)="onActivityClick($event)"
+        (onActionClick)="onActivityClick($event)">
+      </app-activity-feed>
+    </div>
+
+    <!-- Right Column - Quick Actions -->
+    <div class="dashboard-column dashboard-column--right">
+      <app-quick-actions
+        [actions]="quickActions()"
+        [loading]="actionsLoading()"
+        [showDescriptions]="true"
+        [columns]="1"
+        title="Quick Actions"
+        (onActionClick)="onActionClick($event)">
+      </app-quick-actions>
+    </div>
+  </div>
+
+  <!-- Additional Sections -->
+  <div class="dashboard-sections">
+    <!-- Employee Management Section -->
+    <div class="dashboard-section">
+      <h2 class="section-title">Employee Management</h2>
+      <div class="section-content">
+        <div class="management-cards">
+          <p-card class="management-card">
+            <ng-template pTemplate="header">
+              <div class="management-card__icon">
+                <i class="pi pi-users"></i>
+              </div>
+            </ng-template>
+            
+            <div class="management-card__content">
+              <h3 class="management-card__title">All Employees</h3>
+              <p class="management-card__description">View and manage all employees</p>
+            </div>
+
+            <ng-template pTemplate="footer">
+              <p-button 
+                label="View Employees" 
+                icon="pi pi-eye"
+                [outlined]="true"
+                routerLink="/dashboard/employees">
+              </p-button>
+            </ng-template>
+          </p-card>
+
+          <p-card class="management-card">
+            <ng-template pTemplate="header">
+              <div class="management-card__icon">
+                <i class="pi pi-user-plus"></i>
+              </div>
+            </ng-template>
+            
+            <div class="management-card__content">
+              <h3 class="management-card__title">Add Employee</h3>
+              <p class="management-card__description">Add new employee to the system</p>
+            </div>
+
+            <ng-template pTemplate="footer">
+              <p-button 
+                label="Add Employee" 
+                icon="pi pi-plus"
+                [outlined]="true"
+                routerLink="/dashboard/employees/add">
+              </p-button>
+            </ng-template>
+          </p-card>
+
+          <p-card class="management-card">
+            <ng-template pTemplate="header">
+              <div class="management-card__icon">
+                <i class="pi pi-building"></i>
+              </div>
+            </ng-template>
+            
+            <div class="management-card__content">
+              <h3 class="management-card__title">Departments</h3>
+              <p class="management-card__description">Manage departments and teams</p>
+            </div>
+
+            <ng-template pTemplate="footer">
+              <p-button 
+                label="Manage Departments" 
+                icon="pi pi-cog"
+                [outlined]="true"
+                routerLink="/dashboard/departments">
+              </p-button>
+            </ng-template>
+          </p-card>
+        </div>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+
+    <!-- Attendance Section -->
+    <div class="dashboard-section">
+      <h2 class="section-title">Attendance & Time Tracking</h2>
+      <div class="section-content">
+        <div class="attendance-overview">
+          <p-card class="attendance-card">
+            <ng-template pTemplate="header">
+              <div class="attendance-card__header">
+                <h3 class="attendance-card__title">Today's Attendance</h3>
+                <p-badge 
+                  [value]="getCurrentDate()" 
+                  severity="info"
+                  size="small">
+                </p-badge>
+              </div>
+            </ng-template>
+
+            <div class="attendance-card__stats">
+              <div class="attendance-stat">
+                <span class="attendance-stat__value">142</span>
+                <span class="attendance-stat__label">Present</span>
+              </div>
+              <div class="attendance-stat">
+                <span class="attendance-stat__value">8</span>
+                <span class="attendance-stat__label">Absent</span>
+              </div>
+              <div class="attendance-stat">
+                <span class="attendance-stat__value">6</span>
+                <span class="attendance-stat__label">Late</span>
+              </div>
+            </div>
+
+            <ng-template pTemplate="footer">
+              <p-button 
+                label="View Details" 
+                icon="pi pi-chart-bar"
+                [outlined]="true"
+                routerLink="/dashboard/attendance">
+              </p-button>
+            </ng-template>
+          </p-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

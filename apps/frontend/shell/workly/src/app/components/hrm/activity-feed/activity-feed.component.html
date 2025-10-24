@@ -1,0 +1,101 @@
+<!-- HRM Activity Feed Component -->
+<p-card class="activity-feed">
+  <ng-template pTemplate="header">
+    <div class="activity-feed__header">
+      <h2 class="activity-feed__title">{{ title() }}</h2>
+      @if (activities().length > maxItems()) {
+        <p-button 
+          label="View All" 
+          icon="pi pi-list"
+          [text]="true"
+          size="small"
+          (onClick)="handleViewAll()">
+        </p-button>
+      }
+    </div>
+  </ng-template>
+
+  <div class="activity-feed__content">
+    @if (loading()) {
+      <!-- Loading Skeleton -->
+      @for (item of [1,2,3,4,5]; track $index) {
+        <div class="activity-item activity-item--loading">
+          <div class="activity-item__skeleton">
+            <p-skeleton width="40px" height="40px" shape="circle" class="skeleton-icon"></p-skeleton>
+            <div class="skeleton-content">
+              <p-skeleton width="70%" height="16px" class="skeleton-title"></p-skeleton>
+              <p-skeleton width="90%" height="14px" class="skeleton-description"></p-skeleton>
+              <p-skeleton width="50%" height="12px" class="skeleton-timestamp"></p-skeleton>
+            </div>
+          </div>
+        </div>
+      }
+    } @else if (displayActivities.length === 0) {
+      <!-- Empty State -->
+      <div class="activity-feed__empty">
+        <i class="pi pi-bell-slash activity-feed__empty-icon"></i>
+        <p class="activity-feed__empty-text">No recent activity</p>
+        <p class="activity-feed__empty-subtext">Activity will appear here as it happens</p>
+      </div>
+    } @else {
+      <!-- Activity Items -->
+      @for (activity of displayActivities; track activity.id) {
+        <div 
+          class="activity-item" 
+          [class]="getActivityTypeClass(activity)"
+          (click)="handleActivityClick(activity)">
+          
+          <div class="activity-item__icon" [class]="getActivityIconClass(activity)">
+            <i [class]="activity.icon"></i>
+          </div>
+
+          <div class="activity-item__content">
+            <div class="activity-item__header">
+              <h4 class="activity-item__title">{{ activity.title }}</h4>
+              <p-badge 
+                [value]="formatTimestamp(activity.timestamp)" 
+                severity="secondary"
+                size="small">
+              </p-badge>
+            </div>
+            
+            <p class="activity-item__description">{{ activity.description }}</p>
+            
+            @if (showUserInfo() && activity.user) {
+              <div class="activity-item__user">
+                <p-avatar 
+                  [image]="activity.user.avatar"
+                  [label]="activity.user.name.charAt(0).toUpperCase()"
+                  size="normal"
+                  shape="circle">
+                </p-avatar>
+                <span class="activity-item__user-name">{{ activity.user.name }}</span>
+              </div>
+            }
+          </div>
+
+          @if (showActions() && activity.action) {
+            <div class="activity-item__action">
+              @if (activity.action.url) {
+                <p-button 
+                  [label]="activity.action.label"
+                  icon="pi pi-external-link"
+                  size="small"
+                  [text]="true"
+                  (onClick)="handleActionClick(activity, $event)">
+                </p-button>
+              } @else {
+                <p-button 
+                  [label]="activity.action.label"
+                  size="small"
+                  [text]="true"
+                  (onClick)="handleActionClick(activity, $event)">
+                </p-button>
+              }
+            </div>
+          }
+        </div>
+      }
+    }
+  </div>
+</p-card>

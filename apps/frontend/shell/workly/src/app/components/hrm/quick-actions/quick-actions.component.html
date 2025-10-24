@@ -1,0 +1,72 @@
+<!-- HRM Quick Actions Component -->
+<p-card class="quick-actions">
+  <ng-template pTemplate="header">
+    <div class="quick-actions__header">
+      <h2 class="quick-actions__title">{{ title() }}</h2>
+    </div>
+  </ng-template>
+
+  <div class="quick-actions__content" [style.grid-template-columns]="gridColumns">
+    @if (loading()) {
+      <!-- Loading Skeleton -->
+      @for (item of [1,2,3,4]; track $index) {
+        <div class="action-button action-button--loading">
+          <div class="action-button__skeleton">
+            <p-skeleton width="40px" height="40px" shape="rectangle" class="skeleton-icon"></p-skeleton>
+            <div class="skeleton-content">
+              <p-skeleton width="80%" height="16px" class="skeleton-label"></p-skeleton>
+              @if (showDescriptions()) {
+                <p-skeleton width="60%" height="14px" class="skeleton-description"></p-skeleton>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    } @else if (actions().length === 0) {
+      <!-- Empty State -->
+      <div class="quick-actions__empty">
+        <i class="pi pi-bolt quick-actions__empty-icon"></i>
+        <p class="quick-actions__empty-text">No quick actions available</p>
+        <p class="quick-actions__empty-subtext">Actions will appear here when configured</p>
+      </div>
+    } @else {
+      <!-- Action Buttons -->
+      @for (action of actions(); track action.id) {
+        <p-button 
+          class="action-button" 
+          [class]="getActionColorClass(action)"
+          [disabled]="action.disabled"
+          [label]="action.label"
+          [icon]="action.icon"
+          [text]="true"
+          [outlined]="true"
+          [size]="'large'"
+          (onClick)="handleActionClick(action)"
+          [attr.aria-label]="action.label">
+          
+          @if (action.badge) {
+            <ng-template pTemplate="badge">
+              <p-badge 
+                [value]="action.badge.text" 
+                [severity]="getBadgeSeverity(action.badge)"
+                size="small">
+              </p-badge>
+            </ng-template>
+          }
+
+          @if (showDescriptions() && action.description) {
+            <ng-template pTemplate="content">
+              <div class="action-button__description">{{ action.description }}</div>
+            </ng-template>
+          }
+
+          @if (action.url) {
+            <ng-template pTemplate="suffix">
+              <i class="pi pi-external-link"></i>
+            </ng-template>
+          }
+        </p-button>
+      }
+    }
+  </div>
+</p-card>

@@ -1,0 +1,133 @@
+<!-- HRM-Next Demo Component -->
+<lib-dashboard-layout
+  [userProfile]="userProfile"
+  [sidebarSections]="sidebarSections"
+  [notifications]="notifications"
+  [pageTitle]="'HRM Dashboard'"
+  [pageSubtitle]="'Human Resource Management System'"
+  [showSidebar]="true"
+  [showHeader]="true"
+  [showSearch]="true"
+  [showNotifications]="true"
+  [showUserMenu]="true"
+  [sidebarCollapsed]="isSidebarCollapsed()"
+  (onSidebarToggle)="onSidebarToggle($event)"
+  (onUserMenuClick)="onUserMenuClick()"
+  (onNotificationClick)="onNotificationClick($event)"
+  (onLogout)="onLogout()"
+  (onSearch)="onSearch($event)">
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-content">
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+      <h1 class="welcome-title">Welcome back, {{ userProfile.name }}!</h1>
+      <p class="welcome-subtitle">Here's what's happening in your HRM system today.</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="pi pi-users"></i>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-number">156</h3>
+          <p class="stat-label">Total Employees</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="pi pi-clock"></i>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-number">142</h3>
+          <p class="stat-label">Present Today</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="pi pi-calendar"></i>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-number">8</h3>
+          <p class="stat-label">Leave Requests</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="pi pi-dollar"></i>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-number">$45,230</h3>
+          <p class="stat-label">Monthly Payroll</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="recent-activity">
+      <h2 class="section-title">Recent Activity</h2>
+      <div class="activity-list">
+        <div class="activity-item">
+          <div class="activity-icon success">
+            <i class="pi pi-check"></i>
+          </div>
+          <div class="activity-content">
+            <h4 class="activity-title">New Employee Onboarded</h4>
+            <p class="activity-description">Sarah Johnson has been added to the system</p>
+            <span class="activity-time">5 minutes ago</span>
+          </div>
+        </div>
+
+        <div class="activity-item">
+          <div class="activity-icon info">
+            <i class="pi pi-info-circle"></i>
+          </div>
+          <div class="activity-content">
+            <h4 class="activity-title">Leave Request Submitted</h4>
+            <p class="activity-description">Mike Wilson has requested 3 days leave</p>
+            <span class="activity-time">2 hours ago</span>
+          </div>
+        </div>
+
+        <div class="activity-item">
+          <div class="activity-icon warning">
+            <i class="pi pi-exclamation-triangle"></i>
+          </div>
+          <div class="activity-content">
+            <h4 class="activity-title">Attendance Alert</h4>
+            <p class="activity-description">5 employees are late today</p>
+            <span class="activity-time">3 hours ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <h2 class="section-title">Quick Actions</h2>
+      <div class="actions-grid">
+        <button class="action-button">
+          <i class="pi pi-user-plus"></i>
+          <span>Add Employee</span>
+        </button>
+        <button class="action-button">
+          <i class="pi pi-calendar-plus"></i>
+          <span>Process Leave</span>
+        </button>
+        <button class="action-button">
+          <i class="pi pi-file-pdf"></i>
+          <span>Generate Report</span>
+        </button>
+        <button class="action-button">
+          <i class="pi pi-cog"></i>
+          <span>Settings</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</lib-dashboard-layout>

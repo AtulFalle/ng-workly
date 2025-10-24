@@ -1,0 +1,48 @@
+<!-- HRM Stats Cards Component -->
+<div class="stats-cards" [style.grid-template-columns]="gridColumns">
+  @if (loading()) {
+    <!-- Loading Skeleton -->
+    @for (item of [1,2,3,4]; track $index) {
+      <p-card class="stat-card stat-card--loading">
+        <div class="stat-card__skeleton">
+          <p-skeleton width="48px" height="48px" shape="circle" class="skeleton-icon"></p-skeleton>
+          <div class="skeleton-content">
+            <p-skeleton width="60%" height="16px" class="skeleton-title"></p-skeleton>
+            <p-skeleton width="80%" height="24px" class="skeleton-value"></p-skeleton>
+            <p-skeleton width="40%" height="14px" class="skeleton-subtitle"></p-skeleton>
+          </div>
+        </div>
+      </p-card>
+    }
+  } @else {
+    <!-- Actual Cards -->
+    @for (card of cards(); track card.id) {
+      <p-card 
+        class="stat-card" 
+        [class]="getCardColorClass(card)"
+        [style]="{'border-left': '4px solid ' + getCardBorderColor(card)}">
+        
+        <ng-template pTemplate="header">
+          <div class="stat-card__icon">
+            <i [class]="card.icon"></i>
+          </div>
+        </ng-template>
+
+        <div class="stat-card__content">
+          <h3 class="stat-card__value">{{ card.value }}</h3>
+          <p class="stat-card__title">{{ card.title }}</p>
+          @if (card.subtitle) {
+            <p class="stat-card__subtitle">{{ card.subtitle }}</p>
+          }
+        </div>
+
+        @if (showTrends() && card.trend) {
+          <div class="stat-card__trend" [class]="getTrendClass(card.trend)">
+            <i [class]="getTrendIcon(card.trend)"></i>
+            <span class="trend-value">{{ card.trend.value }}%</span>
+          </div>
+        }
+      </p-card>
+    }
+  }
+</div>
