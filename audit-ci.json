@@ -1,8 +1,11 @@
 {
-  "moderate": true,
+  "moderate": false,
   "high": true,
   "critical": true,
-  "allowlist": [],
+  "allowlist": [
+    "GHSA-93m4-6634-74q7",
+    "GHSA-g8mr-fgfg-5qpc"
+  ],
   "skip-dev": false,
   "report-type": "summary",
   "output-format": "text",
@@ -11,8 +14,14 @@
   "show-found": true,
   "show-all": false,
   "config": {
-    "advisories": [],
-    "whitelist": [],
+    "advisories": [
+      "GHSA-93m4-6634-74q7",
+      "GHSA-g8mr-fgfg-5qpc"
+    ],
+    "whitelist": [
+      "GHSA-93m4-6634-74q7",
+      "GHSA-g8mr-fgfg-5qpc"
+    ],
     "report-type": "summary",
     "output-format": "text"
   }

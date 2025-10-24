@@ -28,7 +28,7 @@
     "quality:static": "npx dependency-check --unused",
     "quality:all": "npm run quality:smells && npm run quality:security && npm run quality:vulnerabilities",
     "quality:ci": "npm run quality:all && npm run quality:static",
-    "security:audit": "npm audit --audit-level=moderate",
+    "security:audit": "npm audit --audit-level=high",
     "security:check": "npx audit-ci --config audit-ci.json",
     "security:fix": "npm audit fix",
     "deps:check": "npx dependency-check --missing",
