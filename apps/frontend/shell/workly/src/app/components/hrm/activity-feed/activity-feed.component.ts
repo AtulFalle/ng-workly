@@ -42,8 +42,8 @@ export class ActivityFeedComponent {
   title = input<string>('Recent Activity');
 
   // Outputs
-  activityClick = output<ActivityItem>();
-  actionClick = output<ActivityItem>();
+  onActivityClick = output<ActivityItem>();
+  onActionClick = output<ActivityItem>();
 
   // Computed properties
   get displayActivities(): ActivityItem[] {
@@ -72,12 +72,12 @@ export class ActivityFeedComponent {
   }
 
   handleActivityClick(activity: ActivityItem): void {
-    this.activityClick.emit(activity);
+    this.onActivityClick.emit(activity);
   }
 
   handleActionClick(activity: ActivityItem, event: Event): void {
     event.stopPropagation();
-    this.actionClick.emit(activity);
+    this.onActionClick.emit(activity);
     
     if (activity.action?.command) {
       activity.action.command();
@@ -86,7 +86,7 @@ export class ActivityFeedComponent {
 
   handleViewAll(): void {
     // Emit a special event for viewing all activities
-    this.activityClick.emit({
+    this.onActivityClick.emit({
       id: 'view-all',
       title: 'View All Activities',
       description: 'Show all activities',

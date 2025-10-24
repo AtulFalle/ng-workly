@@ -193,8 +193,8 @@ export class AttendanceDashboardComponent implements OnInit {
       const now = new Date();
       const currentAttendance = this.currentUserAttendance();
       
-      if (currentAttendance && currentAttendance.checkIn) {
-        const checkInTime = currentAttendance.checkIn;
+      if (currentAttendance) {
+        const checkInTime = currentAttendance.checkIn!;
         const totalHours = (now.getTime() - checkInTime.getTime()) / (1000 * 60 * 60);
         
         this.currentUserAttendance.set({

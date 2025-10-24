@@ -67,7 +67,7 @@ export class ThemingService {
     const htmlElement = document.documentElement;
     
     // Remove all theme classes
-    this.availableThemes.forEach(() => {
+    this.availableThemes.forEach(t => {
       htmlElement.removeAttribute(`data-theme`);
     });
     

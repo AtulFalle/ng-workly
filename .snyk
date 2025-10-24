@@ -1,0 +1,20 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.0
+
+# Ignore specific vulnerabilities (add as needed)
+# ignore:
+#   SNYK-JS-LODASH-567746:
+#     - '*':
+#         reason: No fix available
+#         expires: '2024-12-31T23:59:59.999Z'
+
+# Language settings
+language-settings:
+  javascript:
+    dev-dependencies: true
+  typescript:
+    dev-dependencies: true
+
+# Patch settings
+patch:
+  # Add patches here if needed

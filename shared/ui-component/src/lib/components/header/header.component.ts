@@ -37,16 +37,16 @@ export class HeaderComponent {
   subtitle = input<string>('');
 
   // Outputs
-  toggleSidebar = output<void>();
-  userMenuClick = output<void>();
-  notificationClick = output<NotificationItem>();
-  logoutClick = output<void>();
-  searchQuery = output<string>();
+  onToggleSidebar = output<void>();
+  onUserMenuClick = output<void>();
+  onNotificationClick = output<NotificationItem>();
+  onLogout = output<void>();
+  onSearch = output<string>();
 
   // Local state
   isUserMenuOpen = false;
   isNotificationMenuOpen = false;
-  searchInput = '';
+  searchQuery = '';
 
   toggleUserMenu(): void {
     this.isUserMenuOpen = !this.isUserMenuOpen;
@@ -59,21 +59,21 @@ export class HeaderComponent {
   }
 
   handleSearch(): void {
-    this.searchQuery.emit(this.searchInput);
+    this.onSearch.emit(this.searchQuery);
   }
 
   handleNotificationClick(notification: NotificationItem): void {
-    this.notificationClick.emit(notification);
+    this.onNotificationClick.emit(notification);
     this.isNotificationMenuOpen = false;
   }
 
   handleLogout(): void {
-    this.logoutClick.emit();
+    this.onLogout.emit();
     this.isUserMenuOpen = false;
   }
 
   handleToggleSidebar(): void {
-    this.toggleSidebar.emit();
+    this.onToggleSidebar.emit();
   }
 
   getUnreadNotificationCount(): number {
