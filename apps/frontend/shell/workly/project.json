@@ -1,0 +1,106 @@
+{
+  "name": "workly-ui",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/frontend/shell/workly/src",
+  "tags": ["app:shell:workly-ui"],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/frontend/shell/workly",
+        "index": "apps/frontend/shell/workly/src/index.html",
+        "main": "apps/frontend/shell/workly/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/frontend/shell/workly/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/frontend/shell/workly/public"
+          }
+        ],
+        "styles": ["apps/frontend/shell/workly/src/styles.scss"],
+        "customWebpackConfig": {
+          "path": "apps/frontend/shell/workly/webpack.config.ts"
+        },
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "dist/libs/src"
+          ]
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "10kb",
+              "maximumError": "20kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@nx/angular:module-federation-dev-server",
+      "options": {
+        "port": 4200,
+        "publicHost": "http://localhost:4200"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "workly-ui:build:production"
+        },
+        "development": {
+          "buildTarget": "workly-ui:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "workly-ui:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/frontend/shell/workly/jest.config.ts",
+        "tsConfig": "apps/frontend/shell/workly/tsconfig.spec.json"
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "workly-ui:build",
+        "port": 4200,
+        "spa": true
+      }
+    }
+  }
+}

@@ -1,0 +1,242 @@
+// PrimeNG Menubar Component Overrides
+// =====================================
+// Using design tokens from the theming system
+
+// Menubar Base Styles
+.p-menubar {
+  // Layout
+  display: flex;
+  align-items: center;
+  
+  // Spacing
+  padding: var(--spacing-2) var(--spacing-4);
+  gap: var(--spacing-1);
+  
+  // Background & Border
+  background-color: var(--surface-0);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  
+  // Shadow
+  box-shadow: var(--shadow-sm);
+  
+  // Transitions
+  transition: all var(--transition-normal);
+}
+
+// Menubar Items
+.p-menubar .p-menuitem {
+  position: relative;
+  
+  .p-menuitem-link {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-3) var(--spacing-4);
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-fast);
+    font-weight: var(--font-weight-medium);
+    
+    &:hover {
+      background-color: var(--surface-100);
+      color: var(--primary-600);
+    }
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--primary-100);
+    }
+  }
+  
+  .p-menuitem-icon {
+    margin-right: var(--spacing-2);
+    color: var(--text-color-secondary);
+    font-size: var(--font-size-base);
+  }
+  
+  .p-menuitem-text {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+  }
+  
+  .p-submenu-icon {
+    margin-left: var(--spacing-2);
+    color: var(--text-color-tertiary);
+    font-size: var(--font-size-sm);
+    transition: transform var(--transition-fast);
+  }
+}
+
+// Active Menu Item
+.p-menubar .p-menuitem.p-menuitem-active {
+  .p-menuitem-link {
+    background-color: var(--primary-50);
+    color: var(--primary-700);
+    
+    .p-menuitem-icon {
+      color: var(--primary-600);
+    }
+  }
+}
+
+// Submenu
+.p-menubar .p-submenu-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background-color: var(--surface-0);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-index-dropdown);
+  padding: var(--spacing-2);
+  margin-top: var(--spacing-1);
+  
+  .p-menuitem {
+    .p-menuitem-link {
+      padding: var(--spacing-3) var(--spacing-4);
+      border-radius: var(--border-radius);
+      
+      &:hover {
+        background-color: var(--surface-100);
+        color: var(--primary-600);
+      }
+    }
+  }
+}
+
+// Submenu with Icons
+.p-menubar .p-submenu-list .p-menuitem {
+  .p-menuitem-icon {
+    width: 16px;
+    text-align: center;
+  }
+}
+
+// Menubar Variants
+.p-menubar.p-menubar-elevated {
+  box-shadow: var(--shadow-lg);
+}
+
+.p-menubar.p-menubar-outlined {
+  border: 2px solid var(--border-color);
+  box-shadow: none;
+}
+
+.p-menubar.p-menubar-flat {
+  border: none;
+  box-shadow: none;
+  background-color: var(--surface-50);
+}
+
+// Horizontal Menubar
+.p-menubar.p-menubar-horizontal {
+  flex-direction: row;
+  
+  .p-menubar-start {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+  }
+  
+  .p-menubar-end {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    margin-left: auto;
+  }
+}
+
+// Vertical Menubar
+.p-menubar.p-menubar-vertical {
+  flex-direction: column;
+  align-items: stretch;
+  
+  .p-menubar-start,
+  .p-menubar-end {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+  }
+}
+
+// Responsive Menubar
+@media (max-width: 768px) {
+  .p-menubar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--spacing-3);
+  }
+  
+  .p-menubar .p-menubar-start,
+  .p-menubar .p-menubar-end {
+    flex-direction: column;
+    gap: var(--spacing-1);
+  }
+  
+  .p-menubar .p-menubar-end {
+    margin-left: 0;
+    margin-top: var(--spacing-2);
+  }
+}
+
+// Dark Theme Support
+.p-dark {
+  .p-menubar {
+    background-color: var(--surface-800);
+    border-color: var(--surface-600);
+  }
+  
+  .p-menubar .p-menuitem {
+    .p-menuitem-link {
+      color: var(--surface-200);
+      
+      &:hover {
+        background-color: var(--surface-700);
+        color: var(--primary-400);
+      }
+    }
+    
+    .p-menuitem-icon {
+      color: var(--surface-300);
+    }
+    
+    .p-submenu-icon {
+      color: var(--surface-400);
+    }
+  }
+  
+  .p-menubar .p-menuitem.p-menuitem-active {
+    .p-menuitem-link {
+      background-color: var(--primary-900);
+      color: var(--primary-300);
+      
+      .p-menuitem-icon {
+        color: var(--primary-400);
+      }
+    }
+  }
+  
+  .p-menubar .p-submenu-list {
+    background-color: var(--surface-800);
+    border-color: var(--surface-600);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    
+    .p-menuitem {
+      .p-menuitem-link {
+        color: var(--surface-200);
+        
+        &:hover {
+          background-color: var(--surface-700);
+          color: var(--primary-400);
+        }
+      }
+    }
+  }
+  
+  .p-menubar.p-menubar-flat {
+    background-color: var(--surface-700);
+  }
+}

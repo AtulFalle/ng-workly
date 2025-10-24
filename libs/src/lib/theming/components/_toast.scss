@@ -1,0 +1,305 @@
+// PrimeNG Toast Component Overrides
+// ===================================
+// Using design tokens from the theming system
+
+// Toast Container
+.p-toast {
+  position: fixed;
+  top: var(--spacing-6);
+  right: var(--spacing-6);
+  z-index: var(--z-index-toast);
+  max-width: 400px;
+  width: 100%;
+}
+
+// Toast Message
+.p-toast .p-toast-message {
+  display: flex;
+  align-items: flex-start;
+  padding: var(--spacing-4);
+  margin-bottom: var(--spacing-3);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  background-color: var(--surface-0);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-normal);
+  
+  &:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-2px);
+  }
+}
+
+// Toast Icon
+.p-toast .p-toast-message .p-toast-message-icon {
+  margin-right: var(--spacing-3);
+  font-size: var(--font-size-lg);
+  flex-shrink: 0;
+  margin-top: var(--spacing-1);
+}
+
+// Toast Content
+.p-toast .p-toast-message .p-toast-message-content {
+  flex: 1;
+  
+  .p-toast-message-text {
+    margin: 0;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    color: var(--text-color);
+  }
+  
+  .p-toast-summary {
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-1);
+    color: var(--text-color);
+  }
+  
+  .p-toast-detail {
+    color: var(--text-color-secondary);
+    font-size: var(--font-size-sm);
+  }
+}
+
+// Toast Close Button
+.p-toast .p-toast-message .p-toast-message-close {
+  background: none;
+  border: none;
+  color: var(--text-color-tertiary);
+  cursor: pointer;
+  padding: var(--spacing-1);
+  margin-left: var(--spacing-3);
+  border-radius: var(--border-radius);
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+  
+  &:hover {
+    background-color: var(--surface-100);
+    color: var(--text-color);
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--primary-100);
+  }
+}
+
+// Toast Severity Variants
+.p-toast .p-toast-message.p-toast-message-success {
+  border-left: 4px solid var(--success-500);
+  
+  .p-toast-message-icon {
+    color: var(--success-600);
+  }
+  
+  .p-toast-summary {
+    color: var(--success-700);
+  }
+}
+
+.p-toast .p-toast-message.p-toast-message-info {
+  border-left: 4px solid var(--info-500);
+  
+  .p-toast-message-icon {
+    color: var(--info-600);
+  }
+  
+  .p-toast-summary {
+    color: var(--info-700);
+  }
+}
+
+.p-toast .p-toast-message.p-toast-message-warn {
+  border-left: 4px solid var(--warning-500);
+  
+  .p-toast-message-icon {
+    color: var(--warning-600);
+  }
+  
+  .p-toast-summary {
+    color: var(--warning-700);
+  }
+}
+
+.p-toast .p-toast-message.p-toast-message-error {
+  border-left: 4px solid var(--error-500);
+  
+  .p-toast-message-icon {
+    color: var(--error-600);
+  }
+  
+  .p-toast-summary {
+    color: var(--error-700);
+  }
+}
+
+// Toast Animations
+.p-toast .p-toast-message {
+  animation: toastSlideIn 0.3s ease-out;
+}
+
+.p-toast .p-toast-message.p-toast-message-leave {
+  animation: toastSlideOut 0.3s ease-in;
+}
+
+@keyframes toastSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toastSlideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+// Toast Position Variants
+.p-toast.p-toast-top-right {
+  top: var(--spacing-6);
+  right: var(--spacing-6);
+  left: auto;
+  bottom: auto;
+}
+
+.p-toast.p-toast-top-left {
+  top: var(--spacing-6);
+  left: var(--spacing-6);
+  right: auto;
+  bottom: auto;
+}
+
+.p-toast.p-toast-top-center {
+  top: var(--spacing-6);
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translateX(-50%);
+}
+
+.p-toast.p-toast-bottom-right {
+  bottom: var(--spacing-6);
+  right: var(--spacing-6);
+  left: auto;
+  top: auto;
+}
+
+.p-toast.p-toast-bottom-left {
+  bottom: var(--spacing-6);
+  left: var(--spacing-6);
+  right: auto;
+  top: auto;
+}
+
+.p-toast.p-toast-bottom-center {
+  bottom: var(--spacing-6);
+  left: 50%;
+  right: auto;
+  top: auto;
+  transform: translateX(-50%);
+}
+
+// Responsive Toast
+@media (max-width: 768px) {
+  .p-toast {
+    top: var(--spacing-4);
+    right: var(--spacing-4);
+    left: var(--spacing-4);
+    max-width: none;
+  }
+  
+  .p-toast .p-toast-message {
+    padding: var(--spacing-3);
+  }
+  
+  .p-toast .p-toast-message .p-toast-message-content {
+    .p-toast-summary {
+      font-size: var(--font-size-sm);
+    }
+    
+    .p-toast-detail {
+      font-size: var(--font-size-xs);
+    }
+  }
+}
+
+// Dark Theme Support
+.p-dark {
+  .p-toast .p-toast-message {
+    background-color: var(--surface-800);
+    border-color: var(--surface-600);
+  }
+  
+  .p-toast .p-toast-message .p-toast-message-content {
+    .p-toast-message-text {
+      color: var(--surface-200);
+    }
+    
+    .p-toast-summary {
+      color: var(--surface-100);
+    }
+    
+    .p-toast-detail {
+      color: var(--surface-300);
+    }
+  }
+  
+  .p-toast .p-toast-message .p-toast-message-close {
+    color: var(--surface-400);
+    
+    &:hover {
+      background-color: var(--surface-700);
+      color: var(--surface-100);
+    }
+  }
+  
+  .p-toast .p-toast-message.p-toast-message-success {
+    .p-toast-message-icon {
+      color: var(--success-400);
+    }
+    
+    .p-toast-summary {
+      color: var(--success-300);
+    }
+  }
+  
+  .p-toast .p-toast-message.p-toast-message-info {
+    .p-toast-message-icon {
+      color: var(--info-400);
+    }
+    
+    .p-toast-summary {
+      color: var(--info-300);
+    }
+  }
+  
+  .p-toast .p-toast-message.p-toast-message-warn {
+    .p-toast-message-icon {
+      color: var(--warning-400);
+    }
+    
+    .p-toast-summary {
+      color: var(--warning-300);
+    }
+  }
+  
+  .p-toast .p-toast-message.p-toast-message-error {
+    .p-toast-message-icon {
+      color: var(--error-400);
+    }
+    
+    .p-toast-summary {
+      color: var(--error-300);
+    }
+  }
+}

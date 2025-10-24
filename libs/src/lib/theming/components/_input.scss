@@ -1,0 +1,245 @@
+// PrimeNG Input Component Overrides
+// ==================================
+// Using design tokens from the theming system
+
+// Input Base Styles
+.p-password-input {
+  width: 100%;
+}
+
+.p-inputtext,
+.p-inputtextarea,
+.p-password input,
+.p-dropdown input,
+.p-multiselect input {
+  // Typography
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  
+  // Spacing
+  padding: var(--spacing-3) var(--spacing-4);
+  
+  // Border & Radius
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  
+  // Background
+  background-color: var(--surface-0);
+  color: var(--text-color);
+  
+  // Transitions
+  transition: all var(--transition-fast);
+  
+  // Focus styles
+  &:focus {
+    outline: none;
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 3px var(--primary-100);
+  }
+  
+  // Disabled state
+  &:disabled {
+    background-color: var(--surface-100);
+    color: var(--text-color-disabled);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  
+  // Placeholder
+  &::placeholder {
+    color: var(--text-color-tertiary);
+  }
+}
+
+// Input Sizes
+.p-inputtext.p-inputtext-sm,
+.p-inputtextarea.p-inputtextarea-sm {
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-sm);
+}
+
+.p-inputtext.p-inputtext-lg,
+.p-inputtextarea.p-inputtextarea-lg {
+  padding: var(--spacing-4) var(--spacing-5);
+  font-size: var(--font-size-lg);
+}
+
+// Input with Icons
+.p-input-icon-left,
+.p-input-icon-right {
+  position: relative;
+  
+  .p-inputtext {
+    padding-left: var(--spacing-10);
+  }
+  
+  .p-inputtext.p-inputtext-lg {
+    padding-left: var(--spacing-12);
+  }
+  
+  .p-inputtext.p-inputtext-sm {
+    padding-left: var(--spacing-8);
+  }
+}
+
+.p-input-icon-right {
+  .p-inputtext {
+    padding-right: var(--spacing-10);
+    padding-left: var(--spacing-4);
+  }
+  
+  .p-inputtext.p-inputtext-lg {
+    padding-right: var(--spacing-12);
+  }
+  
+  .p-inputtext.p-inputtext-sm {
+    padding-right: var(--spacing-8);
+  }
+}
+
+.p-input-icon-left > i,
+.p-input-icon-right > i {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-color-tertiary);
+  font-size: var(--font-size-base);
+}
+
+.p-input-icon-left > i {
+  left: var(--spacing-3);
+}
+
+.p-input-icon-right > i {
+  right: var(--spacing-3);
+}
+
+// Input States
+.p-inputtext.ng-invalid.ng-touched,
+.p-inputtextarea.ng-invalid.ng-touched {
+  border-color: var(--error-500);
+  
+  &:focus {
+    border-color: var(--error-500);
+    box-shadow: 0 0 0 3px var(--error-100);
+  }
+}
+
+.p-inputtext.ng-valid.ng-touched,
+.p-inputtextarea.ng-valid.ng-touched {
+  border-color: var(--success-500);
+  
+  &:focus {
+    border-color: var(--success-500);
+    box-shadow: 0 0 0 3px var(--success-100);
+  }
+}
+
+// Textarea specific
+.p-inputtextarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+// Password component
+.p-password {
+  position: relative;
+  
+  .p-password-toggle {
+    position: absolute;
+    right: var(--spacing-3);
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-color-tertiary);
+    cursor: pointer;
+    padding: var(--spacing-1);
+    
+    &:hover {
+      color: var(--text-color-secondary);
+    }
+  }
+}
+
+// Dropdown input
+.p-dropdown {
+  .p-dropdown-trigger {
+    background: none;
+    border: none;
+    color: var(--text-color-tertiary);
+    padding: var(--spacing-3);
+    
+    &:hover {
+      color: var(--text-color-secondary);
+    }
+  }
+}
+
+// Multiselect input
+.p-multiselect {
+  .p-multiselect-trigger {
+    background: none;
+    border: none;
+    color: var(--text-color-tertiary);
+    padding: var(--spacing-3);
+    
+    &:hover {
+      color: var(--text-color-secondary);
+    }
+  }
+  
+  .p-multiselect-label {
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+}
+
+// Dark Theme Support
+.p-dark {
+  .p-inputtext,
+  .p-inputtextarea,
+  .p-password input,
+  .p-dropdown input,
+  .p-multiselect input {
+    background-color: var(--surface-800);
+    border-color: var(--surface-600);
+    color: var(--surface-100);
+    
+    &:focus {
+      border-color: var(--primary-400);
+      box-shadow: 0 0 0 3px var(--primary-900);
+    }
+    
+    &:disabled {
+      background-color: var(--surface-700);
+      color: var(--surface-400);
+    }
+    
+    &::placeholder {
+      color: var(--surface-400);
+    }
+  }
+  
+  .p-input-icon-left > i,
+  .p-input-icon-right > i {
+    color: var(--surface-400);
+  }
+  
+  .p-password .p-password-toggle {
+    color: var(--surface-400);
+    
+    &:hover {
+      color: var(--surface-300);
+    }
+  }
+  
+  .p-dropdown .p-dropdown-trigger,
+  .p-multiselect .p-multiselect-trigger {
+    color: var(--surface-400);
+    
+    &:hover {
+      color: var(--surface-300);
+    }
+  }
+}

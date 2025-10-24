@@ -1,0 +1,221 @@
+// PrimeNG Card Component Overrides
+// =================================
+// Using design tokens from the theming system
+
+// Card Base Styles
+.p-card {
+  // Layout
+  display: flex;
+  flex-direction: column;
+  
+  // Background & Border
+  background-color: var(--surface-0);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  
+  // Shadow
+  box-shadow: var(--shadow-sm);
+  
+  // Transitions
+  transition: all var(--transition-normal);
+  
+  // Hover effect
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+
+// Card Header
+.p-card .p-card-header {
+  padding: var(--spacing-6) var(--spacing-6) var(--spacing-4);
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--surface-50);
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+  
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    color: var(--text-color);
+    font-weight: var(--font-weight-semibold);
+  }
+  
+  h1 { font-size: var(--font-size-2xl); }
+  h2 { font-size: var(--font-size-xl); }
+  h3 { font-size: var(--font-size-lg); }
+  h4 { font-size: var(--font-size-base); }
+  h5 { font-size: var(--font-size-sm); }
+  h6 { font-size: var(--font-size-xs); }
+}
+
+// Card Title
+.p-card .p-card-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
+  margin: 0 0 var(--spacing-2) 0;
+  line-height: var(--line-height-tight);
+}
+
+// Card Subtitle
+.p-card .p-card-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-color-secondary);
+  margin: 0 0 var(--spacing-4) 0;
+  line-height: var(--line-height-normal);
+}
+
+// Card Content
+.p-card .p-card-content {
+  padding: var(--spacing-6);
+  flex: 1;
+  
+  p {
+    margin: 0 0 var(--spacing-4) 0;
+    line-height: var(--line-height-relaxed);
+    color: var(--text-color);
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Card Footer
+.p-card .p-card-footer {
+  padding: var(--spacing-4) var(--spacing-6) var(--spacing-6);
+  border-top: 1px solid var(--border-color);
+  background-color: var(--surface-50);
+  border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+  
+  .p-button {
+    margin-right: var(--spacing-2);
+    
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+// Card Variants
+.p-card.p-card-elevated {
+  box-shadow: var(--shadow-lg);
+  
+  &:hover {
+    box-shadow: var(--shadow-xl);
+  }
+}
+
+.p-card.p-card-outlined {
+  border: 2px solid var(--border-color);
+  box-shadow: none;
+  
+  &:hover {
+    border-color: var(--primary-300);
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+.p-card.p-card-flat {
+  border: none;
+  box-shadow: none;
+  background-color: var(--surface-50);
+}
+
+// Card with Image
+.p-card .p-card-image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+  object-fit: cover;
+}
+
+// Card Actions
+.p-card .p-card-actions {
+  display: flex;
+  gap: var(--spacing-2);
+  padding: var(--spacing-4) var(--spacing-6);
+  border-top: 1px solid var(--border-color);
+  background-color: var(--surface-50);
+  
+  .p-button {
+    flex: 1;
+  }
+}
+
+// Card Grid
+.p-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-6);
+  
+  .p-card {
+    margin: 0;
+  }
+}
+
+// Responsive Card
+@media (max-width: 768px) {
+  .p-card {
+    margin: var(--spacing-4) 0;
+  }
+  
+  .p-card .p-card-header,
+  .p-card .p-card-content,
+  .p-card .p-card-footer {
+    padding: var(--spacing-4);
+  }
+  
+  .p-card-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+  }
+}
+
+// Dark Theme Support
+.p-dark {
+  .p-card {
+    background-color: var(--surface-800);
+    border-color: var(--surface-600);
+    
+    &:hover {
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  .p-card .p-card-header {
+    background-color: var(--surface-700);
+    border-bottom-color: var(--surface-600);
+    
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--surface-100);
+    }
+  }
+  
+  .p-card .p-card-title {
+    color: var(--surface-100);
+  }
+  
+  .p-card .p-card-subtitle {
+    color: var(--surface-300);
+  }
+  
+  .p-card .p-card-content {
+    p {
+      color: var(--surface-200);
+    }
+  }
+  
+  .p-card .p-card-footer {
+    background-color: var(--surface-700);
+    border-top-color: var(--surface-600);
+  }
+  
+  .p-card .p-card-actions {
+    background-color: var(--surface-700);
+    border-top-color: var(--surface-600);
+  }
+  
+  .p-card.p-card-flat {
+    background-color: var(--surface-700);
+  }
+}

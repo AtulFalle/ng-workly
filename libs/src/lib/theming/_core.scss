@@ -1,0 +1,756 @@
+// PrimeNG Core Styles
+// ===================
+
+// Note: PrimeNG base styles should be imported separately in the application
+// This file contains our custom core styles
+
+// Dynamic Color Palette System
+// =============================
+// This system allows users to select colors and automatically generates
+// a complete color palette based on the selected primary color
+
+:root {
+  // Default primary color (can be overridden by user selection)
+  --user-primary-color: #a855f7;
+  
+  // Generate color palette based on user selection
+  --primary-50: color-mix(in srgb, var(--user-primary-color) 10%, white);
+  --primary-100: color-mix(in srgb, var(--user-primary-color) 20%, white);
+  --primary-200: color-mix(in srgb, var(--user-primary-color) 30%, white);
+  --primary-300: color-mix(in srgb, var(--user-primary-color) 40%, white);
+  --primary-400: color-mix(in srgb, var(--user-primary-color) 50%, white);
+  --primary-500: var(--user-primary-color);
+  --primary-600: color-mix(in srgb, var(--user-primary-color) 80%, black);
+  --primary-700: color-mix(in srgb, var(--user-primary-color) 70%, black);
+  --primary-800: color-mix(in srgb, var(--user-primary-color) 60%, black);
+  --primary-900: color-mix(in srgb, var(--user-primary-color) 50%, black);
+  --primary-950: color-mix(in srgb, var(--user-primary-color) 40%, black);
+  
+  // Dark theme color overrides
+  --primary-50-dark: color-mix(in srgb, var(--user-primary-color) 20%, #1a1a1a);
+  --primary-100-dark: color-mix(in srgb, var(--user-primary-color) 30%, #2a2a2a);
+  --primary-200-dark: color-mix(in srgb, var(--user-primary-color) 40%, #3a3a3a);
+  --primary-300-dark: color-mix(in srgb, var(--user-primary-color) 50%, #4a4a4a);
+  --primary-400-dark: color-mix(in srgb, var(--user-primary-color) 60%, #5a5a5a);
+  --primary-500-dark: var(--user-primary-color);
+  --primary-600-dark: color-mix(in srgb, var(--user-primary-color) 80%, #0a0a0a);
+  --primary-700-dark: color-mix(in srgb, var(--user-primary-color) 70%, #0a0a0a);
+  --primary-800-dark: color-mix(in srgb, var(--user-primary-color) 60%, #0a0a0a);
+  --primary-900-dark: color-mix(in srgb, var(--user-primary-color) 50%, #0a0a0a);
+  --primary-950-dark: color-mix(in srgb, var(--user-primary-color) 40%, #0a0a0a);
+  
+  // Add a test style to make it obvious that shared library styles are working
+  .test-shared-lib-styles {
+    background: linear-gradient(45deg, var(--primary-500), var(--primary-700));
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    margin: 1rem 0;
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+  }
+  
+  // Dark theme test styles
+  .p-dark .test-shared-lib-styles {
+    background: linear-gradient(45deg, var(--primary-500-dark), var(--primary-700-dark));
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.5);
+  }
+}
+
+
+// PrimeNG Component Style Overrides for Testing
+// =============================================
+// These styles will override PrimeNG component styles to test if shared library styles are working
+
+// Override PrimeNG Button styles
+.p-button {
+  background: var(--primary-500) !important;
+  border-color: var(--primary-500) !important;
+  color: white !important;
+  width: 100%;
+
+  &:hover {
+    background: var(--primary-600) !important;
+    border-color: var(--primary-600) !important;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.3) !important;
+  }
+}
+
+// Dark theme button overrides
+.p-dark .p-button {
+  background: var(--primary-500-dark) !important;
+  border-color: var(--primary-500-dark) !important;
+  color: white !important;
+
+  &:hover {
+    background: var(--primary-600-dark) !important;
+    border-color: var(--primary-600-dark) !important;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.5) !important;
+  }
+}
+
+// Override PrimeNG Select/Dropdown styles
+.p-select, .p-dropdown {
+  .p-dropdown-label {
+    color: var(--primary-700) !important;
+    font-weight: 600 !important;
+  }
+
+  .p-dropdown-trigger {
+    color: var(--primary-500) !important;
+  }
+}
+
+// Dark theme select/dropdown overrides
+.p-dark .p-select, .p-dark .p-dropdown {
+  .p-dropdown-label {
+    color: var(--primary-300-dark) !important;
+    font-weight: 600 !important;
+  }
+
+  .p-dropdown-trigger {
+    color: var(--primary-500-dark) !important;
+  }
+}
+
+// Override PrimeNG Toolbar styles
+.p-toolbar {
+  background: linear-gradient(90deg, var(--primary-50), var(--primary-100)) !important;
+  border-bottom: 3px solid var(--primary-500) !important;
+
+  h1 {
+    color: var(--primary-800) !important;
+    font-weight: 700 !important;
+  }
+}
+
+// Dark theme toolbar overrides
+.p-dark .p-toolbar {
+  background: linear-gradient(90deg, var(--primary-50-dark), var(--primary-100-dark)) !important;
+  border-bottom: 3px solid var(--primary-500-dark) !important;
+
+  h1 {
+    color: var(--primary-200-dark) !important;
+    font-weight: 700 !important;
+  }
+}
+
+// Override PrimeNG Card styles
+.p-card {
+  border: 2px solid var(--primary-200) !important;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.1) !important;
+
+  .p-card-header {
+    background: var(--primary-50) !important;
+    color: var(--primary-800) !important;
+    font-weight: 600 !important;
+  }
+}
+
+// Dark theme card overrides
+.p-dark .p-card {
+  border: 2px solid var(--primary-700-dark) !important;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3) !important;
+
+  .p-card-header {
+    background: var(--primary-900-dark) !important;
+    color: var(--primary-100-dark) !important;
+    font-weight: 600 !important;
+  }
+}
+
+// Override PrimeNG Panel styles
+.p-panel {
+  border: 2px solid var(--primary-300) !important;
+
+  .p-panel-header {
+    background: var(--primary-100) !important;
+    color: var(--primary-800) !important;
+    font-weight: 600 !important;
+  }
+}
+
+// Dark theme panel overrides
+.p-dark .p-panel {
+  border: 2px solid var(--primary-600-dark) !important;
+
+  .p-panel-header {
+    background: var(--primary-800-dark) !important;
+    color: var(--primary-200-dark) !important;
+    font-weight: 600 !important;
+  }
+}
+
+// Override PrimeNG Menubar styles
+.p-menubar {
+  background: var(--primary-50) !important;
+  border: 1px solid var(--primary-200) !important;
+
+  .p-menuitem-link {
+    color: var(--primary-700) !important;
+
+    &:hover {
+      background: var(--primary-100) !important;
+      color: var(--primary-800) !important;
+    }
+  }
+}
+
+// Dark theme menubar overrides
+.p-dark .p-menubar {
+  background: var(--primary-900-dark) !important;
+  border: 1px solid var(--primary-700-dark) !important;
+
+  .p-menuitem-link {
+    color: var(--primary-300-dark) !important;
+
+    &:hover {
+      background: var(--primary-800-dark) !important;
+      color: var(--primary-100-dark) !important;
+    }
+  }
+}
+
+// Base HTML and Body Styles
+// -------------------------
+html {
+  font-size: 16px;
+  line-height: $line-height-normal;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  color: $text-color;
+  background-color: $surface-50;
+  min-height: 100vh;
+}
+
+// Reset and Normalize
+// ------------------
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+// Typography
+// ----------
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
+  margin-bottom: $spacing-4;
+}
+
+h1 {
+  @include text-4xl;
+  margin-bottom: $spacing-6;
+}
+
+h2 {
+  @include text-3xl;
+  margin-bottom: $spacing-5;
+}
+
+h3 {
+  @include text-2xl;
+  margin-bottom: $spacing-4;
+}
+
+h4 {
+  @include text-xl;
+  margin-bottom: $spacing-3;
+}
+
+h5 {
+  @include text-lg;
+  margin-bottom: $spacing-3;
+}
+
+h6 {
+  @include text-base;
+  margin-bottom: $spacing-2;
+}
+
+p {
+  margin-bottom: $spacing-4;
+  line-height: $line-height-relaxed;
+}
+
+a {
+  color: $primary-500;
+  text-decoration: none;
+  transition: color $transition-fast;
+  
+  &:hover {
+    color: $primary-600;
+    text-decoration: underline;
+  }
+  
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+// Lists
+// -----
+ul, ol {
+  margin-bottom: $spacing-4;
+  padding-left: $spacing-6;
+}
+
+li {
+  margin-bottom: $spacing-1;
+}
+
+// Code
+// ----
+code {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.875em;
+  background-color: $surface-100;
+  padding: $spacing-1 $spacing-2;
+  border-radius: $border-radius;
+  color: $text-color;
+}
+
+pre {
+  background-color: $surface-100;
+  padding: $spacing-4;
+  border-radius: $border-radius-lg;
+  overflow-x: auto;
+  margin-bottom: $spacing-4;
+  
+  code {
+    background-color: transparent;
+    padding: 0;
+  }
+}
+
+// Tables
+// ------
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: $spacing-4;
+}
+
+th,
+td {
+  padding: $spacing-3;
+  text-align: left;
+  border-bottom: 1px solid $border-color;
+}
+
+th {
+  font-weight: $font-weight-semibold;
+  background-color: $surface-50;
+}
+
+// Forms
+// -----
+fieldset {
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  padding: $spacing-4;
+  margin-bottom: $spacing-4;
+}
+
+legend {
+  font-weight: $font-weight-semibold;
+  padding: 0 $spacing-2;
+}
+
+// PrimeNG Component Overrides
+// ===========================
+
+// Button Component
+// ----------------
+.p-button {
+  @include button-primary;
+  font-weight: $font-weight-medium;
+  border-radius: $border-radius;
+  transition: all $transition-fast;
+  
+  &.p-button-secondary {
+    @include button-secondary;
+  }
+  
+  &.p-button-outlined {
+    @include button-outline;
+  }
+  
+  &.p-button-text {
+    @include button-ghost;
+  }
+  
+  &.p-button-sm {
+    padding: $spacing-1 $spacing-3;
+    font-size: $font-size-sm;
+  }
+  
+  &.p-button-lg {
+    padding: $spacing-3 $spacing-6;
+    font-size: $font-size-lg;
+  }
+  
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+// Input Components
+// ----------------
+.p-inputtext,
+.p-inputnumber-input,
+.p-dropdown,
+.p-multiselect,
+.p-calendar-input {
+  @include input-base;
+  
+  &.p-invalid {
+    @include input-error;
+  }
+}
+
+.p-float-label {
+  position: relative;
+  
+  .p-inputtext,
+  .p-inputnumber-input,
+  .p-dropdown,
+  .p-multiselect,
+  .p-calendar-input {
+    padding-top: $spacing-5;
+    padding-bottom: $spacing-1;
+  }
+  
+  label {
+    position: absolute;
+    top: 50%;
+    left: $spacing-3;
+    transform: translateY(-50%);
+    transition: all $transition-fast;
+    pointer-events: none;
+    color: $text-color-tertiary;
+    font-size: $font-size-base;
+    
+    &.p-label-active {
+      top: $spacing-1;
+      font-size: $font-size-xs;
+      color: $primary-500;
+    }
+  }
+}
+
+// Card Component
+// --------------
+.p-card {
+  @include card-base;
+  
+  .p-card-header {
+    padding: $spacing-6 $spacing-6 0;
+    border-bottom: 1px solid $border-color;
+    margin-bottom: $spacing-4;
+  }
+  
+  .p-card-body {
+    padding: $spacing-6;
+  }
+  
+  .p-card-footer {
+    padding: 0 $spacing-6 $spacing-6;
+    border-top: 1px solid $border-color;
+    margin-top: $spacing-4;
+  }
+  
+  .p-card-title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-2;
+  }
+  
+  .p-card-subtitle {
+    font-size: $font-size-sm;
+    color: $text-color-secondary;
+    margin-bottom: $spacing-4;
+  }
+}
+
+// Panel Component
+// ---------------
+.p-panel {
+  @include card-base;
+  
+  .p-panel-header {
+    padding: $spacing-4 $spacing-6;
+    background-color: $surface-50;
+    border-bottom: 1px solid $border-color;
+    border-radius: $border-radius-lg $border-radius-lg 0 0;
+    
+    .p-panel-title {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+    }
+  }
+  
+  .p-panel-content {
+    padding: $spacing-6;
+  }
+}
+
+// Dialog Component
+// ----------------
+.p-dialog {
+  .p-dialog-header {
+    padding: $spacing-6;
+    background-color: $surface-50;
+    border-bottom: 1px solid $border-color;
+    
+    .p-dialog-title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
+    }
+  }
+  
+  .p-dialog-content {
+    padding: $spacing-6;
+  }
+  
+  .p-dialog-footer {
+    padding: $spacing-6;
+    background-color: $surface-50;
+    border-top: 1px solid $border-color;
+    @include flex-end;
+    gap: $spacing-3;
+  }
+}
+
+// Table Component
+// ---------------
+.p-datatable {
+  .p-datatable-header {
+    padding: $spacing-4 $spacing-6;
+    background-color: $surface-50;
+    border-bottom: 1px solid $border-color;
+  }
+  
+  .p-datatable-thead > tr > th {
+    padding: $spacing-3 $spacing-4;
+    background-color: $surface-50;
+    font-weight: $font-weight-semibold;
+    border-bottom: 2px solid $border-color;
+  }
+  
+  .p-datatable-tbody > tr > td {
+    padding: $spacing-3 $spacing-4;
+    border-bottom: 1px solid $border-color;
+  }
+  
+  .p-datatable-tbody > tr:hover {
+    background-color: $surface-50;
+  }
+  
+  .p-datatable-footer {
+    padding: $spacing-4 $spacing-6;
+    background-color: $surface-50;
+    border-top: 1px solid $border-color;
+  }
+}
+
+// Menu Components
+// ---------------
+.p-menu {
+  @include card-base;
+  padding: $spacing-2;
+  min-width: 200px;
+  
+  .p-menuitem-link {
+    padding: $spacing-3 $spacing-4;
+    border-radius: $border-radius;
+    transition: background-color $transition-fast;
+    
+    &:hover {
+      background-color: $surface-100;
+    }
+    
+    &:focus-visible {
+      @include focus-ring;
+    }
+  }
+  
+  .p-menuitem-text {
+    font-weight: $font-weight-medium;
+  }
+  
+  .p-menuitem-icon {
+    margin-right: $spacing-3;
+    color: $text-color-secondary;
+  }
+}
+
+.p-menubar {
+  .p-menubar-root-list {
+    @include flex-start;
+    gap: $spacing-1;
+  }
+  
+  .p-menuitem-link {
+    padding: $spacing-3 $spacing-4;
+    border-radius: $border-radius;
+    transition: background-color $transition-fast;
+    
+    &:hover {
+      background-color: $surface-100;
+    }
+  }
+}
+
+// Toast Component
+// ---------------
+.p-toast {
+  .p-toast-message {
+    @include card-base;
+    padding: $spacing-4 $spacing-6;
+    margin-bottom: $spacing-3;
+    @include flex-start;
+    gap: $spacing-3;
+    
+    &.p-toast-message-success {
+      border-left: 4px solid $success-500;
+    }
+    
+    &.p-toast-message-info {
+      border-left: 4px solid $info-500;
+    }
+    
+    &.p-toast-message-warn {
+      border-left: 4px solid $warning-500;
+    }
+    
+    &.p-toast-message-error {
+      border-left: 4px solid $error-500;
+    }
+  }
+  
+  .p-toast-message-content {
+    flex: 1;
+  }
+  
+  .p-toast-message-text {
+    font-weight: $font-weight-medium;
+    margin-bottom: $spacing-1;
+  }
+  
+  .p-toast-message-detail {
+    font-size: $font-size-sm;
+    color: $text-color-secondary;
+  }
+}
+
+// Progress Components
+// ------------------
+.p-progressbar {
+  background-color: $surface-200;
+  border-radius: $border-radius-full;
+  overflow: hidden;
+  
+  .p-progressbar-value {
+    background-color: $primary-500;
+    transition: width $transition-normal;
+  }
+}
+
+.p-progressspinner {
+  .p-progressspinner-circle {
+    stroke: $primary-500;
+  }
+}
+
+// Utility Classes
+// ---------------
+.p-component {
+  font-family: inherit;
+}
+
+.p-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.p-sr-only {
+  @include sr-only;
+}
+
+.p-text-truncate {
+  @include truncate;
+}
+
+// Responsive Utilities
+// -------------------
+@include mobile {
+  .p-dialog {
+    width: 95vw;
+    max-width: 95vw;
+  }
+  
+  .p-card {
+    .p-card-header,
+    .p-card-body,
+    .p-card-footer {
+      padding: $spacing-4;
+    }
+  }
+  
+  .p-datatable {
+    .p-datatable-header,
+    .p-datatable-footer {
+      padding: $spacing-3 $spacing-4;
+    }
+  }
+}

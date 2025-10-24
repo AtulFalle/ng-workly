@@ -1,0 +1,27 @@
+// PrimeNG Component Style Overrides
+// ===================================
+// Using design tokens from the theming system
+
+// Import all component overrides
+@import 'button';
+@import 'input';
+@import 'card';
+@import 'panel';
+@import 'toolbar';
+@import 'menubar';
+@import 'toast';
+@import 'dropdown';
+@import 'table';
+
+// Additional component imports can be added here as needed
+// @import 'dialog';
+// @import 'overlay';
+// @import 'calendar';
+// @import 'chart';
+// @import 'form';
+// @import 'menu';
+// @import 'overlaypanel';
+
+.p-error{
+    color: var(--error-500);
+}

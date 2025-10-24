@@ -1,0 +1,26 @@
+<footer class="footer">
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <div class="footer-bottom-content">
+      <!-- Copyright -->
+      <div class="copyright">
+        <p>&copy; {{ getCurrentYear() }} {{ companyName() }}. All rights reserved.</p>
+      </div>
+
+      <!-- Additional Links -->
+      @if (additionalLinks().length > 0) {
+        <div class="additional-links">
+          @for (link of additionalLinks(); track link.label) {
+            <a 
+              [href]="link.url"
+              [routerLink]="link.routerLink"
+              class="additional-link"
+              (click)="onLinkClick(link)">
+              {{ link.label }}
+            </a>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</footer>

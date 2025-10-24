@@ -1,0 +1,165 @@
+<div class="login-container">
+  <!-- Background Elements -->
+  <div class="background-elements">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
+
+  <!-- Main Login Content -->
+  <div class="login-content">
+    <!-- Left Side - Branding -->
+    <div class="login-branding">
+      <div class="branding-content">
+        <div class="logo-section">
+          <div class="logo-icon">
+            <i class="pi pi-shield"></i>
+          </div>
+          <h1 class="brand-title">Workly</h1>
+          <p class="brand-subtitle">Professional Dashboard</p>
+        </div>
+        
+        <div class="feature-list">
+          <div class="feature-item">
+            <i class="pi pi-check-circle"></i>
+            <span>Secure Authentication</span>
+          </div>
+          <div class="feature-item">
+            <i class="pi pi-check-circle"></i>
+            <span>Modern Interface</span>
+          </div>
+          <div class="feature-item">
+            <i class="pi pi-check-circle"></i>
+            <span>Real-time Updates</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Login Form -->
+    <div class="login-form-section">
+      <div class="form-container">
+        <!-- Form Header -->
+        <div class="form-header">
+          <h2>Welcome Back</h2>
+          <p>Sign in to your account to continue</p>
+        </div>
+
+        <!-- Login Form -->
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+          <!-- Email Field -->
+          <div class="form-field">
+            <label for="email" class="field-label">
+              Email Address
+            </label>
+            <div class="input-wrapper">
+              <input 
+                type="email" 
+                id="email"
+                pInputText 
+                formControlName="email"
+                placeholder="Enter your email address"
+                [class.p-invalid]="isFieldInvalid('email')"
+                class="form-input"
+                style="padding: 0.85rem;"
+                >
+            </div>
+            <small 
+              *ngIf="isFieldInvalid('email')" 
+              class="field-error">
+              {{ getFieldError('email') }}
+            </small>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-field">
+            <label for="password" class="field-label">
+              Password
+            </label>
+            <div class="input-wrapper">
+              <p-password 
+                formControlName="password"
+                placeholder="Enter your password"
+                [feedback]="false"
+                [toggleMask]="true"
+                class="form-input password-input">
+              </p-password>
+            </div>
+            <small 
+              *ngIf="isFieldInvalid('password')" 
+              class="field-error">
+              {{ getFieldError('password') }}
+            </small>
+          </div>
+
+          <!-- Remember Me & Forgot Password -->
+          <div class="form-options">
+            <div class="remember-me">
+              <p-checkbox 
+                formControlName="rememberMe"
+                [binary]="true"
+                inputId="rememberMe"
+                [style]="{'margin-right': '8px'}">
+              </p-checkbox>
+              <label for="rememberMe" class="checkbox-label">Remember me</label>
+            </div>
+            <a 
+              routerLink="/forgot-password" 
+              class="forgot-password-link">
+              Forgot password?
+            </a>
+          </div>
+
+          <!-- Submit Button -->
+          <p-button 
+            type="submit"
+            label="Sign In"
+            icon="pi pi-sign-in"
+            [loading]="isLoading()"
+            [disabled]="loginForm.invalid || isLoading()"
+            class="submit-button">
+          </p-button>
+
+          <!-- Divider -->
+          <!-- <div class="divider-section">
+            <div class="divider-line"></div>
+            <span class="divider-text">OR</span>
+            <div class="divider-line"></div>
+          </div> -->
+
+          <!-- Social Login Buttons -->
+          <!-- <div class="social-login">
+            <p-button 
+              label="Continue with Google"
+              icon="pi pi-google"
+              severity="secondary"
+              [outlined]="true"
+              (click)="loginWithGoogle()"
+              class="social-button google-button">
+            </p-button>
+            
+            <p-button 
+              label="Continue with GitHub"
+              icon="pi pi-github"
+              severity="secondary"
+              [outlined]="true"
+              (click)="loginWithGitHub()"
+              class="social-button github-button">
+            </p-button>
+          </div> -->
+
+          <!-- Sign Up Link -->
+          <!-- <div class="signup-section">
+            <p class="signup-text">
+              Don't have an account? 
+              <a routerLink="/register" class="signup-link">Create one here</a>
+            </p>
+          </div> -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast for notifications -->
+<p-toast position="top-right"></p-toast>

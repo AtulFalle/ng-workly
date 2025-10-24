@@ -1,0 +1,141 @@
+// Shared UI Components Styles
+// ===========================
+// This file contains common styles for all shared components
+
+// Import design system
+@import '@workly/design-system';
+
+// Common component utilities
+// ==========================
+
+// Component container
+.component-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+// Responsive grid utilities
+.grid {
+  display: grid;
+  gap: 1rem;
+
+  &.grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+  &.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+  &.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+  &.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+  @media (max-width: 768px) {
+    &.grid-cols-2,
+    &.grid-cols-3,
+    &.grid-cols-4 {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// Flex utilities
+.flex {
+  display: flex;
+
+  &.flex-col { flex-direction: column; }
+  &.flex-row { flex-direction: row; }
+  &.items-center { align-items: center; }
+  &.justify-center { justify-content: center; }
+  &.justify-between { justify-content: space-between; }
+  &.gap-1 { gap: 0.25rem; }
+  &.gap-2 { gap: 0.5rem; }
+  &.gap-3 { gap: 0.75rem; }
+  &.gap-4 { gap: 1rem; }
+}
+
+// Spacing utilities
+.p-1 { padding: 0.25rem; }
+.p-2 { padding: 0.5rem; }
+.p-3 { padding: 0.75rem; }
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }
+.p-8 { padding: 2rem; }
+
+.m-1 { margin: 0.25rem; }
+.m-2 { margin: 0.5rem; }
+.m-3 { margin: 0.75rem; }
+.m-4 { margin: 1rem; }
+.m-6 { margin: 1.5rem; }
+.m-8 { margin: 2rem; }
+
+// Text utilities
+.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 0.875rem; }
+.text-base { font-size: 1rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-3xl { font-size: 1.875rem; }
+
+.font-normal { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+// Color utilities
+.text-primary { color: var(--primary-500); }
+.text-secondary { color: var(--primary-600); }
+.text-muted { color: var(--primary-400); }
+.text-success { color: var(--green-500); }
+.text-warning { color: var(--yellow-500); }
+.text-error { color: var(--red-500); }
+
+.bg-primary { background-color: var(--primary-500); }
+.bg-secondary { background-color: var(--primary-100); }
+.bg-surface { background-color: var(--surface-0); }
+
+// Border utilities
+.border { border: 1px solid var(--surface-border); }
+.border-primary { border-color: var(--primary-500); }
+.border-radius { border-radius: var(--border-radius-md); }
+.border-radius-lg { border-radius: var(--border-radius-lg); }
+.border-radius-full { border-radius: var(--border-radius-full); }
+
+// Shadow utilities
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+
+// Animation utilities
+.transition { transition: all 0.2s ease; }
+.transition-fast { transition: all 0.15s ease; }
+.transition-slow { transition: all 0.3s ease; }
+
+.hover-scale:hover { transform: scale(1.05); }
+.hover-lift:hover { transform: translateY(-2px); }
+
+// Responsive utilities
+@media (max-width: 768px) {
+  .hidden-mobile { display: none !important; }
+  .show-mobile { display: block !important; }
+}
+
+@media (min-width: 769px) {
+  .hidden-desktop { display: none !important; }
+  .show-desktop { display: block !important; }
+}
+
+// Dark theme utilities
+.p-dark {
+  .text-primary { color: var(--primary-400-dark); }
+  .text-secondary { color: var(--primary-300-dark); }
+  .text-muted { color: var(--primary-500-dark); }
+  
+  .bg-primary { background-color: var(--primary-500-dark); }
+  .bg-secondary { background-color: var(--primary-800-dark); }
+  .bg-surface { background-color: var(--primary-900-dark); }
+  
+  .border { border-color: var(--primary-700-dark); }
+  .border-primary { border-color: var(--primary-500-dark); }
+}

@@ -1,0 +1,220 @@
+// PrimeNG Panel Component Overrides
+// ==================================
+// Using design tokens from the theming system
+
+// Panel Base Styles
+.p-panel {
+  // Layout
+  display: flex;
+  flex-direction: column;
+  
+  // Background & Border
+  background-color: var(--surface-0);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  
+  // Shadow
+  box-shadow: var(--shadow-sm);
+  
+  // Transitions
+  transition: all var(--transition-normal);
+}
+
+// Panel Header
+.p-panel .p-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-4) var(--spacing-6);
+  background-color: var(--surface-50);
+  border-bottom: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+  
+  // Header content
+  .p-panel-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-color);
+    margin: 0;
+    line-height: var(--line-height-tight);
+  }
+  
+  // Toggle button
+  .p-panel-toggle {
+    background: none;
+    border: none;
+    color: var(--text-color-secondary);
+    cursor: pointer;
+    padding: var(--spacing-2);
+    border-radius: var(--border-radius);
+    transition: all var(--transition-fast);
+    
+    &:hover {
+      background-color: var(--surface-100);
+      color: var(--text-color);
+    }
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--primary-100);
+    }
+  }
+}
+
+// Panel Content
+.p-panel .p-panel-content {
+  padding: var(--spacing-6);
+  flex: 1;
+  
+  p {
+    margin: 0 0 var(--spacing-4) 0;
+    line-height: var(--line-height-relaxed);
+    color: var(--text-color);
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Panel Footer
+.p-panel .p-panel-footer {
+  padding: var(--spacing-4) var(--spacing-6);
+  border-top: 1px solid var(--border-color);
+  background-color: var(--surface-50);
+  border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+}
+
+// Panel Variants
+.p-panel.p-panel-elevated {
+  box-shadow: var(--shadow-lg);
+}
+
+.p-panel.p-panel-outlined {
+  border: 2px solid var(--border-color);
+  box-shadow: none;
+}
+
+.p-panel.p-panel-flat {
+  border: none;
+  box-shadow: none;
+  background-color: var(--surface-50);
+}
+
+// Collapsible Panel
+.p-panel.p-panel-collapsible {
+  .p-panel-header {
+    cursor: pointer;
+    user-select: none;
+    
+    &:hover {
+      background-color: var(--surface-100);
+    }
+  }
+  
+  .p-panel-content {
+    overflow: hidden;
+    transition: all var(--transition-normal);
+  }
+  
+  &.p-panel-collapsed .p-panel-content {
+    max-height: 0;
+    padding: 0 var(--spacing-6);
+  }
+}
+
+// Panel with Icons
+.p-panel .p-panel-header {
+  .p-panel-icon {
+    margin-right: var(--spacing-3);
+    color: var(--primary-600);
+    font-size: var(--font-size-lg);
+  }
+}
+
+// Panel Actions
+.p-panel .p-panel-actions {
+  display: flex;
+  gap: var(--spacing-2);
+  margin-left: auto;
+  
+  .p-button {
+    margin: 0;
+  }
+}
+
+// Panel Grid
+.p-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-6);
+  
+  .p-panel {
+    margin: 0;
+  }
+}
+
+// Responsive Panel
+@media (max-width: 768px) {
+  .p-panel {
+    margin: var(--spacing-4) 0;
+  }
+  
+  .p-panel .p-panel-header,
+  .p-panel .p-panel-content,
+  .p-panel .p-panel-footer {
+    padding: var(--spacing-4);
+  }
+  
+  .p-panel-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+  }
+}
+
+// Dark Theme Support
+.p-dark {
+  .p-panel {
+    background-color: var(--surface-800);
+    border-color: var(--surface-600);
+  }
+  
+  .p-panel .p-panel-header {
+    background-color: var(--surface-700);
+    border-bottom-color: var(--surface-600);
+    
+    .p-panel-title {
+      color: var(--surface-100);
+    }
+    
+    .p-panel-toggle {
+      color: var(--surface-300);
+      
+      &:hover {
+        background-color: var(--surface-600);
+        color: var(--surface-100);
+      }
+    }
+  }
+  
+  .p-panel .p-panel-content {
+    p {
+      color: var(--surface-200);
+    }
+  }
+  
+  .p-panel .p-panel-footer {
+    background-color: var(--surface-700);
+    border-top-color: var(--surface-600);
+  }
+  
+  .p-panel.p-panel-flat {
+    background-color: var(--surface-700);
+  }
+  
+  .p-panel .p-panel-header {
+    .p-panel-icon {
+      color: var(--primary-400);
+    }
+  }
+}

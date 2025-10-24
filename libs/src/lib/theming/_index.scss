@@ -1,0 +1,21 @@
+// PrimeNG Theme Index
+// ===================
+// This file imports all theme components and provides a single entry point
+
+// Import variables and mixins first
+@import 'variables';
+@import 'mixins';
+
+// Import core styles
+// @import 'core';
+
+// Import component overrides
+@import 'components';
+
+// Import theme variants
+@import 'themes/light';
+@import 'themes/dark';
+@import 'themes/compact';
+
+// Export all styles
+// This file serves as the main entry point for the theming system

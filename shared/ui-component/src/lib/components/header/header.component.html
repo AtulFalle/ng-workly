@@ -1,0 +1,97 @@
+<p-toolbar [class]="'header-toolbar' + (sticky() ? ' sticky' : '')">
+  <!-- Left Section -->
+  <ng-template pTemplate="left">
+    <div class="header-left">
+      <!-- Logo -->
+      @if (logo()) {
+        <div class="logo-section">
+          <img [src]="logo()" [alt]="title()" class="logo">
+        </div>
+      }
+      
+      <!-- Title -->
+      <h1 class="app-title">{{ title() }}</h1>
+
+    </div>
+  </ng-template>
+
+  <!-- Right Section -->
+  <ng-template pTemplate="right">
+    <div class="header-right">
+      <!-- Search Bar -->
+      @if (showSearch()) {
+        <div class="search-section">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input 
+              type="text" 
+              pInputText 
+              [ngModel]="searchQuery()"
+              (ngModelChange)="searchQuery.set($event); onSearchChange()"
+              placeholder="Search..."
+              class="search-input">
+          </span>
+        </div>
+      }
+
+      <!-- Color Palette Toggle -->
+      @if (showColorPalette()) {
+        <p-button 
+          icon="pi pi-palette"
+          [text]="true"
+          severity="secondary"
+          (click)="toggleColorPalette()"
+          pTooltip="Change Theme Color"
+          variant="text"
+          class="color-palette-button">
+        </p-button>
+      }
+
+      <!-- Notifications -->
+      @if (showNotifications()) {
+        <p-button 
+          icon="pi pi-bell"
+          [text]="true"
+          severity="secondary"
+          (click)="onNotificationClick()"
+          pTooltip="Notifications"
+          class="notification-button">
+          @if (notificationCount() > 0) {
+            <p-badge 
+              [value]="notificationCount()"
+              severity="danger"
+              variant="text"
+              size="small">
+            </p-badge>
+          }
+        </p-button>
+      }
+
+      <!-- User Menu -->
+      @if (showUserMenu() && userProfile()) {
+        <div class="user-section">
+          <p-button 
+            icon="pi pi-user"
+            [text]="true"
+            severity="secondary"
+            (click)="toggleUserMenu()"
+            variant="text"
+            class="user-button">
+          </p-button>
+          
+          <!-- User Avatar -->
+          <p-avatar 
+            [label]="userInitials()"
+            [image]="userProfile()?.avatar"
+            shape="circle"
+            size="normal"
+            class="user-avatar"
+            (click)="toggleUserMenu()">
+          </p-avatar>
+        </div>
+      }
+    </div>
+  </ng-template>
+</p-toolbar>
+
+<!-- Color Palette and User Menu overlays removed for now -->

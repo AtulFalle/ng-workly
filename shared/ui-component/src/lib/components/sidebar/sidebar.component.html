@@ -1,0 +1,167 @@
+<!-- Sidebar Container -->
+<div 
+  class="sidebar-container"
+  [class.collapsed]="collapsed()"
+  [class.dark-theme]="theme() === 'dark'"
+  [class.right-position]="position() === 'right'"
+  [style.width]="collapsed() ? collapsedWidth() : width()"
+>
+
+  <!-- Navigation Sections -->
+  <div class="sidebar-content">
+    @for (section of displaySections(); track section.title) {
+      @if (section.visible !== false) {
+        <div class="sidebar-section">
+          <!-- Section Header -->
+          @if (section.title && !collapsed()) {
+            <div 
+              class="section-header"
+              (click)="onSectionToggle(section)"
+              [class.expandable]="section.items.length > 0"
+            >
+              <span class="section-title">{{ section.title }}</span>
+              @if (section.items.length > 0) {
+                <i 
+                  class="pi section-toggle-icon"
+                  [class.pi-chevron-down]="isSectionExpanded(section)"
+                  [class.pi-chevron-right]="!isSectionExpanded(section)"
+                ></i>
+              }
+            </div>
+          }
+          
+          <!-- Section Items -->
+          @if (!section.title || isSectionExpanded(section) || collapsed()) {
+            <div class="section-items">
+              @for (item of section.items; track item.label) {
+                @if (item.separator) {
+                  <div class="menu-separator"></div>
+                } @else if (item.visible !== false) {
+                  <div 
+                    class="menu-item"
+                    [class.active]="activeMenuItem() === (item.routerLink || item.label)"
+                    [class.disabled]="item.disabled"
+                    [class.has-children]="item.items && item.items.length > 0"
+                  >
+                    <!-- Main Menu Item -->
+                    <a 
+                      class="menu-link"
+                      [routerLink]="item.routerLink"
+                      [class.disabled]="item.disabled"
+                      (click)="!item.disabled && onMenuClick(item)"
+                    >
+                      @if (item.icon) {
+                        <i [class]="'pi ' + item.icon" class="menu-icon"></i>
+                      }
+                      @if (!collapsed()) {
+                        <span class="menu-label">{{ item.label }}</span>
+                      }
+                      @if (item.badge && !collapsed()) {
+                        <p-badge 
+                          [value]="item.badge" 
+                          severity="info"
+                          class="menu-badge"
+                        ></p-badge>
+                      }
+                    </a>
+                    
+                    <!-- Submenu Items -->
+                    @if (item.items && item.items.length > 0 && !collapsed()) {
+                      <div class="submenu">
+                        @for (subItem of item.items; track subItem.label) {
+                          <a 
+                            class="submenu-link"
+                            [routerLink]="subItem.routerLink"
+                            [class.disabled]="subItem.disabled"
+                            (click)="!subItem.disabled && onMenuClick(subItem)"
+                          >
+                            @if (subItem.icon) {
+                              <i [class]="'pi ' + subItem.icon" class="submenu-icon"></i>
+                            }
+                            <span class="submenu-label">{{ subItem.label }}</span>
+                            @if (subItem.badge) {
+                              <p-badge 
+                                [value]="subItem.badge" 
+                                severity="info"
+                                class="submenu-badge"
+                              ></p-badge>
+                            }
+                          </a>
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+              }
+            </div>
+          }
+        </div>
+      }
+    }
+  </div>
+
+  <!-- User Profile Section -->
+  @if (showUserProfile() && userProfile()) {
+    <div class="sidebar-footer">
+      <div class="user-profile">
+        @if (collapsed()) {
+          <button 
+            class="user-avatar-collapsed"
+            (click)="toggleUserMenu()"
+            pTooltip="{{ userProfile()?.name }}"
+            tooltipPosition="right"
+          >
+            @if (userProfile()?.avatar) {
+              <img [src]="userProfile()?.avatar" [alt]="userProfile()?.name" class="avatar-image">
+            } @else {
+              <span class="avatar-initials">{{ userInitials() }}</span>
+            }
+          </button>
+        } @else {
+          <div class="user-info">
+            <div class="user-avatar">
+              @if (userProfile()?.avatar) {
+                <img [src]="userProfile()?.avatar" [alt]="userProfile()?.name" class="avatar-image">
+              } @else {
+                <span class="avatar-initials">{{ userInitials() }}</span>
+              }
+            </div>
+            <div class="user-details">
+              <div class="user-name">{{ userProfile()?.name }}</div>
+              @if (userProfile()?.role) {
+                <div class="user-role">{{ userProfile()?.role }}</div>
+              }
+            </div>
+            <button 
+              class="user-menu-toggle"
+              (click)="toggleUserMenu()"
+              pTooltip="User Menu"
+              tooltipPosition="top"
+            >
+              <i class="pi pi-chevron-down"></i>
+            </button>
+          </div>
+        }
+      </div>
+      
+      <!-- User Menu Dropdown -->
+      @if (isUserMenuOpen() && !collapsed()) {
+        <div class="user-menu">
+          @for (menuItem of userMenuItems(); track menuItem.label) {
+            @if (menuItem.separator) {
+              <div class="menu-separator"></div>
+            } @else {
+              <button 
+                class="user-menu-item"
+                (click)="menuItem.command?.()"
+              >
+                <i [class]="'pi ' + menuItem.icon" class="menu-icon"></i>
+                <span>{{ menuItem.label }}</span>
+              </button>
+            }
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

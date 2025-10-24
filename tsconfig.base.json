@@ -14,7 +14,17 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@workly/design-system": ["dist/libs/src/design-system.scss"],
+      "@workly/styles": ["libs/src/lib/*"],
+      "@workly/theming": ["libs/src/lib/theming/theming.module.ts"],
+      "@workly/theming/*": ["libs/src/lib/theming/*"],
+      "@workly/ui": ["libs/src/lib/index.ts"],
+      "@workly/ui-component": ["shared/ui-component/src/index.ts"],
+      "authenticationUi/Routes": [
+        "apps/frontend/features/auth/src/app/remote-entry/entry.routes.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

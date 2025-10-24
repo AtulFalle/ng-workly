@@ -1,0 +1,298 @@
+// PrimeNG Table Component Overrides
+// ===================================
+// Using design tokens from the theming system
+
+// Table Base Styles
+.p-datatable {
+  background-color: var(--surface-0);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+// Table Header
+.p-datatable .p-datatable-header {
+  padding: var(--spacing-4) var(--spacing-6);
+  background-color: var(--surface-50);
+  border-bottom: 1px solid var(--border-color);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
+}
+
+// Table Wrapper
+.p-datatable .p-datatable-wrapper {
+  overflow-x: auto;
+}
+
+// Table Element
+.p-datatable .p-datatable-table {
+  width: 100%;
+  border-collapse: collapse;
+  
+  th, td {
+    padding: var(--spacing-3) var(--spacing-4);
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  th {
+    background-color: var(--surface-50);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-color);
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  td {
+    color: var(--text-color);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+  }
+  
+  tbody tr {
+    transition: all var(--transition-fast);
+    
+    &:hover {
+      background-color: var(--surface-50);
+    }
+    
+    &.p-datatable-row-selected {
+      background-color: var(--primary-50);
+      
+      td {
+        color: var(--primary-700);
+      }
+    }
+  }
+}
+
+// Table Footer
+.p-datatable .p-datatable-footer {
+  padding: var(--spacing-4) var(--spacing-6);
+  background-color: var(--surface-50);
+  border-top: 1px solid var(--border-color);
+  color: var(--text-color-secondary);
+  font-size: var(--font-size-sm);
+}
+
+// Table Paginator
+.p-datatable .p-paginator {
+  padding: var(--spacing-3) var(--spacing-6);
+  background-color: var(--surface-50);
+  border-top: 1px solid var(--border-color);
+  
+  .p-paginator-pages {
+    display: flex;
+    gap: var(--spacing-1);
+  }
+  
+  .p-paginator-page {
+    padding: var(--spacing-2) var(--spacing-3);
+    border: 1px solid var(--border-color);
+    background-color: var(--surface-0);
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-fast);
+    
+    &:hover {
+      background-color: var(--surface-100);
+      border-color: var(--primary-300);
+    }
+    
+    &.p-highlight {
+      background-color: var(--primary-500);
+      border-color: var(--primary-500);
+      color: white;
+    }
+  }
+  
+  .p-paginator-prev,
+  .p-paginator-next {
+    padding: var(--spacing-2) var(--spacing-3);
+    border: 1px solid var(--border-color);
+    background-color: var(--surface-0);
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-fast);
+    
+    &:hover {
+      background-color: var(--surface-100);
+      border-color: var(--primary-300);
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// Table Sorting
+.p-datatable .p-sortable-column {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  
+  &:hover {
+    background-color: var(--surface-100);
+  }
+  
+  .p-sortable-column-icon {
+    margin-left: var(--spacing-2);
+    color: var(--text-color-tertiary);
+    transition: transform var(--transition-fast);
+  }
+  
+  &.p-sortable-column-active {
+    background-color: var(--primary-50);
+    color: var(--primary-700);
+    
+    .p-sortable-column-icon {
+      color: var(--primary-600);
+    }
+  }
+}
+
+// Table Filter
+.p-datatable .p-column-filter {
+  .p-column-filter-input {
+    width: 100%;
+    padding: var(--spacing-2) var(--spacing-3);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    transition: all var(--transition-fast);
+    
+    &:focus {
+      outline: none;
+      border-color: var(--primary-500);
+      box-shadow: 0 0 0 3px var(--primary-100);
+    }
+  }
+}
+
+// Table Selection
+.p-datatable .p-selection-column {
+  width: 3rem;
+  text-align: center;
+  
+  .p-checkbox {
+    margin: 0;
+  }
+}
+
+// Table Actions
+.p-datatable .p-datatable-tbody {
+  .p-button {
+    margin-right: var(--spacing-2);
+    
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+// Responsive Table
+@media (max-width: 768px) {
+  .p-datatable {
+    .p-datatable-header,
+    .p-datatable-footer {
+      padding: var(--spacing-3) var(--spacing-4);
+    }
+    
+    .p-datatable-table {
+      th, td {
+        padding: var(--spacing-2) var(--spacing-3);
+        font-size: var(--font-size-sm);
+      }
+    }
+    
+    .p-paginator {
+      padding: var(--spacing-2) var(--spacing-4);
+      
+      .p-paginator-pages {
+        flex-wrap: wrap;
+        gap: var(--spacing-1);
+      }
+    }
+  }
+}
+
+// Dark Theme Support
+.p-dark {
+  .p-datatable {
+    background-color: var(--surface-800);
+    border-color: var(--surface-600);
+  }
+  
+  .p-datatable .p-datatable-header,
+  .p-datatable .p-datatable-footer {
+    background-color: var(--surface-700);
+    border-color: var(--surface-600);
+    color: var(--surface-100);
+  }
+  
+  .p-datatable .p-datatable-table {
+    th {
+      background-color: var(--surface-700);
+      color: var(--surface-100);
+    }
+    
+    td {
+      color: var(--surface-200);
+    }
+    
+    tbody tr {
+      &:hover {
+        background-color: var(--surface-700);
+      }
+      
+      &.p-datatable-row-selected {
+        background-color: var(--primary-900);
+        
+        td {
+          color: var(--primary-300);
+        }
+      }
+    }
+  }
+  
+  .p-datatable .p-paginator {
+    background-color: var(--surface-700);
+    border-color: var(--surface-600);
+    
+    .p-paginator-page,
+    .p-paginator-prev,
+    .p-paginator-next {
+      background-color: var(--surface-800);
+      border-color: var(--surface-600);
+      color: var(--surface-200);
+      
+      &:hover {
+        background-color: var(--surface-700);
+        border-color: var(--primary-600);
+      }
+      
+      &.p-highlight {
+        background-color: var(--primary-600);
+        border-color: var(--primary-600);
+        color: white;
+      }
+    }
+  }
+  
+  .p-datatable .p-sortable-column {
+    &:hover {
+      background-color: var(--surface-700);
+    }
+    
+    &.p-sortable-column-active {
+      background-color: var(--primary-900);
+      color: var(--primary-300);
+    }
+  }
+}

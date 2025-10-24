@@ -11,29 +11,73 @@
 [Click here to finish setting up your workspace!](https://cloud.nx.app/connect/B46Csk59G2)
 
 
-## Run tasks
+## 🚀 Quick Start
+
+### Development
+```bash
+# Start the main shell application (default)
+npm start
+
+# Start both applications simultaneously
+npm run dev
+
+# Start authentication microfrontend
+npm run start:auth
+```
+
+### Building
+```bash
+# Build all applications and libraries
+npm run build
+
+# Build individual applications
+npm run build:shell
+npm run build:auth
+```
+
+### Testing
+```bash
+# Run all tests
+npm test
+
+# Run tests for specific apps
+npm run test:shell
+npm run test:auth
+```
+
+## 📋 Available Applications
+
+- **Shell App** (`workly-ui`): Main application with shared header/footer components
+- **Auth App** (`authenticationUi`): Authentication microfrontend
+- **Shared Libraries**: UI components and theming system
+
+## 🔧 Run tasks
 
 To run the dev server for your app, use:
 
 ```sh
-npx nx serve workly
+npx nx serve workly-ui
 ```
 
 To create a production bundle:
 
 ```sh
-npx nx build workly
+npx nx build workly-ui
 ```
 
 To see all available targets to run for a project, run:
 
 ```sh
-npx nx show project workly
+npx nx show project workly-ui
 ```
 
 These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
 
 [More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+## 📖 Complete Scripts Guide
+
+For a comprehensive guide to all available npm scripts, see [SCRIPTS.md](./SCRIPTS.md).
 
 ## Add new projects
 
