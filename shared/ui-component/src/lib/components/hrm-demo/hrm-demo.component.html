@@ -11,11 +11,11 @@
   [showNotifications]="true"
   [showUserMenu]="true"
   [sidebarCollapsed]="isSidebarCollapsed()"
-  (onSidebarToggle)="onSidebarToggle($event)"
-  (onUserMenuClick)="onUserMenuClick()"
-  (onNotificationClick)="onNotificationClick($event)"
-  (onLogout)="onLogout()"
-  (onSearch)="onSearch($event)">
+  (sidebarToggle)="onSidebarToggle($event)"
+  (userMenuClick)="onUserMenuClick()"
+  (notificationClick)="onNotificationClick($event)"
+  (logoutClick)="onLogout()"
+  (searchQuery)="onSearch($event)">
 
   <!-- Dashboard Content -->
   <div class="dashboard-content">
