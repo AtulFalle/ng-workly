@@ -29,8 +29,8 @@
         [showUserInfo]="true"
         [showActions]="true"
         title="Recent Activity"
-        (onActivityClick)="onActivityClick($event)"
-        (onActionClick)="onActivityClick($event)">
+        (activityClick)="onActivityClick($event)"
+          >
       </app-activity-feed>
     </div>
 
@@ -42,7 +42,7 @@
         [showDescriptions]="true"
         [columns]="1"
         title="Quick Actions"
-        (onActionClick)="onActionClick($event)">
+        >
       </app-quick-actions>
     </div>
   </div>

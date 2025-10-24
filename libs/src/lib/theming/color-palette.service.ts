@@ -151,7 +151,7 @@ export class ColorPaletteService {
   /**
    * Lighten a color by a percentage
    */
-  private lightenColor(color: string, amount: number): string {
+  private lightenColor(color: string, _amount: number): string {
     // Simple color lightening - could be enhanced with proper color manipulation
     return color;
   }
@@ -159,7 +159,7 @@ export class ColorPaletteService {
   /**
    * Darken a color by a percentage
    */
-  private darkenColor(color: string, amount: number): string {
+  private darkenColor(color: string, _amount: number): string {
     // Simple color darkening - could be enhanced with proper color manipulation
     return color;
   }
