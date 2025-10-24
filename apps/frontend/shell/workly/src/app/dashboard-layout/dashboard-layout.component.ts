@@ -243,8 +243,9 @@ export class DashboardLayoutComponent {
   // HRM Event Handlers
 
   // HRM Demo Event Handlers
-  onHrmSidebarToggle(collapsed: boolean): void {
-    this.isSidebarCollapsed.set(collapsed);
+  onHrmSidebarToggle(event: Event): void {
+    // Extract collapsed state from event or toggle current state
+    this.isSidebarCollapsed.set(!this.isSidebarCollapsed());
     // Handle sidebar toggle
   }
 
@@ -257,12 +258,12 @@ export class DashboardLayoutComponent {
     });
   }
 
-  onHrmNotificationClick(notification: NotificationItem): void {
-    // Handle notification click
+  onHrmNotificationClick(event: Event): void {
+    // Handle notification click - event will be handled by the child component
     this.messageService.add({
       severity: 'info',
       summary: 'Notification',
-      detail: `Clicked: ${notification.title}`
+      detail: 'Notification clicked'
     });
   }
 
@@ -275,12 +276,12 @@ export class DashboardLayoutComponent {
     });
   }
 
-  onHrmSearch(query: string): void {
-    // Handle search query
+  onHrmSearch(event: Event): void {
+    // Handle search query - event will be handled by the child component
     this.messageService.add({
       severity: 'info',
       summary: 'Search',
-      detail: `Searching for: ${query}`
+      detail: 'Search triggered'
     });
   }
 

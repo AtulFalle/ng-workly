@@ -1,1 +1,4 @@
-import('./bootstrap').catch((err) => console.error(err));
+import('./bootstrap').catch((err) => {
+  // eslint-disable-next-line no-console
+  console.error(err);
+});

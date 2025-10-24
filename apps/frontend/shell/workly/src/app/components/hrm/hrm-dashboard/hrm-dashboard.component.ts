@@ -209,14 +209,14 @@ export class HrmDashboardComponent {
     // Handle stats card click
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onActivityClick(_activity: ActivityItem): void {
-    // Handle activity click
+  onActivityClick(event: Event): void {
+    // Handle activity click - event will be handled by the child component
+    console.log('Activity clicked:', event);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onActionClick(_action: QuickAction): void {
-    // Handle quick action click
+  onActionClick(event: Event): void {
+    // Handle quick action click - event will be handled by the child component
+    console.log('Action clicked:', event);
   }
 
   // Simulate loading states

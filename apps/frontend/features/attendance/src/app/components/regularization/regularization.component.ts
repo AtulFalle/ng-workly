@@ -13,6 +13,8 @@ import { TextareaModule } from 'primeng/textarea';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { FormsModule } from '@angular/forms';
+import { RegularizationDataService } from '../../services/regularization-data.service';
+import { RegularizationUtilsService } from '../../services/regularization-utils.service';
 
 export interface RegularizationRequest {
   id: string;
@@ -70,6 +72,14 @@ export interface RegularizationForm {
 })
 export class RegularizationComponent implements OnInit {
   private messageService = inject(MessageService);
+  private dataService = inject(RegularizationDataService);
+  private utilsService = inject(RegularizationUtilsService);
+
+  // Constants for duplicate strings
+  private readonly REGULARIZATION_REQUEST_SUBMITTED = 'Regularization request has been submitted successfully';
+  private readonly REGULARIZATION_REQUEST_CANCELLED = 'Regularization request has been cancelled';
+  private readonly REGULARIZATION_REQUEST_REVIEWED = 'Regularization request has been';
+  private readonly ALL_STATUS = 'All Status';
 
   // Data signals
   regularizationRequests = signal<RegularizationRequest[]>([]);
@@ -102,13 +112,13 @@ export class RegularizationComponent implements OnInit {
 
   // Filter options
   statusOptions = signal<string[]>([
-    'All Status',
+    this.ALL_STATUS,
     'Pending',
     'Approved',
     'Rejected'
   ]);
 
-  selectedStatus = signal<string>('All Status');
+  selectedStatus = signal<string>(this.ALL_STATUS);
 
   ngOnInit(): void {
     this.loadRegularizationData();
@@ -116,63 +126,8 @@ export class RegularizationComponent implements OnInit {
 
   loadRegularizationData(): void {
     this.loading.set(true);
-
     setTimeout(() => {
-      const requests: RegularizationRequest[] = [
-        {
-          id: 'REG001',
-          employeeId: 'EMP001',
-          employeeName: 'John Doe',
-          department: 'Engineering',
-          date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-          originalCheckIn: null,
-          originalCheckOut: null,
-          requestedCheckIn: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 - 8 * 60 * 60 * 1000),
-          requestedCheckOut: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 - 1 * 60 * 60 * 1000),
-          reason: 'Medical appointment - had to visit doctor',
-          status: 'pending',
-          requestedBy: 'John Doe',
-          requestedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)
-        },
-        {
-          id: 'REG002',
-          employeeId: 'EMP002',
-          employeeName: 'Jane Smith',
-          department: 'Marketing',
-          date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-          originalCheckIn: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000 - 7 * 60 * 60 * 1000),
-          originalCheckOut: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000 - 1 * 60 * 60 * 1000),
-          requestedCheckIn: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000 - 8 * 60 * 60 * 1000),
-          requestedCheckOut: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000 - 2 * 60 * 60 * 1000),
-          reason: 'Traffic jam caused delay in arrival',
-          status: 'approved',
-          requestedBy: 'Jane Smith',
-          requestedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-          reviewedBy: 'HR Manager',
-          reviewedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-          comments: 'Approved - valid reason provided'
-        },
-        {
-          id: 'REG003',
-          employeeId: 'EMP003',
-          employeeName: 'Mike Johnson',
-          department: 'Sales',
-          date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-          originalCheckIn: null,
-          originalCheckOut: null,
-          requestedCheckIn: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000 - 8 * 60 * 60 * 1000),
-          requestedCheckOut: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000 - 1 * 60 * 60 * 1000),
-          reason: 'Personal emergency',
-          status: 'rejected',
-          requestedBy: 'Mike Johnson',
-          requestedAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
-          reviewedBy: 'HR Manager',
-          reviewedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-          comments: 'Rejected - insufficient documentation'
-        }
-      ];
-
-      this.regularizationRequests.set(requests);
+      this.regularizationRequests.set(this.dataService.getMockRegularizationRequests());
       this.loading.set(false);
     }, 1500);
   }
@@ -181,7 +136,7 @@ export class RegularizationComponent implements OnInit {
     const requests = this.regularizationRequests();
     const status = this.selectedStatus();
 
-    if (status === 'All Status') {
+    if (status === this.ALL_STATUS) {
       return requests;
     }
 
@@ -245,7 +200,7 @@ export class RegularizationComponent implements OnInit {
     this.messageService.add({
       severity: 'success',
       summary: 'Request Submitted',
-      detail: 'Regularization request has been submitted successfully'
+      detail: this.REGULARIZATION_REQUEST_SUBMITTED
     });
   }
 
@@ -282,7 +237,7 @@ export class RegularizationComponent implements OnInit {
     this.messageService.add({
       severity: 'success',
       summary: 'Review Submitted',
-      detail: `Regularization request has been ${review.status}`
+      detail: `${this.REGULARIZATION_REQUEST_REVIEWED} ${review.status}`
     });
   }
 
@@ -294,43 +249,24 @@ export class RegularizationComponent implements OnInit {
     this.messageService.add({
       severity: 'info',
       summary: 'Request Cancelled',
-      detail: 'Regularization request has been cancelled'
+      detail: this.REGULARIZATION_REQUEST_CANCELLED
     });
   }
 
   getStatusSeverity(status: RegularizationRequest['status']): 'info' | 'success' | 'warn' | 'danger' | 'secondary' | 'contrast' | null | undefined {
-    switch (status) {
-      case 'pending': return 'warn';
-      case 'approved': return 'success';
-      case 'rejected': return 'danger';
-      default: return 'secondary';
-    }
+    return this.utilsService.getStatusSeverity(status);
   }
 
   getStatusLabel(status: RegularizationRequest['status']): string {
-    switch (status) {
-      case 'pending': return 'Pending';
-      case 'approved': return 'Approved';
-      case 'rejected': return 'Rejected';
-      default: return 'Unknown';
-    }
+    return this.utilsService.getStatusLabel(status);
   }
 
   formatTime(date: Date | null): string {
-    if (!date) return '--';
-    return date.toLocaleTimeString('en-US', { 
-      hour: '2-digit', 
-      minute: '2-digit',
-      hour12: true 
-    });
+    return this.utilsService.formatTime(date);
   }
 
   formatDate(date: Date): string {
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
+    return this.utilsService.formatDate(date);
   }
 
   formatDuration(start: Date, end: Date): string {
