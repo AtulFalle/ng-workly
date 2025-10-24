@@ -67,7 +67,8 @@ export class ThemingService {
     const htmlElement = document.documentElement;
     
     // Remove all theme classes
-    this.availableThemes.forEach(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    this.availableThemes.forEach(_t => {
       htmlElement.removeAttribute(`data-theme`);
     });
     

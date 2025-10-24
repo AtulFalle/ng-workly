@@ -31,6 +31,24 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint"
+    },
+    "quality:smells": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx run ui:lint"
+      }
+    },
+    "quality:security": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm run security:audit"
+      }
+    },
+    "quality:vulnerabilities": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx knip --dependencies"
+      }
     }
   }
 }

@@ -5,4 +5,7 @@ import { App } from './app/app';
 // Import styles
 import './index.scss';
 
-bootstrapApplication(App, appConfig).catch((err) => console.error(err));
+bootstrapApplication(App, appConfig).catch((err) => {
+  // Handle bootstrap error
+  throw err;
+});

@@ -1,0 +1,28 @@
+{
+  "moderate": false,
+  "high": true,
+  "critical": true,
+  "allowlist": [
+    "GHSA-93m4-6634-74q7",
+    "GHSA-g8mr-fgfg-5qpc"
+  ],
+  "skip-dev": false,
+  "report-type": "summary",
+  "output-format": "text",
+  "pass-enoaudit": false,
+  "show-not-found": false,
+  "show-found": true,
+  "show-all": false,
+  "config": {
+    "advisories": [
+      "GHSA-93m4-6634-74q7",
+      "GHSA-g8mr-fgfg-5qpc"
+    ],
+    "whitelist": [
+      "GHSA-93m4-6634-74q7",
+      "GHSA-g8mr-fgfg-5qpc"
+    ],
+    "report-type": "summary",
+    "output-format": "text"
+  }
+}

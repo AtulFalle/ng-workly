@@ -35,9 +35,9 @@
       <div class="filter-group">
         <label class="filter-label" for="statusFilter">Status Filter</label>
         <input 
+          id="statusFilter"
           type="text" 
           pInputText 
-          id="statusFilter"
           [ngModel]="selectedStatus()"
           placeholder="Enter status"
           class="filter-input">
@@ -204,9 +204,9 @@
         <div class="form-group">
           <label class="form-label" for="requestDate">Date</label>
           <input 
+            id="requestDate"
             type="date" 
             pInputText 
-            id="requestDate"
             [(ngModel)]="requestForm().date"
             class="form-input">
         </div>
@@ -216,9 +216,9 @@
         <div class="form-group">
           <label class="form-label" for="originalCheckIn">Original Check-in</label>
           <input 
+            id="originalCheckIn"
             type="datetime-local" 
             pInputText 
-            id="originalCheckIn"
             [(ngModel)]="requestForm().originalCheckIn"
             placeholder="Original check-in time"
             class="form-input">
@@ -226,9 +226,9 @@
         <div class="form-group">
           <label class="form-label" for="originalCheckOut">Original Check-out</label>
           <input 
+            id="originalCheckOut"
             type="datetime-local" 
             pInputText 
-            id="originalCheckOut"
             [(ngModel)]="requestForm().originalCheckOut"
             placeholder="Original check-out time"
             class="form-input">
@@ -239,9 +239,9 @@
         <div class="form-group">
           <label class="form-label" for="requestedCheckIn">Requested Check-in</label>
           <input 
+            id="requestedCheckIn"
             type="datetime-local" 
             pInputText 
-            id="requestedCheckIn"
             [(ngModel)]="requestForm().requestedCheckIn"
             placeholder="Requested check-in time"
             class="form-input">
@@ -249,9 +249,9 @@
         <div class="form-group">
           <label class="form-label" for="requestedCheckOut">Requested Check-out</label>
           <input 
+            id="requestedCheckOut"
             type="datetime-local" 
             pInputText 
-            id="requestedCheckOut"
             [(ngModel)]="requestForm().requestedCheckOut"
             placeholder="Requested check-out time"
             class="form-input">
@@ -261,8 +261,8 @@
       <div class="form-group">
         <label class="form-label" for="reason">Reason</label>
         <textarea 
-          pInputTextarea 
           id="reason"
+          pInputTextarea 
           [(ngModel)]="requestForm().reason"
           placeholder="Please provide a detailed reason for the regularization request"
           rows="4"
@@ -304,8 +304,8 @@
         <div class="form-group">
           <label class="form-label" for="reviewDecision">Review Decision</label>
           <select 
-            pInputText 
             id="reviewDecision"
+            pInputText 
             [(ngModel)]="reviewForm().status"
             class="form-input">
             <option value="approved">Approve</option>
@@ -316,8 +316,8 @@
         <div class="form-group">
           <label class="form-label" for="reviewComments">Comments</label>
           <textarea 
-            pInputTextarea 
             id="reviewComments"
+            pInputTextarea 
             [(ngModel)]="reviewForm().comments"
             placeholder="Add review comments"
             rows="3"

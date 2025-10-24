@@ -11,6 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { FormsModule } from '@angular/forms';
+import { AttendanceListDataService } from '../../services/attendance-list-data.service';
 
 export interface AttendanceRecord {
   id: string;
@@ -102,89 +103,22 @@ export class AttendanceListComponent implements OnInit {
   selectedRecords = signal<AttendanceRecord[]>([]);
   globalFilter = signal<string>('');
 
+  private dataService = inject(AttendanceListDataService);
+
+  // Constants for message strings
+  private readonly REGULARIZATION_REQUEST = 'Regularization Request';
+  private readonly REGULARIZATION_APPROVED = 'Regularization Approved';
+  private readonly REGULARIZATION_REJECTED = 'Regularization Rejected';
+  private readonly REGULARIZATION_PENDING = 'regularization-pending';
+
   ngOnInit(): void {
     this.loadAttendanceData();
   }
 
   loadAttendanceData(): void {
     this.loading.set(true);
-
     setTimeout(() => {
-      const records: AttendanceRecord[] = [
-        {
-          id: '1',
-          employeeId: 'EMP001',
-          employeeName: 'John Doe',
-          department: 'Engineering',
-          date: new Date(),
-          checkIn: new Date(Date.now() - 8 * 60 * 60 * 1000),
-          checkOut: null,
-          totalHours: 8,
-          status: 'present',
-          location: 'Office',
-          device: 'Mobile App'
-        },
-        {
-          id: '2',
-          employeeId: 'EMP002',
-          employeeName: 'Jane Smith',
-          department: 'Marketing',
-          date: new Date(),
-          checkIn: new Date(Date.now() - 7.5 * 60 * 60 * 1000),
-          checkOut: new Date(Date.now() - 0.5 * 60 * 60 * 1000),
-          totalHours: 7,
-          status: 'present',
-          location: 'Office',
-          device: 'Desktop'
-        },
-        {
-          id: '3',
-          employeeId: 'EMP003',
-          employeeName: 'Mike Johnson',
-          department: 'Sales',
-          date: new Date(),
-          checkIn: null,
-          checkOut: null,
-          totalHours: 0,
-          status: 'absent',
-          notes: 'Sick leave'
-        },
-        {
-          id: '4',
-          employeeId: 'EMP004',
-          employeeName: 'Sarah Wilson',
-          department: 'HR',
-          date: new Date(Date.now() - 24 * 60 * 60 * 1000), // Yesterday
-          checkIn: new Date(Date.now() - 24 * 60 * 60 * 1000 - 7 * 60 * 60 * 1000),
-          checkOut: new Date(Date.now() - 24 * 60 * 60 * 1000 - 1 * 60 * 60 * 1000),
-          totalHours: 6,
-          status: 'late',
-          location: 'Office',
-          device: 'Mobile App'
-        },
-        {
-          id: '5',
-          employeeId: 'EMP005',
-          employeeName: 'David Brown',
-          department: 'Finance',
-          date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
-          checkIn: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 - 8 * 60 * 60 * 1000),
-          checkOut: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 - 4 * 60 * 60 * 1000),
-          totalHours: 4,
-          status: 'half-day',
-          notes: 'Personal appointment',
-          location: 'Office',
-          device: 'Desktop',
-          regularizationRequest: {
-            id: 'REG001',
-            reason: 'Medical appointment',
-            status: 'pending',
-            requestedBy: 'David Brown',
-            requestedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
-          }
-        }
-      ];
-
+      const records = this.dataService.getMockAttendanceRecords();
       this.attendanceRecords.set(records);
       this.filteredRecords.set(records);
       this.loading.set(false);
@@ -218,7 +152,7 @@ export class AttendanceListComponent implements OnInit {
         'Absent': 'absent',
         'Late': 'late',
         'Half Day': 'half-day',
-        'Regularization Pending': 'regularization-pending'
+        'Regularization Pending': this.REGULARIZATION_PENDING
       };
       filtered = filtered.filter(record => 
         record.status === statusMap[filters.status]
@@ -250,7 +184,7 @@ export class AttendanceListComponent implements OnInit {
   handleRegularizationRequest(record: AttendanceRecord): void {
     this.messageService.add({
       severity: 'info',
-      summary: 'Regularization Request',
+      summary: this.REGULARIZATION_REQUEST,
       detail: `Regularization request submitted for ${record.employeeName}`
     });
   }
@@ -259,7 +193,7 @@ export class AttendanceListComponent implements OnInit {
     if (record.regularizationRequest) {
       this.messageService.add({
         severity: 'success',
-        summary: 'Regularization Approved',
+        summary: this.REGULARIZATION_APPROVED,
         detail: `Regularization approved for ${record.employeeName}`
       });
     }
@@ -269,7 +203,7 @@ export class AttendanceListComponent implements OnInit {
     if (record.regularizationRequest) {
       this.messageService.add({
         severity: 'warn',
-        summary: 'Regularization Rejected',
+        summary: this.REGULARIZATION_REJECTED,
         detail: `Regularization rejected for ${record.employeeName}`
       });
     }
@@ -298,7 +232,7 @@ export class AttendanceListComponent implements OnInit {
       case 'absent': return 'danger';
       case 'late': return 'warn';
       case 'half-day': return 'info';
-      case 'regularization-pending': return 'contrast';
+      case this.REGULARIZATION_PENDING: return 'contrast';
       default: return 'secondary';
     }
   }
@@ -309,7 +243,7 @@ export class AttendanceListComponent implements OnInit {
       case 'absent': return 'Absent';
       case 'late': return 'Late';
       case 'half-day': return 'Half Day';
-      case 'regularization-pending': return 'Pending';
+      case this.REGULARIZATION_PENDING: return 'Pending';
       default: return 'Unknown';
     }
   }

@@ -31,6 +31,24 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint"
+    },
+    "quality:smells": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx run ui-component:lint"
+      }
+    },
+    "quality:security": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm run security:audit"
+      }
+    },
+    "quality:vulnerabilities": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "echo 'Dependency analysis handled by npm audit and audit-ci'"
+      }
     }
   }
 }

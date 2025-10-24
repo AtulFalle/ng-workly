@@ -243,13 +243,14 @@ export class DashboardLayoutComponent {
   // HRM Event Handlers
 
   // HRM Demo Event Handlers
-  onHrmSidebarToggle(collapsed: boolean): void {
-    this.isSidebarCollapsed.set(collapsed);
-    console.log('HRM Sidebar collapsed:', collapsed);
+  onHrmSidebarToggle(event: Event): void {
+    // Extract collapsed state from event or toggle current state
+    this.isSidebarCollapsed.set(!this.isSidebarCollapsed());
+    // Handle sidebar toggle
   }
 
   onHrmUserMenuClick(): void {
-    console.log('HRM User menu clicked');
+    // Handle user menu click
     this.messageService.add({
       severity: 'info',
       summary: 'User Menu',
@@ -257,17 +258,17 @@ export class DashboardLayoutComponent {
     });
   }
 
-  onHrmNotificationClick(notification: NotificationItem): void {
-    console.log('HRM Notification clicked:', notification);
+  onHrmNotificationClick(event: Event): void {
+    // Handle notification click - event will be handled by the child component
     this.messageService.add({
       severity: 'info',
       summary: 'Notification',
-      detail: `Clicked: ${notification.title}`
+      detail: 'Notification clicked'
     });
   }
 
   onHrmLogout(): void {
-    console.log('HRM Logout clicked');
+    // Handle logout
     this.messageService.add({
       severity: 'warn',
       summary: 'Logout',
@@ -275,12 +276,12 @@ export class DashboardLayoutComponent {
     });
   }
 
-  onHrmSearch(query: string): void {
-    console.log('HRM Search query:', query);
+  onHrmSearch(event: Event): void {
+    // Handle search query - event will be handled by the child component
     this.messageService.add({
       severity: 'info',
       summary: 'Search',
-      detail: `Searching for: ${query}`
+      detail: 'Search triggered'
     });
   }
 

@@ -64,6 +64,36 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
+    },
+    "quality:smells": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx run-many -t lint --all --parallel"
+      }
+    },
+    "quality:security": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm run security:audit && npm run security:check"
+      }
+    },
+    "quality:vulnerabilities": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx knip"
+      }
+    },
+    "quality:static": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx knip --dependencies"
+      }
+    },
+    "quality:all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm run quality:smells && npm run quality:security && npm run quality:vulnerabilities"
+      }
     }
   },
   "generators": {

@@ -19,10 +19,10 @@ import { ColorPaletteService, ColorOption } from './color-palette.service';
           (click)="selectColor(color.value)"
           (keydown.enter)="selectColor(color.value)"
           (keydown.space)="selectColor(color.value)"
-          [title]="color.name"
           tabindex="0"
           role="button"
-          [attr.aria-label]="'Select ' + color.name + ' color'">
+          [attr.aria-label]="'Select ' + color.name + ' color'"
+          [title]="color.name">
           <span class="color-name">{{ color.name }}</span>
         </div>
       </div>

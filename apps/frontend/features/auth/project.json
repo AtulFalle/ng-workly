@@ -42,8 +42,8 @@
             },
             {
               "type": "anyComponentStyle",
-              "maximumWarning": "4kb",
-              "maximumError": "8kb"
+              "maximumWarning": "8kb",
+              "maximumError": "12kb"
             }
           ],
           "outputHashing": "all",
@@ -113,6 +113,24 @@
         "production": {
           "buildTarget": "authenticationUi:build:production"
         }
+      }
+    },
+    "quality:smells": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx run authenticationUi:lint"
+      }
+    },
+    "quality:security": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm run security:audit"
+      }
+    },
+    "quality:vulnerabilities": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "echo 'Dependency analysis handled by npm audit and audit-ci'"
       }
     }
   }

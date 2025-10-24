@@ -26,7 +26,7 @@
           type="text" 
           class="search-input"
           placeholder="Search..."
-          [(ngModel)]="searchInput"
+          [(ngModel)]="searchQuery"
           (keyup.enter)="handleSearch()"
           (input)="handleSearch()">
       </div>
@@ -72,7 +72,7 @@
                     (keydown.space)="handleNotificationClick(notification)"
                     tabindex="0"
                     role="button"
-                    [attr.aria-label]="'View notification: ' + notification.title">
+                    [attr.aria-label]="'View ' + notification.title + ' notification'">
                     <div class="notification-icon" [class]="'type-' + notification.type">
                       <i class="pi" [class]="{
                         'pi-info-circle': notification.type === 'info',

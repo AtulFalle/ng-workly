@@ -7,6 +7,8 @@ import { BadgeModule } from 'primeng/badge';
 import { DividerModule } from 'primeng/divider';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { AttendanceUtilsService } from '../../services/attendance-utils.service';
+import { AttendanceDataService } from '../../services/attendance-data.service';
 
 export interface AttendanceRecord {
   id: string;
@@ -50,6 +52,16 @@ export interface AttendanceStats {
 })
 export class AttendanceDashboardComponent implements OnInit {
   private messageService = inject(MessageService);
+  private utilsService = inject(AttendanceUtilsService);
+  private dataService = inject(AttendanceDataService);
+
+  // Constants
+  private readonly TIMEOUT_STATS = 1000;
+  private readonly TIMEOUT_ATTENDANCE = 1500;
+  private readonly TIMEOUT_USER = 2000;
+  private readonly HOURS_IN_MS = 60 * 60 * 1000;
+  private readonly EIGHT_HOURS_AGO = 8 * this.HOURS_IN_MS;
+  private readonly MOBILE_APP_DEVICE = 'Mobile App';
 
   // Signals for data and loading states
   attendanceStats = signal<AttendanceStats>({
@@ -79,11 +91,19 @@ export class AttendanceDashboardComponent implements OnInit {
   }
 
   loadAttendanceData(): void {
+    this.initializeLoadingStates();
+    this.loadAttendanceStats();
+    this.loadTodayAttendance();
+    this.loadCurrentUserAttendance();
+  }
+
+  private initializeLoadingStates(): void {
     this.statsLoading.set(true);
     this.attendanceLoading.set(true);
     this.userAttendanceLoading.set(true);
+  }
 
-    // Simulate API calls
+  private loadAttendanceStats(): void {
     setTimeout(() => {
       this.attendanceStats.set({
         totalEmployees: 156,
@@ -94,67 +114,25 @@ export class AttendanceDashboardComponent implements OnInit {
         attendanceRate: 91.0
       });
       this.statsLoading.set(false);
-    }, 1000);
+    }, this.TIMEOUT_STATS);
+  }
 
+  private loadTodayAttendance(): void {
     setTimeout(() => {
-      this.todayAttendance.set([
-        {
-          id: '1',
-          employeeId: 'EMP001',
-          employeeName: 'John Doe',
-          date: new Date(),
-          checkIn: new Date(Date.now() - 8 * 60 * 60 * 1000), // 8 hours ago
-          checkOut: null,
-          totalHours: 8,
-          status: 'present',
-          location: 'Office',
-          device: 'Mobile App'
-        },
-        {
-          id: '2',
-          employeeId: 'EMP002',
-          employeeName: 'Jane Smith',
-          date: new Date(),
-          checkIn: new Date(Date.now() - 7.5 * 60 * 60 * 1000), // 7.5 hours ago
-          checkOut: new Date(Date.now() - 0.5 * 60 * 60 * 1000), // 30 minutes ago
-          totalHours: 7,
-          status: 'present',
-          location: 'Office',
-          device: 'Desktop'
-        },
-        {
-          id: '3',
-          employeeId: 'EMP003',
-          employeeName: 'Mike Johnson',
-          date: new Date(),
-          checkIn: null,
-          checkOut: null,
-          totalHours: 0,
-          status: 'absent',
-          notes: 'Sick leave'
-        }
-      ]);
+      this.todayAttendance.set(this.dataService.getMockAttendanceData());
       this.attendanceLoading.set(false);
-    }, 1500);
+    }, this.TIMEOUT_ATTENDANCE);
+  }
 
+  private loadCurrentUserAttendance(): void {
     setTimeout(() => {
-      this.currentUserAttendance.set({
-        id: 'current',
-        employeeId: 'EMP001',
-        employeeName: 'John Doe',
-        date: new Date(),
-        checkIn: new Date(Date.now() - 8 * 60 * 60 * 1000),
-        checkOut: null,
-        totalHours: 8,
-        status: 'present',
-        location: 'Office',
-        device: 'Mobile App'
-      });
+      this.currentUserAttendance.set(this.dataService.getMockCurrentUserAttendance());
       this.userAttendanceLoading.set(false);
       this.canCheckIn.set(false);
       this.canCheckOut.set(true);
-    }, 2000);
+    }, this.TIMEOUT_USER);
   }
+
 
   handleCheckIn(): void {
     this.isCheckingIn.set(true);
@@ -171,7 +149,7 @@ export class AttendanceDashboardComponent implements OnInit {
         totalHours: 0,
         status: 'present',
         location: 'Office',
-        device: 'Mobile App'
+        device: this.MOBILE_APP_DEVICE
       });
       
       this.canCheckIn.set(false);
@@ -183,7 +161,7 @@ export class AttendanceDashboardComponent implements OnInit {
         summary: 'Check-in Successful',
         detail: `Checked in at ${now.toLocaleTimeString()}`
       });
-    }, 1500);
+    }, this.TIMEOUT_ATTENDANCE);
   }
 
   handleCheckOut(): void {
@@ -213,7 +191,7 @@ export class AttendanceDashboardComponent implements OnInit {
         summary: 'Check-out Successful',
         detail: `Checked out at ${now.toLocaleTimeString()}`
       });
-    }, 1500);
+    }, this.TIMEOUT_ATTENDANCE);
   }
 
   handleRegularizationRequest(record: AttendanceRecord): void {
@@ -271,27 +249,14 @@ export class AttendanceDashboardComponent implements OnInit {
   }
 
   formatTime(date: Date | null): string {
-    if (!date) return '--';
-    return date.toLocaleTimeString('en-US', { 
-      hour: '2-digit', 
-      minute: '2-digit',
-      hour12: true 
-    });
+    return this.utilsService.formatTime(date);
   }
 
   formatDuration(hours: number): string {
-    if (hours === 0) return '--';
-    const h = Math.floor(hours);
-    const m = Math.round((hours - h) * 60);
-    return `${h}h ${m}m`;
+    return this.utilsService.formatDuration(hours);
   }
 
   getCurrentDate(): string {
-    return new Date().toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
+    return this.utilsService.getCurrentDate();
   }
 }

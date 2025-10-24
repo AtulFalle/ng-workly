@@ -48,7 +48,7 @@
           (keydown.space)="handleActivityClick(activity)"
           tabindex="0"
           role="button"
-          [attr.aria-label]="'View activity: ' + activity.title">
+          [attr.aria-label]="'View ' + activity.title + ' activity'">
           
           <div class="activity-item__icon" [class]="getActivityIconClass(activity)">
             <i [class]="activity.icon"></i>

@@ -46,7 +46,7 @@ export class HeaderComponent {
   // Local state
   isUserMenuOpen = false;
   isNotificationMenuOpen = false;
-  searchInput = '';
+  searchQueryValue = '';
 
   toggleUserMenu(): void {
     this.isUserMenuOpen = !this.isUserMenuOpen;
@@ -59,7 +59,7 @@ export class HeaderComponent {
   }
 
   handleSearch(): void {
-    this.searchQuery.emit(this.searchInput);
+    this.searchQuery.emit(this.searchQueryValue);
   }
 
   handleNotificationClick(notification: NotificationItem): void {

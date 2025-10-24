@@ -153,18 +153,20 @@ export class HrmDemoComponent {
   }
 
   onUserMenuClick(): void {
-    console.log('User menu clicked');
+    // Handle user menu click
   }
 
-  onNotificationClick(notification: NotificationItem): void {
-    console.log('Notification clicked:', notification);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onNotificationClick(_notification: NotificationItem): void {
+    // Handle notification click
   }
 
   onLogout(): void {
-    console.log('Logout clicked');
+    // Handle logout
   }
 
-  onSearch(query: string): void {
-    console.log('Search query:', query);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onSearch(_query: string): void {
+    // Handle search query
   }
 }

@@ -1,6 +1,10 @@
 import { definePreset } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
 
+// Constants for repeated color values
+const PRIMARY_950 = '{primary.950}';
+const PRIMARY_50 = '{primary.50}';
+
 const Workly = definePreset(Aura, {
     semantic: {
         primary: {
@@ -19,13 +23,13 @@ const Workly = definePreset(Aura, {
         colorScheme: {
             light: {
                 primary: {
-                    color: '{primary.950}',
+                    color: PRIMARY_950,
                     contrastColor: '#ffffff',
                     hoverColor: '{primary.800}',
                     activeColor: '{primary.700}'
                 },
                 highlight: {
-                    background: '{primary.950}',
+                    background: PRIMARY_950,
                     focusBackground: '{primary.700}',
                     color: '#ffffff',
                     focusColor: '#ffffff'
@@ -33,16 +37,16 @@ const Workly = definePreset(Aura, {
             },
             dark: {
                 primary: {
-                    color: '{primary.50}',
-                    contrastColor: '{primary.950}',
+                    color: PRIMARY_50,
+                    contrastColor: PRIMARY_950,
                     hoverColor: '{primary.200}',
                     activeColor: '{primary.300}'
                 },
                 highlight: {
-                    background: '{primary.50}',
+                    background: PRIMARY_50,
                     focusBackground: '{primary.300}',
-                    color: '{primary.950}',
-                    focusColor: '{primary.950}'
+                    color: PRIMARY_950,
+                    focusColor: PRIMARY_950
                 }
             }
         }
