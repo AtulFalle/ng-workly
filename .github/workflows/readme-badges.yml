@@ -1,0 +1,89 @@
+name: Update README Badges
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-badges:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci --legacy-peer-deps
+      
+      # Install jq for JSON parsing
+      - run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Generate Status Badges
+        run: |
+          echo "Generating status badges..."
+          
+          # Run checks and capture results
+          npm run quality:security > security.log 2>&1 || true
+          SECURITY_STATUS=$([ $? -eq 0 ] && echo "PASS" || echo "FAIL")
+          
+          nx run-many -t lint --all > lint.log 2>&1 || true
+          LINT_STATUS=$([ $? -eq 0 ] && echo "PASS" || echo "FAIL")
+          
+          nx run-many -t test --all > test.log 2>&1 || true
+          TEST_STATUS=$([ $? -eq 0 ] && echo "PASS" || echo "FAIL")
+          
+          nx run-many -t build --all > build.log 2>&1 || true
+          BUILD_STATUS=$([ $? -eq 0 ] && echo "PASS" || echo "FAIL")
+          
+          # Get vulnerability count
+          VULN_COUNT=$(npm audit --json 2>/dev/null | jq -r '.vulnerabilities | keys | length' || echo "0")
+          
+          # Create badge URLs with proper colors
+          if [ "$SECURITY_STATUS" = "PASS" ]; then
+            SECURITY_BADGE="![Security](https://img.shields.io/badge/security-PASS-green)"
+          else
+            SECURITY_BADGE="![Security](https://img.shields.io/badge/security-$VULN_COUNT%20issues-red)"
+          fi
+          
+          LINT_BADGE="![Lint](https://img.shields.io/badge/lint-$LINT_STATUS-$([ "$LINT_STATUS" = "PASS" ] && echo "green" || echo "red"))"
+          TEST_BADGE="![Tests](https://img.shields.io/badge/tests-$TEST_STATUS-$([ "$TEST_STATUS" = "PASS" ] && echo "green" || echo "red"))"
+          BUILD_BADGE="![Build](https://img.shields.io/badge/build-$BUILD_STATUS-$([ "$BUILD_STATUS" = "PASS" ] && echo "green" || echo "red"))"
+          
+          # Update README
+          cat > README-badges.md << EOF
+          $SECURITY_BADGE $LINT_BADGE $TEST_BADGE $BUILD_BADGE
+          
+          **Last Updated**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          EOF
+          
+          # Insert badges into README
+          if [ -f README.md ]; then
+            # Replace or add badges section
+            awk '/^!\[.*\]/{flag=1; next} /^## /{if(flag) flag=0} !flag' README.md > README-temp.md
+            cat README-badges.md >> README-temp.md
+            mv README-temp.md README.md
+          fi
+          
+          echo "Badges generated:"
+          echo "Security: $SECURITY_STATUS"
+          echo "Lint: $LINT_STATUS"
+          echo "Test: $TEST_STATUS"
+          echo "Build: $BUILD_STATUS"
+
+      - name: Commit Badge Updates
+        run: |
+          echo "Committing badge updates..."
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git commit -m "📊 Update README badges with latest CI results [skip ci]" || echo "No changes to commit"
+          git push || echo "Nothing to push"
