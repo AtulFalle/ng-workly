@@ -6,4 +6,7 @@ fetch('/module-federation.manifest.json')
     Object.entries(remotes).map(([name, entry]) => ({ name, entry }))
   )
   .then((remotes) => registerRemotes(remotes))
-  .then(() => import('./bootstrap').catch((err) => console.error(err)));
+  .then(() => import('./bootstrap').catch((err) => {
+    // Handle bootstrap import error
+    throw err;
+  }));

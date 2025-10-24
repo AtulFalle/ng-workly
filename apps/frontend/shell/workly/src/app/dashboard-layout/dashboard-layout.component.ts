@@ -245,11 +245,11 @@ export class DashboardLayoutComponent {
   // HRM Demo Event Handlers
   onHrmSidebarToggle(collapsed: boolean): void {
     this.isSidebarCollapsed.set(collapsed);
-    console.log('HRM Sidebar collapsed:', collapsed);
+    // Handle sidebar toggle
   }
 
   onHrmUserMenuClick(): void {
-    console.log('HRM User menu clicked');
+    // Handle user menu click
     this.messageService.add({
       severity: 'info',
       summary: 'User Menu',
@@ -258,7 +258,7 @@ export class DashboardLayoutComponent {
   }
 
   onHrmNotificationClick(notification: NotificationItem): void {
-    console.log('HRM Notification clicked:', notification);
+    // Handle notification click
     this.messageService.add({
       severity: 'info',
       summary: 'Notification',
@@ -267,7 +267,7 @@ export class DashboardLayoutComponent {
   }
 
   onHrmLogout(): void {
-    console.log('HRM Logout clicked');
+    // Handle logout
     this.messageService.add({
       severity: 'warn',
       summary: 'Logout',
@@ -276,7 +276,7 @@ export class DashboardLayoutComponent {
   }
 
   onHrmSearch(query: string): void {
-    console.log('HRM Search query:', query);
+    // Handle search query
     this.messageService.add({
       severity: 'info',
       summary: 'Search',

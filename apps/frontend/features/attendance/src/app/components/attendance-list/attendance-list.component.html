@@ -39,8 +39,9 @@
 
     <div class="filters-grid">
       <div class="filter-group">
-        <label class="filter-label">Date Range</label>
+        <label class="filter-label" for="dateRange">Date Range</label>
         <input 
+          id="dateRange"
           type="text" 
           pInputText 
           [(ngModel)]="filters().dateRange"
@@ -49,8 +50,9 @@
       </div>
 
       <div class="filter-group">
-        <label class="filter-label">Department</label>
+        <label class="filter-label" for="department">Department</label>
         <input 
+          id="department"
           type="text" 
           pInputText 
           [(ngModel)]="filters().department"
@@ -59,8 +61,9 @@
       </div>
 
       <div class="filter-group">
-        <label class="filter-label">Status</label>
+        <label class="filter-label" for="status">Status</label>
         <input 
+          id="status"
           type="text" 
           pInputText 
           [(ngModel)]="filters().status"
@@ -69,8 +72,9 @@
       </div>
 
       <div class="filter-group">
-        <label class="filter-label">Employee</label>
+        <label class="filter-label" for="employee">Employee</label>
         <input 
+          id="employee"
           type="text" 
           pInputText 
           [(ngModel)]="filters().employee"

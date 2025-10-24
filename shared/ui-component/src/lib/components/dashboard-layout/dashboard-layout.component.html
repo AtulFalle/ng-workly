@@ -13,9 +13,9 @@
         [subtitle]="pageSubtitle()"
         (onToggleSidebar)="toggleSidebar()"
         (onUserMenuClick)="handleUserMenuClick()"
-        (onNotificationClick)="handleNotificationClick($event)"
+        (notificationClick)="handleNotificationClick($event)"
         (onLogout)="handleLogout()"
-        (onSearch)="handleSearch($event)">
+        (searchQuery)="handleSearch($event)">
       </lib-header>
     </header>
   }

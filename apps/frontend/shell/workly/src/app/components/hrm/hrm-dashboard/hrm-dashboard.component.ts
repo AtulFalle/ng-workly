@@ -102,7 +102,9 @@ export class HrmDashboardComponent {
       },
       action: {
         label: 'View Profile',
-        command: () => console.log('View employee profile')
+        command: () => {
+          // Handle view employee profile
+        }
       }
     },
     {
@@ -118,7 +120,9 @@ export class HrmDashboardComponent {
       },
       action: {
         label: 'Review',
-        command: () => console.log('Review leave request')
+        command: () => {
+          // Handle review leave request
+        }
       }
     },
     {
@@ -130,7 +134,9 @@ export class HrmDashboardComponent {
       icon: 'pi pi-exclamation-triangle',
       action: {
         label: 'View Details',
-        command: () => console.log('View attendance details')
+        command: () => {
+          // Handle view attendance details
+        }
       }
     },
     {
@@ -142,7 +148,9 @@ export class HrmDashboardComponent {
       icon: 'pi pi-check-circle',
       action: {
         label: 'View Report',
-        command: () => console.log('View payroll report')
+        command: () => {
+          // Handle view payroll report
+        }
       }
     }
   ]);
@@ -155,7 +163,9 @@ export class HrmDashboardComponent {
       icon: 'pi pi-user-plus',
       color: 'primary',
       description: 'Add new employee to the system',
-      command: () => console.log('Add employee clicked')
+      command: () => {
+        // Handle add employee
+      }
     },
     {
       id: 'process-leave',
@@ -163,7 +173,9 @@ export class HrmDashboardComponent {
       icon: 'pi pi-calendar-plus',
       color: 'success',
       description: 'Review and process leave requests',
-      command: () => console.log('Process leave clicked'),
+      command: () => {
+        // Handle process leave
+      },
       badge: {
         text: '3',
         color: 'warning'
@@ -175,7 +187,9 @@ export class HrmDashboardComponent {
       icon: 'pi pi-file-pdf',
       color: 'info',
       description: 'Create and download reports',
-      command: () => console.log('Generate report clicked')
+      command: () => {
+        // Handle generate report
+      }
     },
     {
       id: 'settings',
@@ -183,21 +197,26 @@ export class HrmDashboardComponent {
       icon: 'pi pi-cog',
       color: 'warning',
       description: 'Configure system settings',
-      command: () => console.log('Settings clicked')
+      command: () => {
+        // Handle settings
+      }
     }
   ]);
 
   // Event handlers
-  onStatsCardClick(card: StatCard): void {
-    console.log('Stats card clicked:', card);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onStatsCardClick(_card: StatCard): void {
+    // Handle stats card click
   }
 
-  onActivityClick(activity: ActivityItem): void {
-    console.log('Activity clicked:', activity);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onActivityClick(_activity: ActivityItem): void {
+    // Handle activity click
   }
 
-  onActionClick(action: QuickAction): void {
-    console.log('Quick action clicked:', action);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onActionClick(_action: QuickAction): void {
+    // Handle quick action click
   }
 
   // Simulate loading states

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ColorPaletteService, ColorOption } from './color-palette.service';
 
 @Component({
-  selector: 'workly-color-palette',
+  selector: 'lib-color-palette',
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
@@ -17,6 +17,11 @@ import { ColorPaletteService, ColorOption } from './color-palette.service';
           [style.background-color]="color.value"
           [class.selected]="isColorSelected(color.value)"
           (click)="selectColor(color.value)"
+          (keydown.enter)="selectColor(color.value)"
+          (keydown.space)="selectColor(color.value)"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="'Select ' + color.name + ' color'"
           [title]="color.name">
           <span class="color-name">{{ color.name }}</span>
         </div>
@@ -135,9 +140,9 @@ export class ColorPaletteComponent {
   private colorPaletteService = inject(ColorPaletteService);
 
   // Input properties
-  @Input() title: string = '🎨 Choose Your Theme Color';
+  @Input() title = '🎨 Choose Your Theme Color';
   @Input() customColors: ColorOption[] = [];
-  @Input() showCustomPicker: boolean = true;
+  @Input() showCustomPicker = true;
 
   // Output events
   @Output() colorSelected = new EventEmitter<string>();

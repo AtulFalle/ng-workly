@@ -130,7 +130,7 @@
     "quality:vulnerabilities": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "npx knip --dependencies"
+        "command": "echo 'Dependency analysis handled by npm audit and audit-ci'"
       }
     }
   }

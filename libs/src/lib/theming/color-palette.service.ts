@@ -131,9 +131,9 @@ export class ColorPaletteService {
   /**
    * Hook for color change events - can be overridden by consumers
    */
-  protected onColorChange(color: string, source: 'predefined' | 'custom' | 'reset'): void {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected onColorChange(_color: string, _source: 'predefined' | 'custom' | 'reset'): void {
     // This can be extended by consumers to add custom logic
-    console.log(`Color changed to ${color} from ${source}`);
   }
 
   /**
@@ -151,7 +151,8 @@ export class ColorPaletteService {
   /**
    * Lighten a color by a percentage
    */
-  private lightenColor(color: string, amount: number): string {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private lightenColor(color: string, _amount: number): string {
     // Simple color lightening - could be enhanced with proper color manipulation
     return color;
   }
@@ -159,7 +160,8 @@ export class ColorPaletteService {
   /**
    * Darken a color by a percentage
    */
-  private darkenColor(color: string, amount: number): string {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private darkenColor(color: string, _amount: number): string {
     // Simple color darkening - could be enhanced with proper color manipulation
     return color;
   }

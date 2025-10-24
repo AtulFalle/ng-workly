@@ -37,7 +37,7 @@ export class QuickActionsComponent {
   showDescriptions = input<boolean>(true);
 
   // Outputs
-  onActionClick = output<QuickAction>();
+  actionClick = output<QuickAction>();
 
   // Computed properties
   get gridColumns(): string {
@@ -70,7 +70,7 @@ export class QuickActionsComponent {
   handleActionClick(action: QuickAction): void {
     if (action.disabled) return;
 
-    this.onActionClick.emit(action);
+    this.actionClick.emit(action);
 
     if (action.command) {
       action.command();

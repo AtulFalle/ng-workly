@@ -17,6 +17,11 @@
             <div 
               class="section-header"
               (click)="onSectionToggle(section)"
+              (keydown.enter)="onSectionToggle(section)"
+              (keydown.space)="onSectionToggle(section)"
+              tabindex="0"
+              role="button"
+              [attr.aria-label]="'Toggle ' + section.title + ' section'"
               [class.expandable]="section.items.length > 0"
             >
               <span class="section-title">{{ section.title }}</span>
