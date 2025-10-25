@@ -124,10 +124,10 @@ jobs:
           ---
           EOF
           
-          # Update README.md
+          # Update README.md - Insert status section after the badges
           if [ -f README.md ]; then
-            # Find the start of the status section and replace it
-            awk '/## 🚀 Project Status/{flag=1; next} /^---$/{if(flag) flag=0} !flag' README.md > README-temp.md
+            # Find the end of the badges section and insert status there
+            awk '/^<\/div>/{print; print ""; print "<!-- CI Status Section - Auto-generated -->"; flag=1; next} flag && /^## /{print ""; print "---"; print ""; flag=0} !flag' README.md > README-temp.md
             cat README-status.md >> README-temp.md
             mv README-temp.md README.md
           else
@@ -150,7 +150,7 @@ jobs:
           git merge origin/master || git rebase origin/master || git reset --hard origin/master
           
           git add README.md
-          git commit -m "📊 Update README with latest CI results [skip ci]" || echo "No changes to commit"
+          git commit -m "ci: update project status in README [skip ci]" || echo "No changes to commit"
           
           # Push with retry logic
           for i in {1..3}; do
