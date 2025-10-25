@@ -43,6 +43,7 @@ jobs:
         run: |
           echo "Running lint checks..."
           nx run-many -t lint --all --json > lint-results.json 2>&1 || true
+          nx run-many -t lint --all > lint-results.txt 2>&1 || true
           LINT_ISSUES=$(jq -r '.results | length' lint-results.json 2>/dev/null || echo "0")
           LINT_STATUS=$([ "$LINT_ISSUES" -eq 0 ] && echo "PASS" || echo "FAIL")
           echo "lint_issues=$LINT_ISSUES" >> $GITHUB_OUTPUT
@@ -64,12 +65,17 @@ jobs:
         id: build
         run: |
           echo "Running builds..."
+          START_TIME=$(date +%s)
           nx run-many -t build --all --json > build-results.json 2>&1 || true
+          END_TIME=$(date +%s)
+          BUILD_DURATION=$((END_TIME - START_TIME))
           BUILD_COUNT=$(jq -r '.results | length' build-results.json 2>/dev/null || echo "0")
           BUILD_STATUS=$([ "$BUILD_COUNT" -gt 0 ] && echo "PASS" || echo "FAIL")
           echo "build_count=$BUILD_COUNT" >> $GITHUB_OUTPUT
           echo "build_status=$BUILD_STATUS" >> $GITHUB_OUTPUT
-          echo "Build Status: $BUILD_STATUS ($BUILD_COUNT projects)"
+          echo "build_duration=$BUILD_DURATION" >> $GITHUB_OUTPUT
+          echo "start_time=$START_TIME" >> $GITHUB_OUTPUT
+          echo "Build Status: $BUILD_STATUS ($BUILD_COUNT projects) in ${BUILD_DURATION}s"
 
       - name: Run Security Checks
         id: security
@@ -88,38 +94,100 @@ jobs:
         run: |
           echo "Updating README with CI results..."
           
-          # Create updated README content
+          # Get actual test coverage data
+          if [ -f coverage/coverage-summary.json ]; then
+            COVERAGE_DATA=$(cat coverage/coverage-summary.json | jq -r '.total.lines.pct // "N/A"')
+            UNIT_COVERAGE=$(cat coverage/coverage-summary.json | jq -r '.total.lines.pct // "N/A"')
+          else
+            COVERAGE_DATA="N/A"
+            UNIT_COVERAGE="N/A"
+          fi
+          
+          # Get actual build time and bundle size
+          BUILD_TIME="${{ steps.build.outputs.build_duration }}s"
+          BUNDLE_SIZE=$(find dist -name "*.js" -exec du -ch {} + 2>/dev/null | tail -1 | cut -f1 || echo "N/A")
+          
+          # Get actual code smells count from lint results
+          if [ -f lint-results.txt ]; then
+            CODE_SMELLS=$(grep -c "sonarjs/" lint-results.txt 2>/dev/null || echo "0")
+            COMPLEXITY_ISSUES=$(grep -c "cognitive-complexity" lint-results.txt 2>/dev/null || echo "0")
+          else
+            CODE_SMELLS="0"
+            COMPLEXITY_ISSUES="0"
+          fi
+          
+          # Get actual project count
+          PROJECT_COUNT=$(find . -name "project.json" -not -path "./node_modules/*" | wc -l)
+          
+          # Get actual dependency count
+          DEPENDENCY_COUNT=$(npm list --depth=0 2>/dev/null | wc -l || echo "N/A")
+          
+          # Create updated README content with real data
           cat > README-status.md << EOF
-          ## 🚀 Project Status
+          ## 🚀 Project Health Dashboard
           
-          | Check | Status | Details |
-          |-------|--------|---------|
-          | **Lint** | ${{ steps.lint.outputs.lint_status == 'PASS' && '✅ PASS' || '❌ FAIL' }} | ${{ steps.lint.outputs.lint_issues }} issues found |
-          | **Tests** | ${{ steps.test.outputs.test_status == 'PASS' && '✅ PASS' || '❌ FAIL' }} | ${{ steps.test.outputs.test_count }} test suites |
-          | **Build** | ${{ steps.build.outputs.build_status == 'PASS' && '✅ PASS' || '❌ FAIL' }} | ${{ steps.build.outputs.build_count }} projects built |
-          | **Security** | ${{ steps.security.outputs.security_status == 'PASS' && '✅ PASS' || '❌ FAIL' }} | ${{ steps.security.outputs.vulnerabilities }} vulnerabilities |
+          <div align="center">
           
-          ### 📊 Last Updated
+          | 🧪 **Testing** | 🏗️ **Build** | 🔒 **Security** | 📊 **Quality** |
+          |:---:|:---:|:---:|:---:|
+          | **Status** | ${{ steps.test.outputs.test_status == 'PASS' && '✅ PASS' || '❌ FAIL' }} | ${{ steps.build.outputs.build_status == 'PASS' && '✅ PASS' || '❌ FAIL' }} | ${{ steps.security.outputs.security_status == 'PASS' && '✅ PASS' || '❌ FAIL' }} | ${{ steps.lint.outputs.lint_status == 'PASS' && '✅ PASS' || '❌ FAIL' }} |
+          | **Coverage** | ${COVERAGE_DATA}% | **Projects** | ${PROJECT_COUNT} | **Vulnerabilities** | ${{ steps.security.outputs.vulnerabilities }} | **Issues** | ${{ steps.lint.outputs.lint_issues }} |
+          | **Suites** | ${{ steps.test.outputs.test_count }} | **Time** | ${BUILD_TIME}s | **Score** | $([ "${{ steps.security.outputs.vulnerabilities }}" -eq 0 ] && echo "A+" || echo "B") | **Smells** | ${CODE_SMELLS} |
+          
+          </div>
+          
+          ### 📈 Detailed Metrics
+          
+          <table>
+          <tr>
+          <td width="50%">
+          
+          #### 🧪 Test Coverage
+          - **Unit Tests**: ${UNIT_COVERAGE}% coverage
+          - **Integration Tests**: N/A (not configured)
+          - **E2E Tests**: N/A (not configured)
+          - **Total Suites**: ${{ steps.test.outputs.test_count }}
+          
+          #### 🏗️ Build Information
+          - **Projects Built**: ${PROJECT_COUNT}
+          - **Build Time**: ${BUILD_TIME} seconds
+          - **Bundle Size**: ${BUNDLE_SIZE}
+          - **Dependencies**: ${DEPENDENCY_COUNT} packages
+          
+          </td>
+          <td width="50%">
+          
+          #### 🔒 Security Status
+          - **Vulnerabilities**: ${{ steps.security.outputs.vulnerabilities }}
+          - **High/Critical**: $([ "${{ steps.security.outputs.vulnerabilities }}" -gt 0 ] && echo "Check report" || echo "0")
+          - **Security Score**: $([ "${{ steps.security.outputs.vulnerabilities }}" -eq 0 ] && echo "A+" || echo "B")
+          - **Last Audit**: $(date -u +"%Y-%m-%d")
+          
+          #### 📊 Quality Metrics
+          - **Lint Issues**: ${{ steps.lint.outputs.lint_issues }}
+          - **Code Smells**: ${CODE_SMELLS}
+          - **Complexity Issues**: ${COMPLEXITY_ISSUES}
+          - **Duplicates**: N/A (not configured)
+          
+          </td>
+          </tr>
+          </table>
+          
+          ### 🔍 System Information
+          
+          | Component | Version | Status |
+          |-----------|---------|--------|
+          | **Node.js** | $(node --version) | ✅ Active |
+          | **NPM** | $(npm --version) | ✅ Active |
+          | **Nx** | $(npx nx --version 2>/dev/null || echo "N/A") | ✅ Active |
+          | **Angular** | $(npm list @angular/core --depth=0 2>/dev/null | grep @angular/core | cut -d'@' -f3 | cut -d' ' -f1 || echo "N/A") | ✅ Active |
+          | **TypeScript** | $(npm list typescript --depth=0 2>/dev/null | grep typescript | cut -d'@' -f3 | cut -d' ' -f1 || echo "N/A") | ✅ Active |
+          
+          ### 📅 Last Updated
           **Date**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")  
-          **Commit**: ${{ github.sha }}  
-          **Branch**: ${{ github.ref_name }}  
+          **Commit**: \`${{ github.sha }}\`  
+          **Branch**: \`${{ github.ref_name }}\`  
           **Workflow**: [View Details](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-          
-          ### 🔍 Security Details
-          \`\`\`bash
-          npm run quality:security
-          \`\`\`
-          
-          \`\`\`
-          $(cat security-results.txt | tail -20)
-          \`\`\`
-          
-          ### 📈 Quality Metrics
-          - **Total Projects**: ${{ steps.build.outputs.build_count }}
-          - **Dependencies**: $(npm list --depth=0 2>/dev/null | wc -l) packages
-          - **Build Time**: ~$(date +%s) seconds
-          - **Node Version**: $(node --version)
-          - **NPM Version**: $(npm --version)
           
           ---
           EOF
