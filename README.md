@@ -2,19 +2,6 @@
 
 <div align="center">
 
-![Nx](https://img.shields.io/badge/Nx-21.6.6-143055?style=for-the-badge&logo=nx&logoColor=white)
-![Angular](https://img.shields.io/badge/Angular-20.3.0-DD0031?style=for-the-badge&logo=angular&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![PrimeNG](https://img.shields.io/badge/PrimeNG-20.2.0-FF6B35?style=for-the-badge&logo=primeng&logoColor=white)
-
-**A modern, scalable Human Resource Management platform built with Angular, Nx, and enterprise-grade architecture.**
-
-[![Quality Gate](https://img.shields.io/badge/Quality%20Gate-Passing-brightgreen?style=for-the-badge)](https://github.com/your-org/workly)
-[![Security](https://img.shields.io/badge/Security-Audited-blue?style=for-the-badge)](https://github.com/your-org/workly)
-[![Coverage](https://img.shields.io/badge/Coverage-80%25-brightgreen?style=for-the-badge)](https://github.com/your-org/workly)
-
-</div>
-
 ## 📋 Table of Contents
 
 - [🎯 Overview](#-overview)
@@ -369,3 +356,16 @@ For enterprise customers, we offer:
 [![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/workly)
 
 </div>
+## 📊 Quick Status Overview
+
+<div align="center">
+
+| 🧪 **Tests** | 🏗️ **Build** | 🔒 **Security** | 📊 **Quality** |
+|:---:|:---:|:---:|:---:|
+| **Status** | ✅ PASS | ✅ PASS | ✅ PASS | ✅ PASS |
+| **Coverage** | N/A% | **Projects** | 5 | **Vulnerabilities** | 13 | **Issues** |  |
+| **Suites** | 5 | **Time** | ~3.2 min | **Score** | B | **Smells** | 0 |
+
+</div>
+
+**Last Updated**: 2025-10-25 10:37:52 UTC
