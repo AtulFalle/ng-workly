@@ -152,16 +152,12 @@ jobs:
           cat > README-security.md << EOF
           ## 🛡️ Security & Quality Dashboard
           
-          <div align="center">
-          
           | 🔒 **Security** | 🧪 **Testing** | 🏗️ **Build** | 📊 **Quality** |
           |:---:|:---:|:---:|:---:|
           | **Status** | $([ "$CRITICAL_VULNS" -gt 0 ] && echo "🔴 CRITICAL" || ([ "$HIGH_VULNS" -gt 0 ] && echo "🟠 HIGH" || ([ "$VULN_COUNT" -gt 0 ] && echo "🟡 MODERATE" || echo "✅ PASS"))) | ✅ PASS | ✅ PASS | $([ "$LINT_ISSUES" -eq 0 ] && echo "✅ PASS" || echo "⚠️ ISSUES") |
           | **Vulnerabilities** | $VULN_COUNT | **Coverage** | ${COVERAGE_DATA}% | **Projects** | ${PROJECT_COUNT} | **Lint Issues** | $LINT_ISSUES |
           | **Critical** | $CRITICAL_VULNS | **Suites** | 5 | **Time** | ${BUILD_TIME} | **Smells** | ${CODE_SMELLS} |
           | **High** | $HIGH_VULNS | **E2E** | N/A | **Bundle** | ${BUNDLE_SIZE} | **Complexity** | N/A |
-          
-          </div>
           
           ### 🔍 Detailed Security Analysis
           

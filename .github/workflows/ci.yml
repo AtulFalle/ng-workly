@@ -126,15 +126,11 @@ jobs:
           cat > README-status.md << EOF
           ## 🚀 Project Health Dashboard
           
-          <div align="center">
-          
           | 🧪 **Testing** | 🏗️ **Build** | 🔒 **Security** | 📊 **Quality** |
           |:---:|:---:|:---:|:---:|
           | **Status** | ${{ steps.test.outputs.test_status == 'PASS' && '✅ PASS' || '❌ FAIL' }} | ${{ steps.build.outputs.build_status == 'PASS' && '✅ PASS' || '❌ FAIL' }} | ${{ steps.security.outputs.security_status == 'PASS' && '✅ PASS' || '❌ FAIL' }} | ${{ steps.lint.outputs.lint_status == 'PASS' && '✅ PASS' || '❌ FAIL' }} |
           | **Coverage** | ${COVERAGE_DATA}% | **Projects** | ${PROJECT_COUNT} | **Vulnerabilities** | ${{ steps.security.outputs.vulnerabilities }} | **Issues** | ${{ steps.lint.outputs.lint_issues }} |
           | **Suites** | ${{ steps.test.outputs.test_count }} | **Time** | ${BUILD_TIME}s | **Score** | $([ "${{ steps.security.outputs.vulnerabilities }}" -eq 0 ] && echo "A+" || echo "B") | **Smells** | ${CODE_SMELLS} |
-          
-          </div>
           
           ### 📈 Detailed Metrics
           

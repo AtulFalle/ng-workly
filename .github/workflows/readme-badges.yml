@@ -79,15 +79,11 @@ jobs:
           cat > README-badges.md << EOF
           ## 📊 Quick Status Overview
           
-          <div align="center">
-          
           | 🧪 **Tests** | 🏗️ **Build** | 🔒 **Security** | 📊 **Quality** |
           |:---:|:---:|:---:|:---:|
           | **Status** | $([ "$TEST_STATUS" = "PASS" ] && echo "✅ PASS" || echo "❌ FAIL") | $([ "$BUILD_STATUS" = "PASS" ] && echo "✅ PASS" || echo "❌ FAIL") | $([ "$SECURITY_STATUS" = "PASS" ] && echo "✅ PASS" || echo "❌ FAIL") | $([ "$LINT_STATUS" = "PASS" ] && echo "✅ PASS" || echo "❌ FAIL") |
           | **Coverage** | ${COVERAGE_DATA}% | **Projects** | ${PROJECT_COUNT} | **Vulnerabilities** | $VULN_COUNT | **Issues** | $LINT_ISSUES |
           | **Suites** | 5 | **Time** | ~3.2 min | **Score** | $([ "$VULN_COUNT" -eq 0 ] && echo "A+" || echo "B") | **Smells** | ${CODE_SMELLS} |
-          
-          </div>
           
           **Last Updated**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
           EOF
