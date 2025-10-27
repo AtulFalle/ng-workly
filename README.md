@@ -378,3 +378,59 @@ For enterprise customers, we offer:
 | **Suites** | 5 | **Time** | ~3.2 min | **Score** | B | **Smells** | 0 |
 
 **Last Updated**: 2025-10-25 10:42:56 UTC
+## 🛡️ Security & Quality Dashboard
+
+| 🔒 **Security** | 🧪 **Testing** | 🏗️ **Build** | 📊 **Quality** |
+|:---:|:---:|:---:|:---:|
+| **Status** | 🟡 MODERATE | ✅ PASS | ✅ PASS | ⚠️ ISSUES |
+| **Vulnerabilities** | 13 | **Coverage** | N/A% | **Projects** | 5 | **Lint Issues** |  |
+| **Critical** | 0 | **Suites** | 5 | **Time** | ~3.2 min | **Smells** | 0 |
+| **High** | 0 | **E2E** | N/A | **Bundle** | N/A | **Complexity** | N/A |
+
+### 🔍 Detailed Security Analysis
+
+<table>
+<tr>
+<td width="50%">
+
+#### 🛡️ Security Breakdown
+- **Total Vulnerabilities**: 13
+- **Critical Severity**: 0
+- **High Severity**: 0
+- **Moderate Severity**: 13
+- **Security Score**: ✅ A+
+
+#### 🔍 Vulnerability Analysis
+- **Dependencies**: 70 packages
+- **Dev Dependencies**: 70 packages
+- **Last Audit**: 2025-10-27
+- **Audit Level**: high
+
+</td>
+<td width="50%">
+
+#### 📊 Quality Metrics
+- **Code Coverage**: N/A%
+- **Lint Issues**: 
+- **Code Smells**: 0
+- **Complexity**: N/A (not measured)
+- **Duplicates**: N/A (not measured)
+- **Technical Debt**: N/A (not measured)
+
+#### 🏗️ Build Performance
+- **Projects Built**: 5
+- **Build Time**: ~3.2 min
+- **Bundle Size**: N/A
+- **Cache Hit Rate**: N/A (not measured)
+- **Parallel Jobs**: N/A (not measured)
+
+</td>
+</tr>
+</table>
+
+### 📅 Last Updated
+**Date**: 2025-10-27 09:19:13 UTC
+**Report**: [Security Report](./SECURITY-REPORT.md)
+**Workflow**: [View Details](https://github.com/AtulFalle/ng-workly/actions/runs/18835835804)
+
+---

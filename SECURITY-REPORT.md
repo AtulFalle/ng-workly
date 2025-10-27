@@ -1,9 +1,9 @@
 # 🛡️ Security Report
 
-**Generated**: 2025-10-24 23:02:51 UTC  
-**Commit**: d90c97184f6e41d29bc3a729039bbc9cb6a2f96b  
+**Generated**: 2025-10-27 09:18:59 UTC  
+**Commit**: f7913ee1d3ffb4e7bd644dd1e450c58cade39344  
 **Branch**: master  
-**Workflow**: [View Details](https://github.com/AtulFalle/ng-workly/actions/runs/18794173045)
+**Workflow**: [View Details](https://github.com/AtulFalle/ng-workly/actions/runs/18835835804)
 
 ## 🔍 Vulnerability Scan
 
@@ -28,30 +28,30 @@ node_modules/koa
     Depends on vulnerable versions of @module-federation/dts-plugin
     node_modules/@module-federation/cli
     node_modules/@module-federation/node/node_modules/@module-federation/cli
-      @module-federation/enhanced  <=0.0.1-rc.0 || >=0.18.0
-      Depends on vulnerable versions of @module-federation/cli
-      Depends on vulnerable versions of @module-federation/dts-plugin
-      Depends on vulnerable versions of @module-federation/manifest
-      Depends on vulnerable versions of @module-federation/rspack
-      node_modules/@module-federation/enhanced
-      node_modules/@module-federation/node/node_modules/@module-federation/enhanced
-        @module-federation/node  >=2.7.11
-        Depends on vulnerable versions of @module-federation/enhanced
-        node_modules/@module-federation/node
-        @nx/module-federation  <=0.0.0-pr-33229-fff13a7 || >=21.4.0-beta.0
-        Depends on vulnerable versions of @module-federation/enhanced
-        Depends on vulnerable versions of @module-federation/node
-        node_modules/@nx/module-federation
-        @nx/rspack  <=0.0.0-pr-33229-fff13a7 || >=21.4.0-beta.0
-        Depends on vulnerable versions of @module-federation/enhanced
-        Depends on vulnerable versions of @module-federation/node
+    @module-federation/enhanced  <=0.0.0-fix-register-share-20251020114421 || >=0.18.0
+    Depends on vulnerable versions of @module-federation/cli
+    Depends on vulnerable versions of @module-federation/dts-plugin
+    Depends on vulnerable versions of @module-federation/manifest
+    Depends on vulnerable versions of @module-federation/rspack
+    node_modules/@module-federation/enhanced
+    node_modules/@module-federation/node/node_modules/@module-federation/enhanced
+      @module-federation/node  >=2.7.11
+      Depends on vulnerable versions of @module-federation/enhanced
+      node_modules/@module-federation/node
+      @nx/module-federation  <=0.0.0-pr-33229-fff13a7 || >=21.4.0-beta.0
+      Depends on vulnerable versions of @module-federation/enhanced
+      Depends on vulnerable versions of @module-federation/node
+      node_modules/@nx/module-federation
+        @nx/angular  <=0.0.0-pr-33229-fff13a7 || >=21.4.0-beta.0
         Depends on vulnerable versions of @nx/module-federation
-        node_modules/@nx/rspack
-          @nx/angular  <=0.0.0-pr-33229-fff13a7 || >=21.4.0-beta.0
-          Depends on vulnerable versions of @nx/module-federation
-          Depends on vulnerable versions of @nx/rspack
-          node_modules/@nx/angular
-    @module-federation/manifest  <=0.0.0-research-issue-4085-20251016232757 || >=0.18.0
+        Depends on vulnerable versions of @nx/rspack
+        node_modules/@nx/angular
+      @nx/rspack  <=0.0.0-pr-33229-fff13a7 || >=21.4.0-beta.0
+      Depends on vulnerable versions of @module-federation/enhanced
+      Depends on vulnerable versions of @module-federation/node
+      Depends on vulnerable versions of @nx/module-federation
+      node_modules/@nx/rspack
+    @module-federation/manifest  <=0.0.0-fix-register-share-20251020114421 || >=0.18.0
     Depends on vulnerable versions of @module-federation/dts-plugin
     node_modules/@module-federation/manifest
     node_modules/@module-federation/node/node_modules/@module-federation/manifest
@@ -89,7 +89,7 @@ nx run-many -t lint --all
 ```
 
 ```
-/home/runner/work/_temp/6d397b54-dcb1-4b1d-a323-bf79dd11af01.sh: line 4: nx: command not found
+/home/runner/work/_temp/28f17764-da17-4494-bee2-c146fbfa28ab.sh: line 4: nx: command not found
 ```
 
 ## 🧪 Test Results
@@ -99,7 +99,7 @@ nx run-many -t test --all
 ```
 
 ```
-/home/runner/work/_temp/6d397b54-dcb1-4b1d-a323-bf79dd11af01.sh: line 4: nx: command not found
+/home/runner/work/_temp/28f17764-da17-4494-bee2-c146fbfa28ab.sh: line 4: nx: command not found
 ```
 
 ## 🏗️ Build Status
@@ -109,7 +109,7 @@ nx run-many -t build --all
 ```
 
 ```
-/home/runner/work/_temp/6d397b54-dcb1-4b1d-a323-bf79dd11af01.sh: line 4: nx: command not found
+/home/runner/work/_temp/28f17764-da17-4494-bee2-c146fbfa28ab.sh: line 4: nx: command not found
 ```
 
 ## 📈 Security Metrics
