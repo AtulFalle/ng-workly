@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 import { loadRemote } from '@module-federation/enhanced/runtime';
 import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
+import { HrmDashboardComponent } from './components/hrm/hrm-dashboard/hrm-dashboard.component';
 
 export const appRoutes: Route[] = [
   // Auth routes (no layout)
@@ -17,18 +18,17 @@ export const appRoutes: Route[] = [
     path: 'dashboard',
     component: DashboardLayoutComponent,
     children: [
+      // Default dashboard route - loads shell dashboard
+      {
+        path: '',
+        component: HrmDashboardComponent
+      },
+      // Attendance module routes
       {
         path: 'attendance',
         loadChildren: () =>
           loadRemote<typeof import('attendance/Routes')>('attendance/Routes').then(
-            (m) => m!.remoteRoutes
-          ),
-      },
-      {
-        path: 'attendance/reports',
-        loadChildren: () =>
-          loadRemote<typeof import('attendance/Routes')>('attendance/Routes').then(
-            (m) => m!.remoteRoutes
+            (m) => m?.remoteRoutes || []
           ),
       },
     ],

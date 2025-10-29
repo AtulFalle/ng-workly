@@ -134,14 +134,39 @@ export class DashboardLayoutComponent {
       title: 'Attendance',
       items: [
         {
+          label: 'Dashboard',
+          icon: 'pi pi-home',
+          routerLink: '/dashboard/attendance/dashboard'
+        },
+        {
           label: 'Time Tracking',
           icon: 'pi pi-clock',
           routerLink: '/dashboard/attendance'
         },
         {
+          label: 'Attendance List',
+          icon: 'pi pi-list',
+          routerLink: '/dashboard/attendance/list'
+        },
+        {
           label: 'Reports',
           icon: 'pi pi-file-pdf',
           routerLink: '/dashboard/attendance/reports'
+        },
+        {
+          label: 'Regularization',
+          icon: 'pi pi-calendar-plus',
+          routerLink: '/dashboard/attendance/regularization'
+        },
+        {
+          label: 'Request Leave',
+          icon: 'pi pi-calendar-minus',
+          routerLink: '/dashboard/attendance/leave-request'
+        },
+        {
+          label: 'Approve Leave',
+          icon: 'pi pi-check-circle',
+          routerLink: '/dashboard/attendance/leave-approval'
         }
       ]
     },

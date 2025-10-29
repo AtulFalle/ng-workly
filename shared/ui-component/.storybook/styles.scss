@@ -1,0 +1,300 @@
+// Storybook Global Styles
+// ========================
+// This file contains global styles for Storybook including design system variables and PrimeNG theming
+
+// Design System CSS Variables
+// ============================
+:root {
+  // Color System
+  --primary-50: #f0f9ff;
+  --primary-100: #e0f2fe;
+  --primary-200: #bae6fd;
+  --primary-300: #7dd3fc;
+  --primary-400: #38bdf8;
+  --primary-500: #0ea5e9;
+  --primary-600: #0284c7;
+  --primary-700: #0369a1;
+  --primary-800: #075985;
+  --primary-900: #0c4a6e;
+
+  --secondary-50: #f8fafc;
+  --secondary-100: #f1f5f9;
+  --secondary-200: #e2e8f0;
+  --secondary-300: #cbd5e1;
+  --secondary-400: #94a3b8;
+  --secondary-500: #64748b;
+  --secondary-600: #475569;
+  --secondary-700: #334155;
+  --secondary-800: #1e293b;
+  --secondary-900: #0f172a;
+
+  // Semantic Colors
+  --success-50: #f0fdf4;
+  --success-100: #dcfce7;
+  --success-200: #bbf7d0;
+  --success-300: #86efac;
+  --success-400: #4ade80;
+  --success-500: #22c55e;
+  --success-600: #16a34a;
+  --success-700: #15803d;
+  --success-800: #166534;
+  --success-900: #14532d;
+
+  --warning-50: #fffbeb;
+  --warning-100: #fef3c7;
+  --warning-200: #fde68a;
+  --warning-300: #fcd34d;
+  --warning-400: #fbbf24;
+  --warning-500: #f59e0b;
+  --warning-600: #d97706;
+  --warning-700: #b45309;
+  --warning-800: #92400e;
+  --warning-900: #78350f;
+
+  --error-50: #fef2f2;
+  --error-100: #fee2e2;
+  --error-200: #fecaca;
+  --error-300: #fca5a5;
+  --error-400: #f87171;
+  --error-500: #ef4444;
+  --error-600: #dc2626;
+  --error-700: #b91c1c;
+  --error-800: #991b1b;
+  --error-900: #7f1d1d;
+
+  --info-50: #eff6ff;
+  --info-100: #dbeafe;
+  --info-200: #bfdbfe;
+  --info-300: #93c5fd;
+  --info-400: #60a5fa;
+  --info-500: #3b82f6;
+  --info-600: #2563eb;
+  --info-700: #1d4ed8;
+  --info-800: #1e40af;
+  --info-900: #1e3a8a;
+
+  // Surface Colors
+  --surface-0: #ffffff;
+  --surface-50: #f8fafc;
+  --surface-100: #f1f5f9;
+  --surface-200: #e2e8f0;
+  --surface-300: #cbd5e1;
+  --surface-400: #94a3b8;
+  --surface-500: #64748b;
+  --surface-600: #475569;
+  --surface-700: #334155;
+  --surface-800: #1e293b;
+  --surface-900: #0f172a;
+
+  // Text Colors
+  --text-color: #1f2937;
+  --text-color-secondary: #6b7280;
+  --text-color-tertiary: #9ca3af;
+  --text-color-disabled: #d1d5db;
+
+  // Border Colors
+  --border-color: #e5e7eb;
+  --border-color-focus: #3b82f6;
+  --border-color-error: #ef4444;
+
+  // Spacing System
+  --spacing-1: 0.25rem;   // 4px
+  --spacing-2: 0.5rem;    // 8px
+  --spacing-3: 0.75rem;   // 12px
+  --spacing-4: 1rem;      // 16px
+  --spacing-5: 1.25rem;   // 20px
+  --spacing-6: 1.5rem;    // 24px
+  --spacing-8: 2rem;      // 32px
+  --spacing-10: 2.5rem;   // 40px
+  --spacing-12: 3rem;     // 48px
+  --spacing-16: 4rem;     // 64px
+  --spacing-20: 5rem;     // 80px
+  --spacing-24: 6rem;     // 96px
+
+  // Typography
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-size-xs: 0.75rem;    // 12px
+  --font-size-sm: 0.875rem;   // 14px
+  --font-size-base: 1rem;     // 16px
+  --font-size-lg: 1.125rem;   // 18px
+  --font-size-xl: 1.25rem;    // 20px
+  --font-size-2xl: 1.5rem;    // 24px
+  --font-size-3xl: 1.875rem;  // 30px
+  --font-size-4xl: 2.25rem;   // 36px
+  --font-size-5xl: 3rem;      // 48px
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --line-height-none: 1;
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-loose: 2;
+
+  // Border Radius
+  --border-radius-none: 0;
+  --border-radius-sm: 0.125rem;   // 2px
+  --border-radius: 0.25rem;       // 4px
+  --border-radius-md: 0.375rem;   // 6px
+  --border-radius-lg: 0.5rem;     // 8px
+  --border-radius-xl: 0.75rem;    // 12px
+  --border-radius-2xl: 1rem;      // 16px
+  --border-radius-full: 9999px;
+
+  // Shadows
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  // Z-Index
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-fixed: 1030;
+  --z-index-modal-backdrop: 1040;
+  --z-index-modal: 1050;
+  --z-index-popover: 1060;
+  --z-index-tooltip: 1070;
+
+  // Transitions
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow: 500ms ease;
+}
+
+// Dark Theme Variables
+.p-dark {
+  --primary-50: #0c4a6e;
+  --primary-100: #075985;
+  --primary-200: #0369a1;
+  --primary-300: #0284c7;
+  --primary-400: #0ea5e9;
+  --primary-500: #38bdf8;
+  --primary-600: #7dd3fc;
+  --primary-700: #bae6fd;
+  --primary-800: #e0f2fe;
+  --primary-900: #f0f9ff;
+
+  --surface-0: #0f172a;
+  --surface-50: #1e293b;
+  --surface-100: #334155;
+  --surface-200: #475569;
+  --surface-300: #64748b;
+  --surface-400: #94a3b8;
+  --surface-500: #cbd5e1;
+  --surface-600: #e2e8f0;
+  --surface-700: #f1f5f9;
+  --surface-800: #f8fafc;
+  --surface-900: #ffffff;
+
+  --text-color: #f8fafc;
+  --text-color-secondary: #cbd5e1;
+  --text-color-tertiary: #94a3b8;
+  --text-color-disabled: #64748b;
+
+  --border-color: #334155;
+  --border-color-focus: #60a5fa;
+  --border-color-error: #f87171;
+}
+
+// Base Styles
+// ===========
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-family);
+  line-height: var(--line-height-normal);
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--surface-0);
+  color: var(--text-color);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+}
+
+// Storybook Specific Styles
+// =========================
+.sb-show-main {
+  background-color: var(--surface-0);
+  color: var(--text-color);
+}
+
+// PrimeNG Theme Integration
+// =========================
+.p-component {
+  font-family: var(--font-family);
+}
+
+// Override PrimeNG default colors with design system
+.p-button {
+  --p-button-primary-color: var(--primary-500);
+  --p-button-primary-hover-color: var(--primary-600);
+  --p-button-primary-active-color: var(--primary-700);
+}
+
+.p-inputtext {
+  --p-inputtext-border-color: var(--border-color);
+  --p-inputtext-focus-border-color: var(--border-color-focus);
+}
+
+.p-dropdown {
+  --p-dropdown-border-color: var(--border-color);
+  --p-dropdown-focus-border-color: var(--border-color-focus);
+}
+
+// Dark theme integration
+.p-dark {
+  .p-component {
+    color: var(--text-color);
+  }
+  
+  .p-button {
+    --p-button-primary-color: var(--primary-500);
+    --p-button-primary-hover-color: var(--primary-400);
+    --p-button-primary-active-color: var(--primary-300);
+  }
+  
+  .p-inputtext {
+    --p-inputtext-border-color: var(--border-color);
+    --p-inputtext-focus-border-color: var(--border-color-focus);
+    background-color: var(--surface-50);
+    color: var(--text-color);
+  }
+  
+  .p-dropdown {
+    --p-dropdown-border-color: var(--border-color);
+    --p-dropdown-focus-border-color: var(--border-color-focus);
+    background-color: var(--surface-50);
+    color: var(--text-color);
+  }
+}
+
+// Storybook Canvas Styles
+// =======================
+.sb-canvas {
+  background-color: var(--surface-0);
+  color: var(--text-color);
+}
+
+// Responsive Design
+// =================
+@media (max-width: 768px) {
+  :root {
+    --spacing-4: 0.75rem;
+    --spacing-6: 1rem;
+    --spacing-8: 1.5rem;
+  }
+}
