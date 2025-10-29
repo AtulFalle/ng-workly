@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
 // Import PrimeIcons
-@import 'primeicons/primeicons.css';
+@use 'primeicons/primeicons.css';
 
 // Import design system from the shared library
-@import 'design-system.scss';
+@use 'design-system.scss';
 

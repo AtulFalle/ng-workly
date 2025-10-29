@@ -1,0 +1,290 @@
+.leave-request {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: var(--surface-0);
+  min-height: 100vh;
+
+  .request-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-color);
+      margin: 0 0 0.5rem 0;
+    }
+
+    .page-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-color-secondary);
+      margin: 0;
+    }
+  }
+
+  .balance-section {
+    margin-bottom: 2rem;
+
+    .balance-card {
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        background: var(--surface-50);
+        border-bottom: 1px solid var(--surface-200);
+
+        .card-title {
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: var(--text-color);
+          margin: 0;
+        }
+      }
+
+      .balance-info {
+        padding: 1.5rem;
+
+        .balance-item {
+          .balance-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--surface-100);
+
+            &:last-child {
+              border-bottom: none;
+            }
+
+            .balance-label {
+              font-weight: 500;
+              color: var(--text-color);
+            }
+
+            .balance-value {
+              font-weight: 600;
+              color: var(--text-color);
+
+              &--highlight {
+                color: var(--primary-color);
+                font-size: 1.1rem;
+              }
+            }
+          }
+        }
+      }
+
+      .balance-placeholder {
+        padding: 2rem;
+        text-align: center;
+        color: var(--text-color-secondary);
+
+        i {
+          font-size: 2rem;
+          margin-bottom: 1rem;
+          display: block;
+        }
+
+        p {
+          margin: 0;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  .form-section {
+    margin-bottom: 2rem;
+
+    .form-card {
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        background: var(--surface-50);
+        border-bottom: 1px solid var(--surface-200);
+
+        .card-title {
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: var(--text-color);
+          margin: 0;
+        }
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        .field-label {
+          font-weight: 600;
+          color: var(--text-color);
+          font-size: 0.9rem;
+        }
+
+        .field-error {
+          color: var(--red-500);
+          font-size: 0.8rem;
+          margin-top: 0.25rem;
+        }
+
+        .total-days-display {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.75rem;
+          background: var(--surface-50);
+          border: 1px solid var(--surface-200);
+          border-radius: 6px;
+
+          .total-days-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+          }
+
+          .total-days-label {
+            color: var(--text-color-secondary);
+            font-size: 0.9rem;
+          }
+        }
+
+        textarea {
+          resize: vertical;
+          min-height: 80px;
+        }
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--surface-200);
+
+        .action-button {
+          min-width: 120px;
+
+          &--primary {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+
+            &:hover:not(:disabled) {
+              background: var(--primary-600);
+              border-color: var(--primary-600);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .summary-section {
+    .summary-card {
+      .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin: 0;
+        padding: 1rem 1.5rem;
+        background: var(--surface-50);
+        border-bottom: 1px solid var(--surface-200);
+      }
+
+      .summary-content {
+        padding: 1.5rem;
+
+        .summary-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.75rem 0;
+          border-bottom: 1px solid var(--surface-100);
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          .summary-label {
+            font-weight: 500;
+            color: var(--text-color);
+          }
+
+          .summary-value {
+            font-weight: 600;
+            color: var(--text-color);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .leave-request {
+    padding: 1rem;
+
+    .request-header {
+      .page-title {
+        font-size: 2rem;
+      }
+    }
+
+    .form-section {
+      .form-card {
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+          flex-direction: column;
+
+          .action-button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Dark Theme Support
+.p-dark {
+  .leave-request {
+    background: var(--surface-900);
+
+    .request-header {
+      .page-title {
+        color: var(--surface-0);
+      }
+
+      .page-subtitle {
+        color: var(--surface-300);
+      }
+    }
+
+    .balance-card,
+    .form-card,
+    .summary-card {
+      background: var(--surface-800);
+      border-color: var(--surface-700);
+
+      .card-header {
+        background: var(--surface-700);
+        border-color: var(--surface-600);
+      }
+    }
+  }
+}

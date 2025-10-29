@@ -29,19 +29,20 @@
         </ng-template>
 
         <div class="stat-card__content">
-          <h3 class="stat-card__value">{{ card.value }}</h3>
+          <span>
+            <h3 class="stat-card__value">{{ card.value }}</h3>
+            @if (showTrends() && card.trend) {
+              <div class="stat-card__trend" [class]="getTrendClass(card.trend)">
+                <i [class]="getTrendIcon(card.trend)"></i>
+                <span class="trend-value">{{ card.trend.value }}%</span>
+              </div>
+            }
+          </span>
           <p class="stat-card__title">{{ card.title }}</p>
           @if (card.subtitle) {
             <p class="stat-card__subtitle">{{ card.subtitle }}</p>
           }
         </div>
-
-        @if (showTrends() && card.trend) {
-          <div class="stat-card__trend" [class]="getTrendClass(card.trend)">
-            <i [class]="getTrendIcon(card.trend)"></i>
-            <span class="trend-value">{{ card.trend.value }}%</span>
-          </div>
-        }
       </p-card>
     }
   }

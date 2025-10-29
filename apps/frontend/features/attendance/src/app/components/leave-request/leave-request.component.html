@@ -1,0 +1,238 @@
+<!-- Leave Request Form -->
+<div class="leave-request">
+  <!-- Header Section -->
+  <div class="request-header">
+    <h1 class="page-title">Submit Leave Request</h1>
+    <p class="page-subtitle">Request time off from work</p>
+  </div>
+
+  <!-- Leave Balance Overview -->
+  <div class="balance-section">
+    <p-card class="balance-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <h2 class="card-title">Leave Balance</h2>
+          <p-badge 
+            [value]="selectedLeaveType() ? getLeaveTypeLabel(selectedLeaveType()) : 'Select Leave Type'" 
+            severity="info">
+          </p-badge>
+        </div>
+      </ng-template>
+
+      @if (selectedLeaveType()) {
+        <div class="balance-info">
+          @for (balance of leaveBalances(); track balance.leaveType) {
+            @if (balance.leaveType === selectedLeaveType()) {
+              <div class="balance-item">
+                <div class="balance-row">
+                  <span class="balance-label">Total Days:</span>
+                  <span class="balance-value">{{ balance.totalDays }}</span>
+                </div>
+                <div class="balance-row">
+                  <span class="balance-label">Used Days:</span>
+                  <span class="balance-value">{{ balance.usedDays }}</span>
+                </div>
+                <div class="balance-row">
+                  <span class="balance-label">Remaining Days:</span>
+                  <span class="balance-value balance-value--highlight">{{ balance.remainingDays }}</span>
+                </div>
+              </div>
+            }
+          }
+        </div>
+      } @else {
+        <div class="balance-placeholder">
+          <i class="pi pi-info-circle"></i>
+          <p>Select a leave type to view your balance</p>
+        </div>
+      }
+    </p-card>
+  </div>
+
+  <!-- Leave Request Form -->
+  <div class="form-section">
+    <p-card class="form-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <h2 class="card-title">Leave Request Details</h2>
+          <p-badge 
+            [value]="totalDays() + ' days'" 
+            [severity]="canSubmitRequest() ? 'success' : 'warn'">
+          </p-badge>
+        </div>
+      </ng-template>
+
+      <form [formGroup]="leaveForm()" (ngSubmit)="onSubmit()">
+        <div class="form-grid">
+          <!-- Leave Type -->
+          <div class="form-field">
+            <label for="leaveType" class="field-label">Leave Type *</label>
+            <p-select
+              id="leaveType"
+              formControlName="leaveType"
+              [options]="leaveTypes()"
+              placeholder="Select leave type"
+              (onChange)="onLeaveTypeChange()"
+              class="w-full">
+            </p-select>
+            @if (leaveForm().get('leaveType')?.invalid && leaveForm().get('leaveType')?.touched) {
+              <small class="field-error">Please select a leave type</small>
+            }
+          </div>
+
+          <!-- Start Date -->
+          <div class="form-field">
+            <label for="startDate" class="field-label">Start Date *</label>
+            <p-datepicker
+              id="startDate"
+              formControlName="startDate"
+              placeholder="Select start date"
+              (onSelect)="onDateChange()"
+              class="w-full">
+            </p-datepicker>
+            @if (leaveForm().get('startDate')?.invalid && leaveForm().get('startDate')?.touched) {
+              <small class="field-error">Please select a start date</small>
+            }
+          </div>
+
+          <!-- End Date -->
+          <div class="form-field">
+            <label for="endDate" class="field-label">End Date *</label>
+            <p-datepicker
+              id="endDate"
+              formControlName="endDate"
+              placeholder="Select end date"
+              (onSelect)="onDateChange()"
+              class="w-full">
+            </p-datepicker>
+            @if (leaveForm().get('endDate')?.invalid && leaveForm().get('endDate')?.touched) {
+              <small class="field-error">Please select a valid end date</small>
+            }
+          </div>
+
+          <!-- Total Days Display -->
+          <div class="form-field">
+            <label class="field-label">Total Days</label>
+            <div class="total-days-display">
+              <span class="total-days-value">{{ totalDays() }}</span>
+              <span class="total-days-label">days</span>
+            </div>
+            @if (totalDays() > availableBalance()) {
+              <small class="field-error">Exceeds available balance ({{ availableBalance() }} days)</small>
+            }
+          </div>
+        </div>
+
+        <!-- Reason -->
+        <div class="form-field">
+          <label for="reason" class="field-label">Reason for Leave *</label>
+          <textarea
+            id="reason"
+            formControlName="reason"
+            placeholder="Please provide a detailed reason for your leave request..."
+            rows="4"
+            class="w-full">
+          </textarea>
+          @if (leaveForm().get('reason')?.invalid && leaveForm().get('reason')?.touched) {
+            <small class="field-error">Please provide a reason (minimum 10 characters)</small>
+          }
+        </div>
+
+        <!-- Emergency Contact -->
+        <div class="form-field">
+          <label for="emergencyContact" class="field-label">Emergency Contact *</label>
+          <input
+            id="emergencyContact"
+            type="text"
+            formControlName="emergencyContact"
+            placeholder="Name and phone number of emergency contact"
+            class="w-full">
+          @if (leaveForm().get('emergencyContact')?.invalid && leaveForm().get('emergencyContact')?.touched) {
+            <small class="field-error">Please provide emergency contact details</small>
+          }
+        </div>
+
+        <!-- Work Handover -->
+        <div class="form-field">
+          <label for="workHandover" class="field-label">Work Handover *</label>
+          <textarea
+            id="workHandover"
+            formControlName="workHandover"
+            placeholder="Describe how your work will be handled during your absence..."
+            rows="3"
+            class="w-full">
+          </textarea>
+          @if (leaveForm().get('workHandover')?.invalid && leaveForm().get('workHandover')?.touched) {
+            <small class="field-error">Please describe work handover arrangements</small>
+          }
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <p-button
+            label="Cancel"
+            icon="pi pi-times"
+            [outlined]="true"
+            (onClick)="onCancel()"
+            class="action-button">
+          </p-button>
+          
+          <p-button
+            label="Reset"
+            icon="pi pi-refresh"
+            [outlined]="true"
+            (onClick)="onReset()"
+            class="action-button">
+          </p-button>
+          
+          <p-button
+            label="Submit Request"
+            icon="pi pi-send"
+            type="submit"
+            [loading]="isSubmitting()"
+            [disabled]="!canSubmitRequest()"
+            class="action-button action-button--primary">
+          </p-button>
+        </div>
+      </form>
+    </p-card>
+  </div>
+
+  <!-- Request Summary -->
+  @if (selectedLeaveType() && selectedStartDate() && selectedEndDate()) {
+    <div class="summary-section">
+      <p-card class="summary-card">
+        <ng-template pTemplate="header">
+          <h2 class="card-title">Request Summary</h2>
+        </ng-template>
+
+        <div class="summary-content">
+          <div class="summary-row">
+            <span class="summary-label">Leave Type:</span>
+            <span class="summary-value">{{ getLeaveTypeLabel(selectedLeaveType()) }}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Duration:</span>
+            <span class="summary-value">{{ selectedStartDate() | date:'mediumDate' }} - {{ selectedEndDate() | date:'mediumDate' }}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Total Days:</span>
+            <span class="summary-value">{{ totalDays() }} days</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Available Balance:</span>
+            <span class="summary-value">{{ availableBalance() }} days</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Status:</span>
+            <span class="summary-value">
+              <p-badge value="Pending Approval" severity="warn"></p-badge>
+            </span>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  }
+</div>
+
+<p-toast></p-toast>

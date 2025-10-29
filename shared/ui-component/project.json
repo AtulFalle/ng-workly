@@ -11,7 +11,13 @@
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
         "project": "shared/ui-component/ng-package.json",
-        "tsConfig": "shared/ui-component/tsconfig.lib.json"
+        "tsConfig": "shared/ui-component/tsconfig.lib.json",
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "dist/libs/src",
+            "node_modules"
+          ]
+        }
       },
       "configurations": {
         "production": {
@@ -48,6 +54,73 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "echo 'Dependency analysis handled by npm audit and audit-ci'"
+      }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "shared/ui-component/.storybook",
+        "browserTarget": "ui-component:build-storybook",
+        "compodoc": false,
+        "styles": [
+          "shared/ui-component/.storybook/styles.scss",
+          "dist/libs/src/design-system.scss",
+          "primeicons/primeicons.css"
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "dist/libs/src",
+            "node_modules",
+            "shared/ui-component/src"
+          ]
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/ui-component",
+        "configDir": "shared/ui-component/.storybook",
+        "browserTarget": "ui-component:build-storybook",
+        "compodoc": false,
+        "styles": [
+          "shared/ui-component/.storybook/styles.scss",
+          "dist/libs/src/design-system.scss",
+          "primeicons/primeicons.css"
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "dist/libs/src",
+            "node_modules",
+            "shared/ui-component/src"
+          ]
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "static-storybook": {
+      "executor": "@nx/web:file-server",
+      "dependsOn": ["build-storybook"],
+      "options": {
+        "buildTarget": "ui-component:build-storybook",
+        "staticFilePath": "dist/storybook/ui-component",
+        "spa": true
+      },
+      "configurations": {
+        "ci": {
+          "buildTarget": "ui-component:build-storybook:ci"
+        }
       }
     }
   }

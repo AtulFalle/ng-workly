@@ -1,0 +1,323 @@
+<!-- Leave Approval Dashboard -->
+<div class="leave-approval">
+  <!-- Header Section -->
+  <div class="approval-header">
+    <h1 class="page-title">Leave Approval</h1>
+    <p class="page-subtitle">Review and approve leave requests</p>
+  </div>
+
+  <!-- Stats Overview -->
+  <div class="stats-section">
+    <div class="stats-grid">
+      <p-card class="stat-card stat-card--primary">
+        <div class="stat-content">
+          <div class="stat-icon">
+            <i class="pi pi-inbox"></i>
+          </div>
+          <div class="stat-info">
+            <h3 class="stat-value">{{ pendingCount() }}</h3>
+            <p class="stat-label">Pending Requests</p>
+          </div>
+        </div>
+      </p-card>
+
+      <p-card class="stat-card stat-card--success">
+        <div class="stat-content">
+          <div class="stat-icon">
+            <i class="pi pi-check-circle"></i>
+          </div>
+          <div class="stat-info">
+            <h3 class="stat-value">{{ approvedRequests().length }}</h3>
+            <p class="stat-label">Approved</p>
+          </div>
+        </div>
+      </p-card>
+
+      <p-card class="stat-card stat-card--danger">
+        <div class="stat-content">
+          <div class="stat-icon">
+            <i class="pi pi-times-circle"></i>
+          </div>
+          <div class="stat-info">
+            <h3 class="stat-value">{{ rejectedRequests().length }}</h3>
+            <p class="stat-label">Rejected</p>
+          </div>
+        </div>
+      </p-card>
+
+      <p-card class="stat-card stat-card--info">
+        <div class="stat-content">
+          <div class="stat-icon">
+            <i class="pi pi-chart-bar"></i>
+          </div>
+          <div class="stat-info">
+            <h3 class="stat-value">{{ totalRequests() }}</h3>
+            <p class="stat-label">Total Requests</p>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <p-card class="filters-card">
+      <ng-template pTemplate="header">
+        <h2 class="card-title">Filters</h2>
+      </ng-template>
+
+      <div class="filters-grid">
+        <div class="filter-field">
+          <label class="filter-label">Status</label>
+          <p-select
+            [options]="statusOptions()"
+            [(ngModel)]="statusFilter"
+            (onChange)="onStatusFilterChange()"
+            placeholder="All Status"
+            class="w-full">
+          </p-select>
+        </div>
+
+        <div class="filter-field">
+          <label class="filter-label">Leave Type</label>
+          <p-select
+            [options]="leaveTypeOptions()"
+            [(ngModel)]="leaveTypeFilter"
+            (onChange)="onLeaveTypeFilterChange()"
+            placeholder="All Types"
+            class="w-full">
+          </p-select>
+        </div>
+
+        <div class="filter-field">
+          <label class="filter-label">Date Range</label>
+          <p-datepicker
+            [(ngModel)]="dateRange"
+            selectionMode="range"
+            placeholder="Select date range"
+            (onSelect)="onDateRangeChange()"
+            class="w-full">
+          </p-datepicker>
+        </div>
+
+        <div class="filter-actions">
+          <p-button
+            label="Export Data"
+            icon="pi pi-download"
+            [outlined]="true"
+            (onClick)="onExportData()"
+            class="export-button">
+          </p-button>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- Requests Table -->
+  <div class="requests-section">
+    <p-card class="requests-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <h2 class="card-title">Leave Requests</h2>
+          <p-badge 
+            [value]="filteredRequests().length + ' requests'" 
+            severity="info">
+          </p-badge>
+        </div>
+      </ng-template>
+
+      @if (isLoading()) {
+        <div class="loading-state">
+          <i class="pi pi-spinner pi-spin"></i>
+          <p>Loading leave requests...</p>
+        </div>
+      } @else if (filteredRequests().length === 0) {
+        <div class="empty-state">
+          <i class="pi pi-inbox"></i>
+          <h3>No Leave Requests Found</h3>
+          <p>No leave requests match your current filters.</p>
+        </div>
+      } @else {
+        <div class="requests-table">
+          @for (request of filteredRequests(); track request.id) {
+            <div class="request-item">
+              <div class="request-header">
+                <div class="request-info">
+                  <h4 class="employee-name">{{ request.employeeName }}</h4>
+                  <p class="employee-id">{{ request.employeeId }}</p>
+                </div>
+                <div class="request-status">
+                  <p-badge 
+                    [value]="getStatusLabel(request.status)" 
+                    [severity]="getStatusSeverity(request.status)">
+                  </p-badge>
+                </div>
+              </div>
+
+              <div class="request-details">
+                <div class="detail-row">
+                  <span class="detail-label">Leave Type:</span>
+                  <span class="detail-value">{{ getLeaveTypeLabel(request.leaveType) }}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Duration:</span>
+                  <span class="detail-value">{{ formatDate(request.startDate) }} - {{ formatDate(request.endDate) }}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Total Days:</span>
+                  <span class="detail-value">{{ formatDuration(request.totalDays) }}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Submitted:</span>
+                  <span class="detail-value">{{ formatDate(request.submittedDate) }}</span>
+                </div>
+                @if (request.approvedBy) {
+                  <div class="detail-row">
+                    <span class="detail-label">Approved By:</span>
+                    <span class="detail-value">{{ request.approvedBy }}</span>
+                  </div>
+                }
+                @if (request.approvedDate) {
+                  <div class="detail-row">
+                    <span class="detail-label">Approved Date:</span>
+                    <span class="detail-value">{{ formatDate(request.approvedDate) }}</span>
+                  </div>
+                }
+              </div>
+
+              <div class="request-reason">
+                <h5 class="reason-title">Reason:</h5>
+                <p class="reason-text">{{ request.reason }}</p>
+              </div>
+
+              @if (request.emergencyContact) {
+                <div class="request-contact">
+                  <h5 class="contact-title">Emergency Contact:</h5>
+                  <p class="contact-text">{{ request.emergencyContact }}</p>
+                </div>
+              }
+
+              @if (request.workHandover) {
+                <div class="request-handover">
+                  <h5 class="handover-title">Work Handover:</h5>
+                  <p class="handover-text">{{ request.workHandover }}</p>
+                </div>
+              }
+
+              @if (request.comments) {
+                <div class="request-comments">
+                  <h5 class="comments-title">Comments:</h5>
+                  <p class="comments-text">{{ request.comments }}</p>
+                </div>
+              }
+
+              <div class="request-actions">
+                <p-button
+                  label="View Details"
+                  icon="pi pi-eye"
+                  [outlined]="true"
+                  size="small"
+                  (onClick)="onViewRequest(request)"
+                  class="action-button">
+                </p-button>
+
+                @if (request.status === 'pending') {
+                  <p-button
+                    label="Approve"
+                    icon="pi pi-check"
+                    size="small"
+                    (onClick)="onApproveRequest()"
+                    class="action-button action-button--success">
+                  </p-button>
+                  
+                  <p-button
+                    label="Reject"
+                    icon="pi pi-times"
+                    [outlined]="true"
+                    severity="danger"
+                    size="small"
+                    (onClick)="onRejectRequest()"
+                    class="action-button">
+                  </p-button>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </p-card>
+  </div>
+</div>
+
+<!-- Approval Dialog -->
+<p-dialog
+  [(visible)]="showApprovalDialog"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '600px' }"
+  header="Process Leave Request"
+  (onHide)="onCloseDialog()">
+  
+  @if (selectedRequest()) {
+    <div class="approval-dialog">
+      <div class="request-summary">
+        <h4>Request Summary</h4>
+        <div class="summary-details">
+          <div class="summary-row">
+            <span class="summary-label">Employee:</span>
+            <span class="summary-value">{{ selectedRequest()!.employeeName }}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Leave Type:</span>
+            <span class="summary-value">{{ getLeaveTypeLabel(selectedRequest()!.leaveType) }}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Duration:</span>
+            <span class="summary-value">{{ formatDate(selectedRequest()!.startDate) }} - {{ formatDate(selectedRequest()!.endDate) }}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Total Days:</span>
+            <span class="summary-value">{{ formatDuration(selectedRequest()!.totalDays) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="approval-form">
+        <div class="form-field">
+          <label class="field-label">Comments</label>
+          <textarea
+            [(ngModel)]="approvalComments"
+            placeholder="Add comments for this decision..."
+            rows="4"
+            class="w-full">
+          </textarea>
+        </div>
+      </div>
+    </div>
+  }
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-actions">
+      <p-button
+        label="Cancel"
+        icon="pi pi-times"
+        [outlined]="true"
+        (onClick)="onCloseDialog()"
+        class="dialog-button">
+      </p-button>
+      
+      <p-button
+        [label]="approvalAction() === 'approve' ? 'Approve Request' : 'Reject Request'"
+        [icon]="approvalAction() === 'approve' ? 'pi pi-check' : 'pi pi-times'"
+        [severity]="approvalAction() === 'approve' ? 'success' : 'danger'"
+        [loading]="isProcessing()"
+        (onClick)="onProcessApproval()"
+        class="dialog-button">
+      </p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-toast></p-toast>
