@@ -457,3 +457,12 @@ For enterprise customers, we offer:
 | **Suites** | 5 | **Time** | ~3.2 min | **Score** | B | **Smells** | 0 |
 
 **Last Updated**: 2025-10-31 18:53:41 UTC
+## 📊 Quick Status Overview
+
+| 🧪 **Tests** | 🏗️ **Build** | 🔒 **Security** | 📊 **Quality** |
+|:---:|:---:|:---:|:---:|
+| **Status** | ✅ PASS | ✅ PASS | ✅ PASS | ✅ PASS |
+| **Coverage** | N/A% | **Projects** | 4 | **Vulnerabilities** | 9 | **Issues** |  |
+| **Suites** | 5 | **Time** | ~3.2 min | **Score** | B | **Smells** | 0 |
+
+**Last Updated**: 2025-10-31 19:56:24 UTC
