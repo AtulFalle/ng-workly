@@ -4,7 +4,7 @@
 
 import { ChartData, ChartOptions } from 'chart.js';
 
-export type ChartType = 'line' | 'bar' | 'pie' | 'doughnut' | 'polarArea' | 'radar' | 'area' | 'bubble' | 'scatter';
+export type ChartType = 'line' | 'bar' | 'pie' | 'doughnut' | 'polarArea' | 'radar' | 'bubble' | 'scatter';
 
 export interface ChartConfig {
   type: ChartType;

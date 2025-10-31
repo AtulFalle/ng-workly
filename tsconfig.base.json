@@ -16,10 +16,10 @@
     "baseUrl": ".",
     "paths": {
       "@workly/design-system": ["dist/libs/src/design-system.scss"],
-      "@workly/styles": ["libs/src/lib/*"],
-      "@workly/theming": ["libs/src/lib/theming/theming.module.ts"],
-      "@workly/theming/*": ["libs/src/lib/theming/*"],
-      "@workly/ui": ["libs/src/lib/index.ts"],
+      "@workly/theming": [
+        "shared/ui-component/src/lib/theming/theming.module.ts"
+      ],
+      "@workly/theming/*": ["shared/ui-component/src/lib/theming/*"],
       "@workly/ui-component": ["shared/ui-component/src/index.ts"],
       "attendance/Routes": [
         "apps/frontend/features/attendance/src/app/remote-entry/entry.routes.ts"

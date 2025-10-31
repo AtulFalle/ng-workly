@@ -1,0 +1,35 @@
+<div class="color-palette-selector">
+  @if (title()) {
+    <h3>{{ title() }}</h3>
+  }
+  
+  <div class="color-options">
+    @for (color of colorPalette(); track color.value) {
+      <div 
+        class="color-option"
+        [style.background-color]="color.value"
+        [class.selected]="isColorSelected(color.value)"
+        (click)="selectColor(color.value)"
+        (keydown.enter)="selectColor(color.value)"
+        (keydown.space)="selectColor(color.value)"
+        tabindex="0"
+        role="button"
+        [attr.aria-label]="'Select ' + color.name + ' color'"
+        [title]="color.name">
+        <span class="color-name">{{ color.name }}</span>
+      </div>
+    }
+  </div>
+  
+  @if (showCustomPicker() && enableCustomColor()) {
+    <div class="custom-color-picker">
+      <label for="customColor">Or choose custom color:</label>
+      <input 
+        type="color" 
+        id="customColor"
+        [ngModel]="customColorValue()"
+        (ngModelChange)="customColorValue.set($event); selectCustomColor()"
+        class="color-input">
+    </div>
+  }
+</div>

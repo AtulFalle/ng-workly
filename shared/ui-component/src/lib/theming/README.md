@@ -15,7 +15,7 @@ A reusable color palette system for dynamic theme selection across applications.
 ### 1. Import the Service and Component
 
 ```typescript
-import { ColorPaletteService, ColorPaletteComponent } from '@workly/theming';
+import { ColorPaletteService, ColorPaletteComponent } from '@workly/ui-component';
 ```
 
 ### 2. Add to Your Component

@@ -11,13 +11,7 @@
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
         "project": "shared/ui-component/ng-package.json",
-        "tsConfig": "shared/ui-component/tsconfig.lib.json",
-        "stylePreprocessorOptions": {
-          "includePaths": [
-            "dist/libs/src",
-            "node_modules"
-          ]
-        }
+        "tsConfig": "shared/ui-component/tsconfig.lib.json"
       },
       "configurations": {
         "production": {

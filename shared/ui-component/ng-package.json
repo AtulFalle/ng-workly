@@ -5,6 +5,7 @@
     "entryFile": "src/index.ts"
   },
   "assets": [
-    "src/lib/styles/**/*.scss"
+    "src/lib/styles/**/*.scss",
+    "src/lib/theming/**/*.scss"
   ]
 }

@@ -27,7 +27,7 @@ export class ThemingService {
     // Initialize theme from localStorage or system preference
     this.initializeTheme();
   }
-  
+
   /**
    * Set the current theme
    * @param theme The theme to apply
@@ -37,7 +37,7 @@ export class ThemingService {
     this.applyTheme(theme);
     this.saveTheme(theme);
   }
-  
+
   /**
    * Toggle between light and dark themes
    */
@@ -45,21 +45,21 @@ export class ThemingService {
     const newTheme = this._currentTheme() === 'light' ? 'dark' : 'light';
     this.setTheme(newTheme);
   }
-  
+
   /**
    * Get the current theme
    */
   getCurrentTheme(): Theme {
     return this._currentTheme();
   }
-  
+
   /**
    * Check if a specific theme is active
    */
   isThemeActive(theme: Theme): boolean {
     return this._currentTheme() === theme;
   }
-  
+
   /**
    * Apply theme to the document
    */
@@ -81,7 +81,7 @@ export class ThemingService {
       .trim();
     document.body.classList.add(`theme-${theme}`);
   }
-  
+
   /**
    * Initialize theme from localStorage or system preference
    */
@@ -101,14 +101,14 @@ export class ThemingService {
       this.setTheme('light');
     }
   }
-  
+
   /**
    * Save theme to localStorage
    */
   private saveTheme(theme: Theme): void {
     localStorage.setItem('app-theme', theme);
   }
-  
+
   /**
    * Listen to system theme changes
    */
@@ -154,7 +154,7 @@ export class ThemeUtils {
     
     return properties;
   }
-  
+
   /**
    * Apply theme properties to an element
    */
@@ -165,7 +165,7 @@ export class ThemeUtils {
       element.style.setProperty(property, value);
     });
   }
-  
+
   /**
    * Get contrast color for a given background color
    */

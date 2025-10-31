@@ -1,9 +1,13 @@
 <p-card
   [header]="header()"
   [title]="title()"
-  [subtitle]="subtitle()"
-  [footer]="footer()"
   [class]="cardClass">
+  @if (subtitle()) {
+    <div class="lib-card-subtitle">{{ subtitle() }}</div>
+  }
   <ng-content></ng-content>
+  @if (footer()) {
+    <div class="lib-card-footer">{{ footer() }}</div>
+  }
 </p-card>
 

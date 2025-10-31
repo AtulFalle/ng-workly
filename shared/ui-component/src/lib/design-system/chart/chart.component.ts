@@ -2,8 +2,7 @@ import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartModule } from 'primeng/chart';
 import { ChartData, ChartOptions } from 'chart.js';
-
-export type ChartType = 'line' | 'bar' | 'pie' | 'doughnut' | 'polarArea' | 'radar' | 'area' | 'bubble' | 'scatter';
+import { ChartType } from './chart.types';
 
 @Component({
   selector: 'lib-chart',

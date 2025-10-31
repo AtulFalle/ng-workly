@@ -23,4 +23,3 @@ export type { ColorOption, ColorPaletteConfig } from './color-palette.service';
 
 // Export themes
 export { default as Workly } from './themes/workly';
-

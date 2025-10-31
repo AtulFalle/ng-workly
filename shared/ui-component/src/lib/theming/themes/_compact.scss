@@ -42,17 +42,17 @@
 [data-theme="compact"] {
   // Button compact styles
   .p-button {
-    padding: $spacing-2 $spacing-4;
-    font-size: $font-size-sm;
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
     
     &.p-button-sm {
-      padding: $spacing-1 $spacing-3;
-      font-size: $font-size-xs;
+      padding: var(--spacing-1) var(--spacing-3);
+      font-size: var(--font-size-xs);
     }
     
     &.p-button-lg {
-      padding: $spacing-3 $spacing-5;
-      font-size: $font-size-base;
+      padding: var(--spacing-3) var(--spacing-5);
+      font-size: var(--font-size-base);
     }
   }
   
@@ -62,8 +62,8 @@
   .p-dropdown,
   .p-multiselect,
   .p-calendar-input {
-    padding: $spacing-2 $spacing-3;
-    font-size: $font-size-sm;
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-sm);
   }
   
   .p-float-label {
@@ -72,15 +72,15 @@
     .p-dropdown,
     .p-multiselect,
     .p-calendar-input {
-      padding-top: $spacing-4;
-      padding-bottom: $spacing-1;
+      padding-top: var(--spacing-4);
+      padding-bottom: var(--spacing-1);
     }
     
     label {
-      font-size: $font-size-sm;
+      font-size: var(--font-size-sm);
       
       &.p-label-active {
-        font-size: $font-size-xs;
+        font-size: var(--font-size-xs);
       }
     }
   }
@@ -88,149 +88,149 @@
   // Card compact styles
   .p-card {
     .p-card-header {
-      padding: $spacing-4 $spacing-4 0;
+      padding: var(--spacing-4) var(--spacing-4) 0;
     }
     
     .p-card-body {
-      padding: $spacing-4;
+      padding: var(--spacing-4);
     }
     
     .p-card-footer {
-      padding: 0 $spacing-4 $spacing-4;
+      padding: 0 var(--spacing-4) var(--spacing-4);
     }
     
     .p-card-title {
-      font-size: $font-size-lg;
-      margin-bottom: $spacing-2;
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--spacing-2);
     }
     
     .p-card-subtitle {
-      font-size: $font-size-xs;
-      margin-bottom: $spacing-3;
+      font-size: var(--font-size-xs);
+      margin-bottom: var(--spacing-3);
     }
   }
   
   // Panel compact styles
   .p-panel {
     .p-panel-header {
-      padding: $spacing-3 $spacing-4;
+      padding: var(--spacing-3) var(--spacing-4);
       
       .p-panel-title {
-        font-size: $font-size-base;
+        font-size: var(--font-size-base);
       }
     }
     
     .p-panel-content {
-      padding: $spacing-4;
+      padding: var(--spacing-4);
     }
   }
   
   // Dialog compact styles
   .p-dialog {
     .p-dialog-header {
-      padding: $spacing-4;
+      padding: var(--spacing-4);
       
       .p-dialog-title {
-        font-size: $font-size-lg;
+        font-size: var(--font-size-lg);
       }
     }
     
     .p-dialog-content {
-      padding: $spacing-4;
+      padding: var(--spacing-4);
     }
     
     .p-dialog-footer {
-      padding: $spacing-4;
-      gap: $spacing-2;
+      padding: var(--spacing-4);
+      gap: var(--spacing-2);
     }
   }
   
   // Table compact styles
   .p-datatable {
     .p-datatable-header {
-      padding: $spacing-3 $spacing-4;
+      padding: var(--spacing-3) var(--spacing-4);
     }
     
     .p-datatable-thead > tr > th {
-      padding: $spacing-2 $spacing-3;
-      font-size: $font-size-sm;
+      padding: var(--spacing-2) var(--spacing-3);
+      font-size: var(--font-size-sm);
     }
     
     .p-datatable-tbody > tr > td {
-      padding: $spacing-2 $spacing-3;
-      font-size: $font-size-sm;
+      padding: var(--spacing-2) var(--spacing-3);
+      font-size: var(--font-size-sm);
     }
     
     .p-datatable-footer {
-      padding: $spacing-3 $spacing-4;
+      padding: var(--spacing-3) var(--spacing-4);
     }
   }
   
   // Menu compact styles
   .p-menu {
-    padding: $spacing-1;
+    padding: var(--spacing-1);
     min-width: 160px;
     
     .p-menuitem-link {
-      padding: $spacing-2 $spacing-3;
-      font-size: $font-size-sm;
+      padding: var(--spacing-2) var(--spacing-3);
+      font-size: var(--font-size-sm);
     }
     
     .p-menuitem-icon {
-      margin-right: $spacing-2;
+      margin-right: var(--spacing-2);
     }
   }
   
   .p-menubar {
     .p-menuitem-link {
-      padding: $spacing-2 $spacing-3;
-      font-size: $font-size-sm;
+      padding: var(--spacing-2) var(--spacing-3);
+      font-size: var(--font-size-sm);
     }
   }
   
   // Toast compact styles
   .p-toast {
     .p-toast-message {
-      padding: $spacing-3 $spacing-4;
-      margin-bottom: $spacing-2;
+      padding: var(--spacing-3) var(--spacing-4);
+      margin-bottom: var(--spacing-2);
     }
     
     .p-toast-message-text {
-      font-size: $font-size-sm;
+      font-size: var(--font-size-sm);
     }
     
     .p-toast-message-detail {
-      font-size: $font-size-xs;
+      font-size: var(--font-size-xs);
     }
   }
   
   // Typography compact styles
-  h1 { font-size: $font-size-3xl; margin-bottom: $spacing-4; }
-  h2 { font-size: $font-size-2xl; margin-bottom: $spacing-3; }
-  h3 { font-size: $font-size-xl; margin-bottom: $spacing-3; }
-  h4 { font-size: $font-size-lg; margin-bottom: $spacing-2; }
-  h5 { font-size: $font-size-base; margin-bottom: $spacing-2; }
-  h6 { font-size: $font-size-sm; margin-bottom: $spacing-1; }
+  h1 { font-size: var(--font-size-3xl); margin-bottom: var(--spacing-4); }
+  h2 { font-size: var(--font-size-2xl); margin-bottom: var(--spacing-3); }
+  h3 { font-size: var(--font-size-xl); margin-bottom: var(--spacing-3); }
+  h4 { font-size: var(--font-size-lg); margin-bottom: var(--spacing-2); }
+  h5 { font-size: var(--font-size-base); margin-bottom: var(--spacing-2); }
+  h6 { font-size: var(--font-size-sm); margin-bottom: var(--spacing-1); }
   
   p {
-    margin-bottom: $spacing-3;
-    font-size: $font-size-sm;
+    margin-bottom: var(--spacing-3);
+    font-size: var(--font-size-sm);
   }
   
   // Form compact styles
   fieldset {
-    padding: $spacing-3;
-    margin-bottom: $spacing-3;
+    padding: var(--spacing-3);
+    margin-bottom: var(--spacing-3);
   }
   
   // List compact styles
   ul, ol {
-    margin-bottom: $spacing-3;
-    padding-left: $spacing-4;
+    margin-bottom: var(--spacing-3);
+    padding-left: var(--spacing-4);
   }
   
   li {
-    margin-bottom: $spacing-1;
-    font-size: $font-size-sm;
+    margin-bottom: var(--spacing-1);
+    font-size: var(--font-size-sm);
   }
 }

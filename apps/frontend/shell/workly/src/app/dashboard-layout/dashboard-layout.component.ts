@@ -1,8 +1,8 @@
 import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ThemingService, Theme } from '@workly/theming';
-import { ColorPaletteService } from '@workly/theming/color-palette.service';
+import { ThemingService, Theme } from '@workly/ui-component';
+import { ColorPaletteService } from '@workly/ui-component';
 
 // Shared UI Components
 import { 

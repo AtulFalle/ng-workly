@@ -22,10 +22,11 @@
             "input": "apps/frontend/features/auth/public"
           }
         ],
-        "styles": ["apps/frontend/features/auth/src/styles.scss"],
+        "styles": ["apps/frontend/features/auth/src/styles.scss","shared/ui-component/src/lib/styles/design-system.scss"],
         "stylePreprocessorOptions": {
           "includePaths": [
-            "dist/libs/src"
+            "shared/ui-component/src/lib/styles",
+            "shared/ui-component/src/lib/theming"
           ]
         },
         "customWebpackConfig": {

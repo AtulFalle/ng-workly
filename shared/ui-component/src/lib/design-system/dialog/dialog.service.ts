@@ -29,7 +29,7 @@ export class LibDialogService {
   /**
    * Open a dialog with a component
    */
-  open<T>(component: Type<T>, options?: DialogOptions): DynamicDialogRef {
+  open<T>(component: Type<T>, options?: DialogOptions): DynamicDialogRef<any> {
     const config: DynamicDialogConfig = {
       header: options?.header || '',
       width: options?.width || '600px',
@@ -48,13 +48,17 @@ export class LibDialogService {
       maximizable: options?.maximizable || false
     };
 
-    return this.dialogService.open(component, config);
+    const ref = this.dialogService.open(component, config);
+    if (!ref) {
+      throw new Error('Failed to open dialog');
+    }
+    return ref;
   }
 
   /**
    * Open a small dialog
    */
-  openSmall<T>(component: Type<T>, options?: Omit<DialogOptions, 'width'>): DynamicDialogRef {
+  openSmall<T>(component: Type<T>, options?: Omit<DialogOptions, 'width'>): DynamicDialogRef<any> {
     return this.open(component, {
       ...options,
       width: '400px'
@@ -64,7 +68,7 @@ export class LibDialogService {
   /**
    * Open a medium dialog (default)
    */
-  openMedium<T>(component: Type<T>, options?: Omit<DialogOptions, 'width'>): DynamicDialogRef {
+  openMedium<T>(component: Type<T>, options?: Omit<DialogOptions, 'width'>): DynamicDialogRef<any> {
     return this.open(component, {
       ...options,
       width: '600px'
@@ -74,7 +78,7 @@ export class LibDialogService {
   /**
    * Open a large dialog
    */
-  openLarge<T>(component: Type<T>, options?: Omit<DialogOptions, 'width'>): DynamicDialogRef {
+  openLarge<T>(component: Type<T>, options?: Omit<DialogOptions, 'width'>): DynamicDialogRef<any> {
     return this.open(component, {
       ...options,
       width: '900px'

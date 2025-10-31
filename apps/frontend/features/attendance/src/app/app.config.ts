@@ -7,7 +7,7 @@ import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-import { ThemingService } from '@workly/theming';
+import { ThemingService } from '@workly/ui-component';
 import Aura from '@primeuix/themes/aura';
 
 export const appConfig: ApplicationConfig = {

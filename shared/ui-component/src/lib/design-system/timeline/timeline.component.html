@@ -28,11 +28,11 @@
           
           <div class="lib-timeline-title-section">
             <div class="lib-timeline-title">{{ item.title }}</div>
-            @if (item.user?.name) {
+            @if (item.user; as user) {
               <div class="lib-timeline-user">
-                <span class="lib-timeline-user-name">{{ item.user.name }}</span>
-                @if (item.user.role) {
-                  <span class="lib-timeline-user-role">{{ item.user.role }}</span>
+                <span class="lib-timeline-user-name">{{ user.name }}</span>
+                @if (user.role) {
+                  <span class="lib-timeline-user-role">{{ user.role }}</span>
                 }
               </div>
             }

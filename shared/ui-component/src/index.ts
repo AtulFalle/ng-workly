@@ -2,6 +2,9 @@
 export * from './lib/core/prime-ng.config';
 export * from './lib/core/design-system.config';
 
+// Theming System
+export * from './lib/theming';
+
 // Components
 export * from './lib/components/header/header.component';
 export * from './lib/components/footer/footer.component';
