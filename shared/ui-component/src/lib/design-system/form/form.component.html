@@ -1,0 +1,25 @@
+<form
+  [formGroup]="formGroup() || null"
+  [class]="formClass"
+  (ngSubmit)="onSubmit($event)">
+  
+  @if (title() || subtitle()) {
+    <div class="lib-form-header">
+      @if (title()) {
+        <h3 class="lib-form-title">{{ title() }}</h3>
+      }
+      @if (subtitle()) {
+        <p class="lib-form-subtitle">{{ subtitle() }}</p>
+      }
+    </div>
+  }
+
+  <div class="lib-form-content">
+    <ng-content></ng-content>
+  </div>
+
+  <div class="lib-form-actions">
+    <ng-content select="[formActions]"></ng-content>
+  </div>
+</form>
+

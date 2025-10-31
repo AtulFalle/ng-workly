@@ -1,0 +1,440 @@
+// Stat Card Component Styles
+// ===========================
+// Modern stat card styling inspired by Dribbble design
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.lib-stat-card {
+  height: 100%;
+  transition: all 0.3s ease;
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl) !important;
+  }
+
+  // Size variants
+  &--small {
+    .lib-stat-card-container {
+      padding: var(--spacing-3);
+      gap: var(--spacing-2);
+    }
+
+    .lib-stat-card-icon-wrapper {
+      width: 32px;
+      height: 32px;
+
+      i {
+        font-size: 16px;
+      }
+    }
+
+    .lib-stat-card-title {
+      font-size: var(--font-size-sm);
+    }
+
+    .lib-stat-card-value {
+      font-size: var(--font-size-2xl);
+    }
+  }
+
+  &--medium {
+    .lib-stat-card-container {
+      padding: var(--spacing-4);
+      gap: var(--spacing-3);
+    }
+
+    .lib-stat-card-icon-wrapper {
+      width: 40px;
+      height: 40px;
+
+      i {
+        font-size: 20px;
+      }
+    }
+
+    .lib-stat-card-title {
+      font-size: var(--font-size-base);
+    }
+
+    .lib-stat-card-value {
+      font-size: var(--font-size-3xl);
+    }
+  }
+
+  &--large {
+    .lib-stat-card-container {
+      padding: var(--spacing-6);
+      gap: var(--spacing-4);
+    }
+
+    .lib-stat-card-icon-wrapper {
+      width: 48px;
+      height: 48px;
+
+      i {
+        font-size: 24px;
+      }
+    }
+
+    .lib-stat-card-title {
+      font-size: var(--font-size-lg);
+    }
+
+    .lib-stat-card-value {
+      font-size: var(--font-size-4xl);
+    }
+  }
+
+  // Variant colors
+  &--primary {
+    background: linear-gradient(135deg, var(--primary-50) 0%, var(--primary-100) 100%);
+    border-left: 4px solid var(--primary-500);
+
+    .lib-stat-card-icon-wrapper {
+      background: var(--primary-500);
+      color: var(--primary-50);
+    }
+
+    .lib-stat-card-title {
+      color: var(--primary-700);
+    }
+
+    .lib-stat-card-value {
+      color: var(--primary-900);
+    }
+  }
+
+  &--secondary {
+    background: linear-gradient(135deg, var(--secondary-50) 0%, var(--secondary-100) 100%);
+    border-left: 4px solid var(--secondary-500);
+
+    .lib-stat-card-icon-wrapper {
+      background: var(--secondary-500);
+      color: var(--secondary-50);
+    }
+
+    .lib-stat-card-title {
+      color: var(--secondary-700);
+    }
+
+    .lib-stat-card-value {
+      color: var(--secondary-900);
+    }
+  }
+
+  &--success {
+    background: linear-gradient(135deg, var(--success-50) 0%, var(--success-100) 100%);
+    border-left: 4px solid var(--success-500);
+
+    .lib-stat-card-icon-wrapper {
+      background: var(--success-500);
+      color: var(--success-50);
+    }
+
+    .lib-stat-card-title {
+      color: var(--success-700);
+    }
+
+    .lib-stat-card-value {
+      color: var(--success-900);
+    }
+  }
+
+  &--info {
+    background: linear-gradient(135deg, var(--info-50) 0%, var(--info-100) 100%);
+    border-left: 4px solid var(--info-500);
+
+    .lib-stat-card-icon-wrapper {
+      background: var(--info-500);
+      color: var(--info-50);
+    }
+
+    .lib-stat-card-title {
+      color: var(--info-700);
+    }
+
+    .lib-stat-card-value {
+      color: var(--info-900);
+    }
+  }
+
+  &--warning {
+    background: linear-gradient(135deg, var(--warning-50) 0%, var(--warning-100) 100%);
+    border-left: 4px solid var(--warning-500);
+
+    .lib-stat-card-icon-wrapper {
+      background: var(--warning-500);
+      color: var(--warning-50);
+    }
+
+    .lib-stat-card-title {
+      color: var(--warning-700);
+    }
+
+    .lib-stat-card-value {
+      color: var(--warning-900);
+    }
+  }
+
+  &--danger {
+    background: linear-gradient(135deg, var(--error-50) 0%, var(--error-100) 100%);
+    border-left: 4px solid var(--error-500);
+
+    .lib-stat-card-icon-wrapper {
+      background: var(--error-500);
+      color: var(--error-50);
+    }
+
+    .lib-stat-card-title {
+      color: var(--error-700);
+    }
+
+    .lib-stat-card-value {
+      color: var(--error-900);
+    }
+  }
+
+  &--loading {
+    pointer-events: none;
+  }
+}
+
+// Container
+.lib-stat-card-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  height: 100%;
+}
+
+// Header
+.lib-stat-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-2);
+}
+
+.lib-stat-card-header-left {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  flex: 1;
+}
+
+// Icon
+.lib-stat-card-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+
+  i {
+    font-size: 20px;
+  }
+}
+
+// Title section
+.lib-stat-card-title-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-0-5);
+  flex: 1;
+  min-width: 0;
+}
+
+.lib-stat-card-title {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
+  line-height: var(--line-height-tight);
+  word-wrap: break-word;
+}
+
+.lib-stat-card-subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--text-color-secondary);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+// Trend indicator
+.lib-stat-card-trend {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  flex-shrink: 0;
+
+  i {
+    font-size: 12px;
+  }
+
+  &--up {
+    background: var(--success-100);
+    color: var(--success-700);
+
+    i {
+      color: var(--success-600);
+    }
+  }
+
+  &--down {
+    background: var(--error-100);
+    color: var(--error-700);
+
+    i {
+      color: var(--error-600);
+    }
+  }
+
+  &--neutral {
+    background: var(--surface-200);
+    color: var(--text-color-secondary);
+
+    i {
+      color: var(--text-color-secondary);
+    }
+  }
+}
+
+.lib-stat-card-trend-value {
+  font-size: var(--font-size-xs);
+}
+
+// Value section
+.lib-stat-card-value-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.lib-stat-card-value {
+  font-weight: var(--font-weight-bold);
+  color: var(--text-color);
+  line-height: var(--line-height-none);
+  font-variant-numeric: tabular-nums;
+}
+
+.lib-stat-card-description {
+  font-size: var(--font-size-sm);
+  color: var(--text-color-secondary);
+  line-height: var(--line-height-normal);
+  font-weight: var(--font-weight-normal);
+}
+
+// Loading state
+.lib-stat-card-loading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.lib-stat-card-skeleton-value {
+  height: 48px;
+  background: linear-gradient(
+    90deg,
+    var(--surface-200) 0%,
+    var(--surface-100) 50%,
+    var(--surface-200) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+  border-radius: var(--border-radius);
+}
+
+.lib-stat-card-skeleton-description {
+  height: 16px;
+  width: 60%;
+  background: linear-gradient(
+    90deg,
+    var(--surface-200) 0%,
+    var(--surface-100) 50%,
+    var(--surface-200) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+  border-radius: var(--border-radius);
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .lib-stat-card {
+    &--medium,
+    &--large {
+      .lib-stat-card-container {
+        padding: var(--spacing-3);
+      }
+
+      .lib-stat-card-icon-wrapper {
+        width: 36px;
+        height: 36px;
+
+        i {
+          font-size: 18px;
+        }
+      }
+
+      .lib-stat-card-value {
+        font-size: var(--font-size-2xl);
+      }
+    }
+  }
+}
+
+// Dark theme support
+:host-context(.p-dark) {
+  .lib-stat-card {
+    &--primary,
+    &--secondary,
+    &--success,
+    &--info,
+    &--warning,
+    &--danger {
+      background: linear-gradient(135deg, var(--surface-800) 0%, var(--surface-700) 100%);
+      border-left-color: var(--primary-500);
+    }
+
+    .lib-stat-card-title,
+    .lib-stat-card-value {
+      color: var(--surface-100);
+    }
+
+    .lib-stat-card-subtitle,
+    .lib-stat-card-description {
+      color: var(--surface-300);
+    }
+
+    .lib-stat-card-skeleton-value,
+    .lib-stat-card-skeleton-description {
+      background: linear-gradient(
+        90deg,
+        var(--surface-700) 0%,
+        var(--surface-600) 50%,
+        var(--surface-700) 100%
+      );
+      background-size: 200% 100%;
+    }
+  }
+}

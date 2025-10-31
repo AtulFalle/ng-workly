@@ -1,0 +1,17 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="modal()"
+  [closable]="closable()"
+  [dismissableMask]="dismissableMask()"
+  [closeOnEscape]="closeOnEscape()"
+  [styleClass]="dialogSize"
+  [header]="header()"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="onHide()"
+  class="lib-dialog">
+  
+  <!-- Content projection - users provide their own content -->
+  <ng-content></ng-content>
+
+</p-dialog>

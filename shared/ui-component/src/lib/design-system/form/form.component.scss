@@ -1,0 +1,179 @@
+.lib-form {
+  font-family: var(--font-family);
+  width: 100%;
+
+  // Layout variants
+  &.lib-form-vertical {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &.lib-form-horizontal {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--spacing-4);
+
+    .lib-form-content {
+      flex: 1;
+      min-width: 300px;
+    }
+  }
+
+  &.lib-form-inline {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-3);
+    flex-wrap: wrap;
+  }
+
+  // Standardized spacing variants
+  &.lib-form-spacing-none {
+    .lib-form-content {
+      gap: 0;
+    }
+  }
+
+  &.lib-form-spacing-compact {
+    .lib-form-content {
+      gap: var(--spacing-3);                  // 12px - Compact spacing
+    }
+  }
+
+  &.lib-form-spacing-comfortable {
+    .lib-form-content {
+      gap: var(--spacing-4);                  // 16px - Default comfortable spacing
+    }
+  }
+
+  // Header - Standardized spacing
+  .lib-form-header {
+    margin-bottom: var(--spacing-8);          // 32px margin below header
+
+    .lib-form-title {
+      // Standardized form title typography
+      font-size: var(--font-size-xl);         // 20px
+      font-weight: var(--font-weight-semibold); // 600
+      line-height: var(--line-height-tight);  // 1.25
+      color: var(--text-color);
+      margin: 0 0 var(--spacing-2) 0;        // 8px margin below title
+    }
+
+    .lib-form-subtitle {
+      // Standardized form subtitle typography
+      font-size: var(--font-size-sm);         // 14px
+      font-weight: var(--font-weight-normal); // 400
+      line-height: var(--line-height-normal); // 1.5
+      color: var(--text-color-secondary);
+      margin: 0;
+    }
+  }
+
+  // Content - Standardized spacing
+  .lib-form-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);                    // 16px gap between form fields
+  }
+
+  // Actions - Standardized spacing
+  .lib-form-actions {
+    display: flex;
+    gap: var(--spacing-3);                    // 12px gap between buttons
+    margin-top: var(--spacing-8);             // 32px margin above actions
+    justify-content: flex-end;
+
+    &.lib-form-actions-left {
+      justify-content: flex-start;
+    }
+
+    &.lib-form-actions-center {
+      justify-content: center;
+    }
+
+    &.lib-form-actions-right {
+      justify-content: flex-end;
+    }
+
+    &.lib-form-actions-stretch {
+      justify-content: stretch;
+
+      > * {
+        flex: 1;
+      }
+    }
+  }
+
+  // Form field styles
+  ::ng-deep {
+    .lib-form-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-2);
+
+      &.lib-form-field-horizontal {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--spacing-3);                // 12px gap in horizontal layout
+
+        label {
+          min-width: 150px;
+        }
+      }
+    }
+
+    .lib-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-3);                  // 12px gap between group items
+      padding: var(--spacing-4);              // 16px padding inside group
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);  // 6px
+      background-color: var(--surface-50);
+      margin-bottom: var(--spacing-4);        // 16px margin below group
+    }
+
+    .lib-form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-4);                  // 16px gap between row items
+    }
+  }
+
+  // No labels variant
+  &.lib-form-no-labels {
+    ::ng-deep {
+      .lib-form-field label {
+        display: none;
+      }
+    }
+  }
+
+  // Validation styles
+  &.lib-form-show-validation {
+    ::ng-deep {
+      .ng-invalid.ng-touched {
+        border-color: var(--error-500);
+      }
+
+      .ng-valid.ng-touched {
+        border-color: var(--success-500);
+      }
+    }
+  }
+}
+
+// Dark theme support
+.p-dark {
+  .lib-form {
+    ::ng-deep {
+      .lib-form-group {
+        background-color: var(--surface-100);
+        border-color: var(--border-color);
+      }
+    }
+  }
+}
+

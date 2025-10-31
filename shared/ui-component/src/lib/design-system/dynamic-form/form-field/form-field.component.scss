@@ -1,0 +1,81 @@
+.lib-form-field {
+  width: 100%;
+  display: block;
+  
+  // Standardized spacing - Each form field has its own padding
+  // This ensures consistent spacing regardless of parent gap
+  padding: var(--spacing-2); // 8px - Standardized field padding
+  margin: 0; // Remove default margins - spacing handled by padding and parent gap
+  
+  // Grid column spans (1-12 columns)
+  &.lib-form-field-col-1 { grid-column: span 1; }
+  &.lib-form-field-col-2 { grid-column: span 2; }
+  &.lib-form-field-col-3 { grid-column: span 3; }
+  &.lib-form-field-col-4 { grid-column: span 4; }
+  &.lib-form-field-col-5 { grid-column: span 5; }
+  &.lib-form-field-col-6 { grid-column: span 6; }
+  &.lib-form-field-col-7 { grid-column: span 7; }
+  &.lib-form-field-col-8 { grid-column: span 8; }
+  &.lib-form-field-col-9 { grid-column: span 9; }
+  &.lib-form-field-col-10 { grid-column: span 10; }
+  &.lib-form-field-col-11 { grid-column: span 11; }
+  &.lib-form-field-col-12 { grid-column: span 12; }
+  
+  &.lib-form-field-hidden {
+    display: none;
+    padding: 0; // Remove padding when hidden
+  }
+  
+  // Spacing variants
+  &.lib-form-field-spacing-none {
+    padding: 0;
+  }
+  
+  &.lib-form-field-spacing-compact {
+    padding: var(--spacing-1); // 4px - Compact field padding
+  }
+  
+  &.lib-form-field-spacing-comfortable {
+    padding: var(--spacing-2); // 8px - Default comfortable field padding
+  }
+  
+  &.lib-form-field-spacing-generous {
+    padding: var(--spacing-3); // 12px - Generous field padding
+  }
+  
+  // Ensure nested input components use proper spacing
+  ::ng-deep {
+    lib-input {
+      width: 100%;
+      display: block;
+      
+      .lib-input-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin: 0; // Remove default margins - spacing handled by parent padding
+      }
+    }
+  }
+}
+
+// Responsive grid adjustments
+@media (max-width: 768px) {
+  .lib-form-field {
+    &.lib-form-field-col-1,
+    &.lib-form-field-col-2,
+    &.lib-form-field-col-3,
+    &.lib-form-field-col-4,
+    &.lib-form-field-col-5,
+    &.lib-form-field-col-6,
+    &.lib-form-field-col-7,
+    &.lib-form-field-col-8,
+    &.lib-form-field-col-9,
+    &.lib-form-field-col-10,
+    &.lib-form-field-col-11,
+    &.lib-form-field-col-12 {
+      grid-column: span 12; // Full width on mobile
+    }
+  }
+}
+

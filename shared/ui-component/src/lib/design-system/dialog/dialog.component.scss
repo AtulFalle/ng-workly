@@ -1,0 +1,214 @@
+// Dialog Component Styles
+// ========================
+// Modern, consistent dialog styling with proper spacing and typography
+
+::ng-deep {
+  .lib-dialog {
+    .p-dialog {
+      // Dialog container
+      border-radius: var(--border-radius-xl); // 12px - More modern, rounded corners
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border-color);
+      background-color: var(--surface-0);
+      overflow: hidden;
+      
+      // Header styling - Modern spacing and typography
+      .p-dialog-header {
+        padding: var(--spacing-2) var(--spacing-6); // 24px 24px 20px - Top padding more generous
+        border-bottom: 1px solid var(--border-color);
+        background-color: var(--surface-0);
+        border-top-left-radius: var(--border-radius-xl);
+        border-top-right-radius: var(--border-radius-xl);
+        
+        .p-dialog-title {
+          font-size: var(--font-size-2xl); // 24px - More prominent title
+          font-weight: var(--font-weight-semibold); // 600
+          line-height: var(--line-height-tight); // 1.25
+          color: var(--text-color);
+          margin: 0;
+          letter-spacing: -0.01em; // Subtle letter spacing for modern look
+        }
+        
+        .p-dialog-header-icon {
+          width: 32px;
+          height: 32px;
+          color: var(--text-color-secondary);
+          transition: all 0.2s ease;
+          border-radius: var(--border-radius-md);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+          &:hover {
+            color: var(--text-color);
+            background-color: var(--surface-100);
+          }
+        }
+      }
+      
+      // Content styling - Generous padding for readability
+      .p-dialog-content {
+        padding: var(--spacing-6); // 24px - More comfortable spacing
+        background-color: var(--surface-0);
+        font-size: var(--font-size-base); // 16px
+        line-height: var(--line-height-normal); // 1.5
+        color: var(--text-color);
+        
+        // Improved spacing for paragraphs and text
+        p {
+          margin: 0 0 var(--spacing-4) 0; // 16px bottom margin for paragraphs
+          
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+        
+        // Improved spacing for form elements
+        .lib-input,
+        lib-input {
+          margin-bottom: var(--spacing-5); // 20px between form fields
+          
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+        
+        // Better spacing for buttons inside content
+        .lib-button,
+        lib-button {
+          margin-right: var(--spacing-3); // 12px gap between buttons
+          
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+      
+      // Footer styling - Modern spacing and layout
+      .p-dialog-footer {
+        padding: var(--spacing-5) var(--spacing-6); // 20px 24px - Matches header proportions
+        border-top: 1px solid var(--border-color);
+        background-color: var(--surface-0);
+        border-bottom-left-radius: var(--border-radius-xl);
+        border-bottom-right-radius: var(--border-radius-xl);
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--spacing-3); // 12px - Consistent gap between buttons
+        
+        // Button spacing improvements
+        .lib-button,
+        lib-button {
+          min-width: 80px; // Ensure buttons have minimum width
+        }
+      }
+    }
+    
+    // Size variants with better proportions
+    &.lib-dialog-small {
+      .p-dialog {
+        width: 90vw;
+        max-width: 400px;
+        
+        .p-dialog-content {
+          padding: var(--spacing-5); // 20px for small dialogs
+        }
+      }
+    }
+    
+    &.lib-dialog-medium {
+      .p-dialog {
+        width: 90vw;
+        max-width: 600px;
+      }
+    }
+    
+    &.lib-dialog-large {
+      .p-dialog {
+        width: 90vw;
+        max-width: 900px;
+        
+        .p-dialog-content {
+          padding: var(--spacing-8); // 32px for large dialogs
+        }
+      }
+    }
+    
+    &.lib-dialog-fullscreen {
+      .p-dialog {
+        width: 100vw;
+        height: 100vh;
+        max-width: 100vw;
+        max-height: 100vh;
+        border-radius: 0;
+        
+        .p-dialog-content {
+          padding: var(--spacing-8); // 32px for fullscreen
+        }
+      }
+    }
+  }
+  
+  // Backdrop/mask styling - Modern blur effect
+  .p-dialog-mask {
+    background-color: rgba(0, 0, 0, 0.5); // Slightly darker for better contrast
+    backdrop-filter: blur(4px); // More blur for modern effect
+    -webkit-backdrop-filter: blur(4px);
+  }
+}
+
+// Dark theme support
+::ng-deep {
+  .p-dark {
+    .lib-dialog {
+      .p-dialog {
+        background-color: var(--surface-900);
+        border-color: var(--border-color);
+        
+        .p-dialog-header,
+        .p-dialog-content,
+        .p-dialog-footer {
+          background-color: var(--surface-900);
+          border-color: var(--border-color);
+        }
+        
+        .p-dialog-header-icon {
+          &:hover {
+            background-color: var(--surface-800);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive improvements
+@media (max-width: 768px) {
+  ::ng-deep {
+    .lib-dialog {
+      .p-dialog {
+        margin: var(--spacing-4); // 16px margin on mobile
+        
+        .p-dialog-header {
+          padding: var(--spacing-5) var(--spacing-4); // 20px 16px on mobile
+        }
+        
+        .p-dialog-content {
+          padding: var(--spacing-5) var(--spacing-4); // 20px 16px on mobile
+        }
+        
+        .p-dialog-footer {
+          padding: var(--spacing-4); // 16px on mobile
+          flex-direction: column-reverse; // Stack buttons on mobile
+          gap: var(--spacing-2); // 8px gap on mobile
+          
+          .lib-button,
+          lib-button {
+            width: 100%;
+            min-width: auto;
+          }
+        }
+      }
+    }
+  }
+}

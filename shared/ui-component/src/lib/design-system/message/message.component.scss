@@ -1,0 +1,119 @@
+// Message Component Styles
+// ========================
+// Standardized inline message styling
+
+::ng-deep {
+  .lib-message {
+    // Message container
+    .p-message {
+      border-radius: var(--border-radius-md); // 6px
+      padding: var(--spacing-3) var(--spacing-4); // 12px 16px - Comfortable padding
+      margin-bottom: var(--spacing-3); // 12px margin below
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-3); // 12px gap between icon and text
+      
+      // Message icon
+      .p-message-icon {
+        font-size: var(--font-size-lg); // 18px
+        margin-right: 0; // Gap handles spacing
+        flex-shrink: 0;
+        
+        &.p-message-icon-success {
+          color: var(--success-500);
+        }
+        
+        &.p-message-icon-info {
+          color: var(--info-500);
+        }
+        
+        &.p-message-icon-warn {
+          color: var(--warning-500);
+        }
+        
+        &.p-message-icon-error {
+          color: var(--error-500);
+        }
+        
+        &.p-message-icon-secondary {
+          color: var(--secondary-500);
+        }
+        
+        &.p-message-icon-contrast {
+          color: var(--text-color);
+        }
+      }
+      
+      // Message text
+      .p-message-text {
+        flex: 1;
+        font-size: var(--font-size-base); // 16px
+        font-weight: var(--font-weight-normal); // 400
+        line-height: var(--line-height-normal); // 1.5
+        color: var(--text-color);
+      }
+      
+      // Close button
+      .p-message-close {
+        color: var(--text-color-secondary);
+        margin-left: var(--spacing-3); // 12px gap
+        padding: var(--spacing-1); // 4px padding
+        border-radius: var(--border-radius-sm);
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+        
+        &:hover {
+          color: var(--text-color);
+          background-color: var(--surface-100);
+        }
+      }
+      
+      // Size variants
+      &.p-message-sm {
+        padding: var(--spacing-2) var(--spacing-3); // 8px 12px
+        font-size: var(--font-size-sm); // 14px
+        
+        .p-message-icon {
+          font-size: var(--font-size-base); // 16px
+        }
+      }
+      
+      &.p-message-lg {
+        padding: var(--spacing-4) var(--spacing-5); // 16px 20px
+        font-size: var(--font-size-lg); // 18px
+        
+        .p-message-icon {
+          font-size: var(--font-size-xl); // 20px
+        }
+      }
+      
+      // Variant styles
+      &.p-message-outlined {
+        border: 1px solid currentColor;
+        background-color: transparent;
+      }
+      
+      &.p-message-simple {
+        border: none;
+        background-color: transparent;
+        padding: var(--spacing-2) 0; // 8px vertical, no horizontal padding
+      }
+    }
+  }
+}
+
+// Dark theme support
+::ng-deep {
+  .p-dark {
+    .lib-message {
+      .p-message {
+        .p-message-close {
+          &:hover {
+            background-color: var(--surface-800);
+          }
+        }
+      }
+    }
+  }
+}
+

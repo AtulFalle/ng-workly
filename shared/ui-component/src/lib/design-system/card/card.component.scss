@@ -1,0 +1,120 @@
+.lib-card {
+  // Standardized typography
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  background-color: var(--surface-0);
+  border-radius: var(--border-radius-lg);     // 8px
+  transition: all var(--transition-normal);   // 250ms
+
+  // Shadow variants
+  &.lib-card-shadow-none {
+    box-shadow: none;
+  }
+
+  &.lib-card-shadow-sm {
+    box-shadow: var(--shadow-sm);
+  }
+
+  &.lib-card-shadow-md {
+    box-shadow: var(--shadow-md);
+  }
+
+  &.lib-card-shadow-lg {
+    box-shadow: var(--shadow-lg);
+  }
+
+  // Border variants
+  &.lib-card-bordered {
+    border: 1px solid var(--border-color);
+  }
+
+  &.lib-card-elevated {
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+  }
+
+  // Padding variants
+  &.lib-card-no-padding {
+    ::ng-deep .p-card-body {
+      padding: 0;
+    }
+
+    ::ng-deep .p-card-content {
+      padding: 0;
+    }
+  }
+
+  // Customize PrimeNG card styles
+  ::ng-deep {
+    .p-card {
+      background-color: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: var(--border-radius-lg);
+    }
+
+    .p-card-header {
+      // Standardized card header spacing
+      padding: var(--spacing-4);             // 16px padding
+      border-bottom: 1px solid var(--border-color);
+      font-size: var(--font-size-lg);         // 18px
+      font-weight: var(--font-weight-semibold); // 600
+      line-height: var(--line-height-tight);  // 1.25
+      color: var(--text-color);
+      margin-bottom: var(--spacing-2);        // 8px margin below header
+    }
+
+    .p-card-title {
+      // Standardized card title typography
+      font-size: var(--font-size-xl);         // 20px
+      font-weight: var(--font-weight-semibold); // 600
+      line-height: var(--line-height-tight);  // 1.25
+      color: var(--text-color);
+      margin-bottom: var(--spacing-2);        // 8px margin below title
+    }
+
+    .p-card-subtitle {
+      // Standardized card subtitle typography
+      font-size: var(--font-size-sm);         // 14px
+      font-weight: var(--font-weight-normal); // 400
+      line-height: var(--line-height-normal); // 1.5
+      color: var(--text-color-secondary);
+      margin-bottom: var(--spacing-4);        // 16px margin below subtitle
+    }
+
+    .p-card-body {
+      // Standardized card body padding
+      padding: var(--spacing-6);              // 24px padding
+    }
+
+    .p-card-content {
+      padding: 0;
+    }
+
+    .p-card-footer {
+      // Standardized card footer spacing
+      padding: var(--spacing-4);              // 16px padding
+      border-top: 1px solid var(--border-color);
+      margin-top: var(--spacing-2);          // 8px margin above footer
+    }
+  }
+}
+
+// Dark theme support
+.p-dark {
+  .lib-card {
+    background-color: var(--surface-50);
+    border-color: var(--border-color);
+
+    ::ng-deep {
+      .p-card-header,
+      .p-card-footer {
+        border-color: var(--border-color);
+      }
+    }
+  }
+}
+

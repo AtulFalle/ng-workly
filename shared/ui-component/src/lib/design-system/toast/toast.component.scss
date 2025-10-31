@@ -1,0 +1,22 @@
+// Toast Component Styles
+// ======================
+// Minimal overrides to match PrimeNG's default appearance
+// Most styling is handled by PrimeNG's default CSS and the design system
+
+::ng-deep {
+  // Toast container - Top right positioning (standardized for application)
+  .p-toast {
+    top: var(--spacing-6) !important;
+    right: var(--spacing-6) !important;
+    z-index: 1100;
+    max-width: 25rem;
+    
+    // Mobile responsive
+    @media (max-width: 768px) {
+      top: var(--spacing-4) !important;
+      right: var(--spacing-4) !important;
+      left: var(--spacing-4) !important;
+      max-width: calc(100vw - 2rem);
+    }
+  }
+}

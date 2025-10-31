@@ -1,0 +1,52 @@
+<div [class]="cardClass">
+  <lib-card
+    [elevation]="true"
+    [padding]="true"
+    [shadow]="'md'">
+    <div class="lib-stat-card-container">
+      <!-- Header Section -->
+      <div class="lib-stat-card-header">
+        <div class="lib-stat-card-header-left">
+          @if (showIcon() && iconClass && iconClass.length > 0) {
+            <div class="lib-stat-card-icon-wrapper">
+              <i [class]="iconClass"></i>
+            </div>
+          }
+
+          <div class="lib-stat-card-title-section">
+            <div class="lib-stat-card-title">{{ title() }}</div>
+            @if (subtitle()) {
+              <div class="lib-stat-card-subtitle">{{ subtitle() }}</div>
+            }
+          </div>
+        </div>
+
+        @if (showTrend() && trend() !== 'none') {
+          <div [class]="trendClass">
+            <i [class]="trendIcon"></i>
+            @if (formattedTrendValue) {
+              <span class="lib-stat-card-trend-value">{{ formattedTrendValue }}</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Value Section -->
+      @if (loading()) {
+        <div class="lib-stat-card-loading">
+          <div class="lib-stat-card-skeleton-value"></div>
+          @if (description()) {
+            <div class="lib-stat-card-skeleton-description"></div>
+          }
+        </div>
+      } @else {
+        <div class="lib-stat-card-value-section">
+          <div class="lib-stat-card-value">{{ formattedValue }}</div>
+          @if (description()) {
+            <div class="lib-stat-card-description">{{ description() }}</div>
+          }
+        </div>
+      }
+    </div>
+  </lib-card>
+</div>

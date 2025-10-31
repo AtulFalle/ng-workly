@@ -1,13 +1,12 @@
 import type { Preview } from '@storybook/angular';
+import { setCompodocJson } from '@storybook/addon-docs/angular';
+import { applicationConfig } from '@storybook/angular';
+import { providePrimeNG } from 'primeng/config';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import Aura from '@primeuix/themes/aura';
 
-// Import PrimeIcons
-// import 'primeicons/primeicons.css';
-
-// Import design system from the shared library (same as app)
-// import '../../../dist/libs/src/design-system.scss';
-
-// Import design system styles if available
-// import '@workly/design-system';
+// Styles are now imported via project.json
+// Design tokens and global styles are in: src/lib/styles/design-tokens.scss
 
 const preview: Preview = {
   parameters: {
@@ -45,6 +44,17 @@ const preview: Preview = {
     },
   },
   decorators: [
+    // Provide PrimeNG configuration to generate CSS variables
+    applicationConfig({
+      providers: [
+        provideAnimations(),
+        providePrimeNG({
+          theme: {
+            preset: Aura,
+          },
+        }),
+      ],
+    }),
     (story, context) => {
       // Apply dark theme if background is dark
       const isDark = context.globals['backgrounds']?.value === '#1a1a1a';

@@ -1,0 +1,50 @@
+<div class="lib-input-wrapper" [class.lib-input-invalid]="invalid()">
+  @if (label()) {
+    <label class="lib-input-label" [class.lib-input-label-required]="required()">
+      {{ label() }}
+    </label>
+  }
+
+  <div class="lib-input-container">
+    @if (iconLeft()) {
+      <i class="lib-input-icon lib-input-icon-left" [class]="iconLeft()"></i>
+    }
+    
+    <input
+      pInputText
+      [type]="type()"
+      [placeholder]="placeholder()"
+      [value]="inputValue"
+      [disabled]="disabled()"
+      [readonly]="readonly()"
+      [required]="required()"
+      [class.lib-input-small]="size() === 'small'"
+      [class.lib-input-medium]="size() === 'medium'"
+      [class.lib-input-large]="size() === 'large'"
+      [class.lib-input-with-icon-left]="iconLeft()"
+      [class.lib-input-with-icon-right]="iconRight() || showClear()"
+      [class.lib-input-invalid]="invalid()"
+      [value]="inputValue"
+      (input)="onInput($event)"
+      (focus)="onFocus($event)"
+      (blur)="onBlur($event)"
+      class="lib-input">
+
+    @if (iconRight()) {
+      <i class="lib-input-icon lib-input-icon-right" [class]="iconRight()"></i>
+    }
+
+    @if (showClear() && inputValue) {
+      <i class="lib-input-icon lib-input-icon-right lib-input-clear pi pi-times" (click)="onClear()"></i>
+    }
+  </div>
+
+  @if (hint() && !invalid()) {
+    <span class="lib-input-hint">{{ hint() }}</span>
+  }
+
+  @if (errorMessage() && invalid()) {
+    <span class="lib-input-error">{{ errorMessage() }}</span>
+  }
+</div>
+

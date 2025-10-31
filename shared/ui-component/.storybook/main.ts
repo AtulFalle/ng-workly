@@ -31,7 +31,12 @@ const config: StorybookConfig = {
           options: {
             implementation: require('sass'),
             sassOptions: {
-              includePaths: ['node_modules', 'libs/src'],
+              includePaths: [
+                'node_modules',
+                'libs/src',
+                '../../libs/src',
+                '../../../libs/src',
+              ],
             },
           },
         },

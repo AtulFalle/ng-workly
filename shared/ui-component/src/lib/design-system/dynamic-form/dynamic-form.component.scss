@@ -1,0 +1,163 @@
+.lib-dynamic-form {
+  width: 100%;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--text-color);
+  
+  // Form header styling - Standardized spacing
+  .lib-form-header {
+    margin-bottom: var(--spacing-8); // 32px - Standardized section spacing
+    
+    .lib-form-title {
+      font-size: var(--font-size-xl); // 20px
+      font-weight: var(--font-weight-semibold); // 600
+      line-height: var(--line-height-tight); // 1.25
+      color: var(--text-color);
+      margin: 0 0 var(--spacing-2) 0; // 8px margin below title
+    }
+    
+    .lib-form-subtitle {
+      font-size: var(--font-size-sm); // 14px
+      font-weight: var(--font-weight-normal); // 400
+      line-height: var(--line-height-normal); // 1.5
+      color: var(--text-color-secondary);
+      margin: 0;
+    }
+  }
+  
+  // Form content - Standardized spacing
+  .lib-dynamic-form-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4); // 16px - Default content gap
+  }
+
+  // Layout variants with standardized spacing
+  &.lib-dynamic-form-vertical {
+    .lib-dynamic-form-fields {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-4) !important; // 16px - Standardized field spacing - Force override
+      width: 100%;
+      
+      lib-form-field {
+        margin-bottom: 0 !important; // Ensure no margins override gap
+      }
+    }
+  }
+
+  &.lib-dynamic-form-horizontal {
+    .lib-dynamic-form-fields {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: var(--spacing-4) !important; // 16px - Standardized field spacing - Force override
+      align-items: flex-start;
+      width: 100%;
+
+      lib-form-field {
+        flex: 1;
+        min-width: 200px;
+        margin: 0 !important; // Ensure no margins override gap
+      }
+    }
+  }
+
+  &.lib-dynamic-form-grid {
+    .lib-dynamic-form-grid {
+      display: grid;
+      gap: var(--spacing-4) !important; // 16px - Standardized grid gap - Force override
+      width: 100%;
+      row-gap: var(--spacing-4) !important; // 16px - Explicit row gap
+      column-gap: var(--spacing-4) !important; // 16px - Explicit column gap
+
+      lib-form-field {
+        margin: 0 !important; // Ensure no margins override gap
+      }
+
+      // Responsive grid adjustments
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  }
+  
+  // Spacing variants - Force gap values
+  &.lib-dynamic-form-spacing-none {
+    .lib-dynamic-form-content {
+      gap: 0 !important;
+    }
+    
+    .lib-dynamic-form-fields,
+    .lib-dynamic-form-grid {
+      gap: 0 !important;
+      row-gap: 0 !important;
+      column-gap: 0 !important;
+    }
+  }
+  
+  &.lib-dynamic-form-spacing-compact {
+    .lib-dynamic-form-content {
+      gap: var(--spacing-3) !important; // 12px - Compact spacing
+    }
+    
+    .lib-dynamic-form-fields,
+    .lib-dynamic-form-grid {
+      gap: var(--spacing-3) !important; // 12px - Compact field spacing
+      row-gap: var(--spacing-3) !important;
+      column-gap: var(--spacing-3) !important;
+    }
+  }
+  
+  &.lib-dynamic-form-spacing-comfortable {
+    .lib-dynamic-form-content {
+      gap: var(--spacing-4) !important; // 16px - Default comfortable spacing
+    }
+    
+    .lib-dynamic-form-fields,
+    .lib-dynamic-form-grid {
+      gap: var(--spacing-4) !important; // 16px - Default comfortable field spacing
+      row-gap: var(--spacing-4) !important;
+      column-gap: var(--spacing-4) !important;
+    }
+  }
+  
+  // Form actions - Standardized spacing
+  .lib-form-actions {
+    display: flex;
+    gap: var(--spacing-3); // 12px - Standardized button gap
+    margin-top: var(--spacing-8); // 32px - Standardized margin above actions
+    justify-content: flex-end;
+    width: 100%;
+    padding-top: var(--spacing-4); // 16px - Additional padding for visual separation
+    
+    lib-button {
+      display: inline-block;
+      margin: 0; // Remove any default margins
+    }
+  }
+
+  // Field spacing adjustments - Ensure no clumping
+  lib-form-field {
+    display: block !important;
+    width: 100%;
+    margin: 0 !important; // Remove default margins - Force override
+    padding: 0 !important; // Remove default padding - Force override
+    
+    // Ensure no spacing from pseudo-selectors interferes
+    &:first-child {
+      margin-top: 0 !important;
+    }
+    
+    &:last-child {
+      margin-bottom: 0 !important;
+    }
+    
+    // Ensure proper spacing between fields - gap handles this
+    + lib-form-field {
+      margin-top: 0 !important; // Handled by gap property
+    }
+  }
+}
+

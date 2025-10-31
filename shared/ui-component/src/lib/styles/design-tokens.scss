@@ -1,0 +1,297 @@
+// Design System Tokens & Global Styles
+// ====================================
+// Standardized spacing, typography, and design tokens for all components
+// This file applies to both Storybook and development
+
+// ============================================
+// DESIGN TOKENS - SPACING STANDARDS
+// ============================================
+// Based on 4px base unit for consistent spacing
+
+// Component Padding Standards
+// ---------------------------
+// Use for internal component padding
+$component-padding-xs: var(--spacing-2);    // 8px - Compact components
+$component-padding-sm: var(--spacing-3);    // 12px - Small components
+$component-padding-md: var(--spacing-4);    // 16px - Default component padding
+$component-padding-lg: var(--spacing-6);    // 24px - Large components
+$component-padding-xl: var(--spacing-8);    // 32px - Extra large components
+
+// Component Margin Standards
+// --------------------------
+// Use for spacing between components
+$component-margin-xs: var(--spacing-2);     // 8px - Tight spacing
+$component-margin-sm: var(--spacing-3);     // 12px - Compact spacing
+$component-margin-md: var(--spacing-4);     // 16px - Default spacing
+$component-margin-lg: var(--spacing-6);     // 24px - Comfortable spacing
+$component-margin-xl: var(--spacing-8);     // 32px - Generous spacing
+
+// Gap Standards (for flexbox/grid)
+// ---------------------------------
+$gap-xs: var(--spacing-1);                   // 4px - Tight gaps
+$gap-sm: var(--spacing-2);                  // 8px - Compact gaps
+$gap-md: var(--spacing-3);                  // 12px - Default gaps
+$gap-lg: var(--spacing-4);                  // 16px - Comfortable gaps
+$gap-xl: var(--spacing-6);                  // 24px - Generous gaps
+
+// Form Field Spacing Standards
+// ----------------------------
+$form-field-gap: var(--spacing-2);          // 8px - Gap between label and input
+$form-field-spacing: var(--spacing-4);      // 16px - Gap between form fields
+$form-section-spacing: var(--spacing-8);    // 32px - Gap between form sections
+
+// Card Spacing Standards
+// ----------------------
+$card-padding: var(--spacing-6);            // 24px - Default card padding
+$card-padding-compact: var(--spacing-4);   // 16px - Compact card padding
+$card-header-padding: var(--spacing-4);    // 16px - Card header padding
+$card-footer-padding: var(--spacing-4);    // 16px - Card footer padding
+$card-gap: var(--spacing-4);                // 16px - Gap between card elements
+
+// Button Spacing Standards
+// ------------------------
+$button-padding-sm: var(--spacing-2) var(--spacing-3);   // 8px 12px - Small buttons
+$button-padding-md: var(--spacing-3) var(--spacing-4);   // 12px 16px - Default buttons
+$button-padding-lg: var(--spacing-4) var(--spacing-6);  // 16px 24px - Large buttons
+$button-gap: var(--spacing-2);                            // 8px - Gap between buttons
+
+// Input Spacing Standards
+// -----------------------
+$input-padding-sm: var(--spacing-2) var(--spacing-3);     // 8px 12px - Small inputs
+$input-padding-md: var(--spacing-3) var(--spacing-4);    // 12px 16px - Default inputs
+$input-padding-lg: var(--spacing-4) var(--spacing-5);    // 16px 20px - Large inputs
+$input-icon-spacing: var(--spacing-3);                    // 12px - Icon offset from edge
+
+// Typography Standards
+// --------------------
+$font-family: var(--font-family);
+$font-size-base: var(--font-size-base);     // 16px - Base font size
+$font-size-sm: var(--font-size-sm);         // 14px - Small text
+$font-size-lg: var(--font-size-lg);         // 18px - Large text
+$font-size-xl: var(--font-size-xl);         // 20px - Extra large text
+
+$font-weight-normal: var(--font-weight-normal);   // 400
+$font-weight-medium: var(--font-weight-medium);   // 500
+$font-weight-semibold: var(--font-weight-semibold); // 600
+$font-weight-bold: var(--font-weight-bold);        // 700
+
+$line-height-normal: var(--line-height-normal);   // 1.5
+$line-height-tight: var(--line-height-tight);     // 1.25
+$line-height-loose: var(--line-height-loose);     // 2
+
+// ============================================
+// GLOBAL RESET & BASE STYLES
+// ============================================
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  color: var(--text-color);
+  background-color: var(--surface-0);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ============================================
+// STANDARDIZED COMPONENT UTILITIES
+// ============================================
+
+// Spacing Utilities
+// ----------------
+.lib-spacing-xs { gap: $gap-xs; }
+.lib-spacing-sm { gap: $gap-sm; }
+.lib-spacing-md { gap: $gap-md; }
+.lib-spacing-lg { gap: $gap-lg; }
+.lib-spacing-xl { gap: $gap-xl; }
+
+.lib-padding-xs { padding: $component-padding-xs; }
+.lib-padding-sm { padding: $component-padding-sm; }
+.lib-padding-md { padding: $component-padding-md; }
+.lib-padding-lg { padding: $component-padding-lg; }
+.lib-padding-xl { padding: $component-padding-xl; }
+
+.lib-margin-xs { margin: $component-margin-xs; }
+.lib-margin-sm { margin: $component-margin-sm; }
+.lib-margin-md { margin: $component-margin-md; }
+.lib-margin-lg { margin: $component-margin-lg; }
+.lib-margin-xl { margin: $component-margin-xl; }
+
+// Typography Utilities
+// -------------------
+.lib-text-xs { font-size: var(--font-size-xs); }
+.lib-text-sm { font-size: $font-size-sm; }
+.lib-text-base { font-size: $font-size-base; }
+.lib-text-lg { font-size: $font-size-lg; }
+.lib-text-xl { font-size: $font-size-xl; }
+.lib-text-2xl { font-size: var(--font-size-2xl); }
+.lib-text-3xl { font-size: var(--font-size-3xl); }
+
+.lib-font-normal { font-weight: $font-weight-normal; }
+.lib-font-medium { font-weight: $font-weight-medium; }
+.lib-font-semibold { font-weight: $font-weight-semibold; }
+.lib-font-bold { font-weight: $font-weight-bold; }
+
+// ============================================
+// PRIMENG BUTTON VARIABLE OVERRIDES
+// ============================================
+
+.p-button-primary {
+  --p-button-primary-background: var(--primary-500);
+  --p-button-primary-hover-background: var(--primary-600);
+  --p-button-primary-active-background: var(--primary-700);
+  --p-button-primary-color: #ffffff;
+  --p-button-primary-hover-color: #ffffff;
+  --p-button-primary-active-color: #ffffff;
+  --p-button-primary-border-color: var(--primary-500);
+  --p-button-primary-hover-border-color: var(--primary-600);
+  --p-button-primary-active-border-color: var(--primary-700);
+}
+
+.p-button-secondary {
+  --p-button-secondary-background: var(--secondary-500);
+  --p-button-secondary-hover-background: var(--secondary-600);
+  --p-button-secondary-active-background: var(--secondary-700);
+  --p-button-secondary-color: #ffffff;
+  --p-button-secondary-hover-color: #ffffff;
+  --p-button-secondary-active-color: #ffffff;
+  --p-button-secondary-border-color: var(--secondary-500);
+  --p-button-secondary-hover-border-color: var(--secondary-600);
+  --p-button-secondary-active-border-color: var(--secondary-700);
+}
+
+.p-button-success {
+  --p-button-success-background: var(--success-500);
+  --p-button-success-hover-background: var(--success-600);
+  --p-button-success-active-background: var(--success-700);
+  --p-button-success-color: #ffffff;
+  --p-button-success-hover-color: #ffffff;
+  --p-button-success-active-color: #ffffff;
+  --p-button-success-border-color: var(--success-500);
+  --p-button-success-hover-border-color: var(--success-600);
+  --p-button-success-active-border-color: var(--success-700);
+}
+
+.p-button-danger {
+  --p-button-danger-background: var(--error-500);
+  --p-button-danger-hover-background: var(--error-600);
+  --p-button-danger-active-background: var(--error-700);
+  --p-button-danger-color: #ffffff;
+  --p-button-danger-hover-color: #ffffff;
+  --p-button-danger-active-color: #ffffff;
+  --p-button-danger-border-color: var(--error-500);
+  --p-button-danger-hover-border-color: var(--error-600);
+  --p-button-danger-active-border-color: var(--error-700);
+}
+
+.p-button-warning {
+  --p-button-warning-background: var(--warning-500);
+  --p-button-warning-hover-background: var(--warning-600);
+  --p-button-warning-active-background: var(--warning-700);
+  --p-button-warning-color: #ffffff;
+  --p-button-warning-hover-color: #ffffff;
+  --p-button-warning-active-color: #ffffff;
+  --p-button-warning-border-color: var(--warning-500);
+  --p-button-warning-hover-border-color: var(--warning-600);
+  --p-button-warning-active-border-color: var(--warning-700);
+}
+
+.p-button-info {
+  --p-button-info-background: var(--info-500);
+  --p-button-info-hover-background: var(--info-600);
+  --p-button-info-active-background: var(--info-700);
+  --p-button-info-color: #ffffff;
+  --p-button-info-hover-color: #ffffff;
+  --p-button-info-active-color: #ffffff;
+  --p-button-info-border-color: var(--info-500);
+  --p-button-info-hover-border-color: var(--info-600);
+  --p-button-info-active-border-color: var(--info-700);
+}
+
+// ============================================
+// STANDARDIZED PRIMENG COMPONENT SPACING
+// ============================================
+
+// PrimeNG Input Spacing
+.p-inputtext {
+  padding: $input-padding-md;
+  font-size: $font-size-base;
+  font-family: $font-family;
+}
+
+.p-inputtext-sm {
+  padding: $input-padding-sm;
+  font-size: $font-size-sm;
+}
+
+.p-inputtext-lg {
+  padding: $input-padding-lg;
+  font-size: $font-size-lg;
+}
+
+// PrimeNG Button Spacing
+.p-button {
+  font-family: $font-family;
+  font-size: $font-size-base;
+  padding: $button-padding-md;
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-normal);
+}
+
+.p-button-sm {
+  padding: $button-padding-sm;
+  font-size: $font-size-sm;
+}
+
+.p-button-lg {
+  padding: $button-padding-lg;
+  font-size: $font-size-lg;
+}
+
+// PrimeNG Card Spacing
+.p-card {
+  border-radius: var(--border-radius-lg);
+  
+  .p-card-header {
+    padding: $card-header-padding;
+  }
+  
+  .p-card-body {
+    padding: $card-padding;
+  }
+  
+  .p-card-footer {
+    padding: $card-footer-padding;
+  }
+}
+
+// Storybook Canvas Spacing (only applies in Storybook context)
+.sb-show-main {
+  padding: var(--spacing-6);
+  background-color: var(--surface-0);
+  color: var(--text-color);
+}
+
+.sb-main-padded {
+  padding: var(--spacing-8);
+}
+
+// ============================================
+// RESPONSIVE SPACING ADJUSTMENTS
+// ============================================
+
+@media (max-width: 768px) {
+  // Reduce spacing on mobile
+  $component-padding-md: var(--spacing-3);
+  $component-margin-md: var(--spacing-3);
+  $gap-md: var(--spacing-2);
+  $form-field-spacing: var(--spacing-3);
+  $card-padding: var(--spacing-4);
+}
+

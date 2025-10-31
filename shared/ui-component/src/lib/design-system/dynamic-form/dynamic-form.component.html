@@ -1,0 +1,51 @@
+<div 
+  class="lib-dynamic-form" 
+  [class]="formLayoutClass" 
+  [class]="config().className"
+  [class]="spacingClass">
+  @if (title || subtitle) {
+    <div class="lib-form-header">
+      @if (title) {
+        <h3 class="lib-form-title">{{ title }}</h3>
+      }
+      @if (subtitle) {
+        <p class="lib-form-subtitle">{{ subtitle }}</p>
+      }
+    </div>
+  }
+
+  <form 
+    [formGroup]="formGroup()!"
+    (ngSubmit)="onSubmit()"
+    class="lib-dynamic-form-content">
+    
+    <div 
+      [class]="isGridLayout ? 'lib-dynamic-form-grid' : 'lib-dynamic-form-fields'"
+      [style.grid-template-columns]="isGridLayout ? gridTemplateColumns : undefined">
+      
+      @for (control of sortedControls; track control.name) {
+        @if (getFormControl(control.name); as formControl) {
+          <lib-form-field
+            [config]="control"
+            [formControl]="formControl">
+          </lib-form-field>
+        }
+      }
+    </div>
+
+    <div class="lib-form-actions">
+      <lib-button 
+        label="Reset" 
+        severity="secondary" 
+        type="button"
+        (clickEvent)="onReset()">
+      </lib-button>
+      <lib-button 
+        label="Submit" 
+        type="submit" 
+        severity="primary">
+      </lib-button>
+    </div>
+  </form>
+</div>
+

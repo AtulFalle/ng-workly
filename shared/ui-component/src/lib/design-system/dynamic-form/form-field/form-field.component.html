@@ -1,0 +1,99 @@
+<div [class]="fieldClass" [class.lib-form-field-hidden]="config().layout?.hidden">
+  @if (formControl(); as control) {
+    @switch (config().type) {
+      @case ('text') {
+        <lib-input
+          [label]="shouldShowLabel ? config().label : undefined"
+          type="text"
+          [placeholder]="config().placeholder || ''"
+          [ngModel]="fieldValue"
+          [disabled]="config()!.disabled ?? false"
+          [readonly]="config()!.readonly ?? false"
+          [required]="isRequired"
+          [invalid]="isInvalid"
+          [errorMessage]="errorMessage"
+          [hint]="config().hint"
+          [showClear]="config().showClear ?? false"
+          (ngModelChange)="onValueChange($event)"
+          (blurEvent)="onBlur()">
+        </lib-input>
+      }
+      
+      @case ('email') {
+        <lib-input
+          [label]="shouldShowLabel ? config().label : undefined"
+          type="email"
+          [placeholder]="config().placeholder || 'Enter your email'"
+          [ngModel]="fieldValue"
+          (ngModelChange)="onValueChange($event)"
+          (blurEvent)="onBlur()"
+          [disabled]="config().disabled ?? false"
+          [readonly]="config().readonly ?? false"
+          [required]="isRequired"
+          [invalid]="isInvalid"
+          [errorMessage]="errorMessage"
+          [hint]="config().hint"
+          [showClear]="config().showClear ?? false">
+        </lib-input>
+      }
+      
+      @case ('password') {
+        <lib-input
+          [label]="shouldShowLabel ? config().label : undefined"
+          type="password"
+          [placeholder]="config().placeholder || 'Enter your password'"
+          [ngModel]="fieldValue"
+          (ngModelChange)="onValueChange($event)"
+          (blurEvent)="onBlur()"
+          [disabled]="config().disabled ?? false"
+          [readonly]="config().readonly ?? false"
+          [required]="isRequired"
+          [invalid]="isInvalid"
+          [errorMessage]="errorMessage"
+          [hint]="config().hint"
+          [showClear]="config().showClear ?? false">
+        </lib-input>
+      }
+      
+      @case ('number') {
+        <lib-input
+          [label]="shouldShowLabel ? config().label : undefined"
+          type="number"
+          [placeholder]="config().placeholder || 'Enter a number'"
+          [ngModel]="fieldValue"
+          (ngModelChange)="onValueChange($event)"
+          (blurEvent)="onBlur()"
+          [disabled]="config().disabled ?? false"
+          [readonly]="config().readonly ?? false"
+          [required]="isRequired"
+          [invalid]="isInvalid"
+          [errorMessage]="errorMessage"
+          [hint]="config().hint"
+          [showClear]="config().showClear ?? false">
+        </lib-input>
+      }
+      
+      @default {
+        <!-- Fallback to text input for unsupported types -->
+        <lib-input
+          [label]="shouldShowLabel ? config().label : undefined"
+          type="text"
+          [placeholder]="config().placeholder || ''"
+          [ngModel]="fieldValue"
+          (ngModelChange)="onValueChange($event)"
+          (blurEvent)="onBlur()"
+          [disabled]="config().disabled ?? false"
+          [readonly]="config().readonly ?? false"
+          [required]="isRequired"
+          [invalid]="isInvalid"
+          [errorMessage]="errorMessage"
+          [hint]="config().hint"
+          [showClear]="config().showClear ?? false"
+          (valueChange)="onValueChange($event)"
+          (blurEvent)="onBlur()">
+        </lib-input>
+      }
+    }
+  }
+</div>
+

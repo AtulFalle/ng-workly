@@ -1,0 +1,84 @@
+// Confirm Dialog Styles
+// ====================
+// Standardized styling for PrimeNG confirm dialog
+
+::ng-deep {
+  .lib-confirm-dialog {
+    // Dialog container
+    .p-dialog {
+      border-radius: var(--border-radius-lg); // 8px
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border-color);
+      background-color: var(--surface-0);
+      
+      // Header styling
+      .p-dialog-header {
+        padding: var(--spacing-4); // 16px
+        border-bottom: 1px solid var(--border-color);
+        background-color: var(--surface-0);
+        
+        .p-dialog-title {
+          font-size: var(--font-size-xl); // 20px
+          font-weight: var(--font-weight-semibold); // 600
+          line-height: var(--line-height-tight); // 1.25
+          color: var(--text-color);
+          margin: 0;
+        }
+        
+        .p-dialog-header-icon {
+          color: var(--text-color-secondary);
+          transition: color var(--transition-fast);
+          
+          &:hover {
+            color: var(--text-color);
+          }
+        }
+      }
+      
+      // Content styling
+      .p-dialog-content {
+        padding: var(--spacing-4); // 16px
+        background-color: var(--surface-0);
+        font-size: var(--font-size-base); // 16px
+        line-height: var(--line-height-normal); // 1.5
+        color: var(--text-color);
+      }
+      
+      // Footer styling
+      .p-dialog-footer {
+        padding: var(--spacing-4); // 16px
+        border-top: 1px solid var(--border-color);
+        background-color: var(--surface-0);
+        display: flex;
+        gap: var(--spacing-3); // 12px - Standardized button gap
+        justify-content: flex-end;
+      }
+    }
+  }
+  
+  // Backdrop/mask styling
+  .p-dialog-mask {
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+  }
+}
+
+// Dark theme support
+::ng-deep {
+  .p-dark {
+    .lib-confirm-dialog {
+      .p-dialog {
+        background-color: var(--surface-900);
+        border-color: var(--border-color);
+        
+        .p-dialog-header,
+        .p-dialog-content,
+        .p-dialog-footer {
+          background-color: var(--surface-900);
+          border-color: var(--border-color);
+        }
+      }
+    }
+  }
+}
+

@@ -64,7 +64,7 @@
         "browserTarget": "ui-component:build-storybook",
         "compodoc": false,
         "styles": [
-          "shared/ui-component/.storybook/styles.scss",
+          "shared/ui-component/src/lib/styles/design-tokens.scss",
           "dist/libs/src/design-system.scss",
           "primeicons/primeicons.css"
         ],
@@ -91,7 +91,7 @@
         "browserTarget": "ui-component:build-storybook",
         "compodoc": false,
         "styles": [
-          "shared/ui-component/.storybook/styles.scss",
+          "shared/ui-component/src/lib/styles/design-tokens.scss",
           "dist/libs/src/design-system.scss",
           "primeicons/primeicons.css"
         ],
