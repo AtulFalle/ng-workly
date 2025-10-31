@@ -1,6 +1,5 @@
 # 🚀 Workly - Enterprise HRM Platform
 
-<div align="center">
 
 ## 📋 Table of Contents
 
@@ -355,10 +354,8 @@ For enterprise customers, we offer:
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/company/workly)
 [![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/workly)
 
-</div>
 ## 📊 Quick Status Overview
 
-<div align="center">
 
 | 🧪 **Tests** | 🏗️ **Build** | 🔒 **Security** | 📊 **Quality** |
 |:---:|:---:|:---:|:---:|
@@ -366,7 +363,6 @@ For enterprise customers, we offer:
 | **Coverage** | N/A% | **Projects** | 5 | **Vulnerabilities** | 13 | **Issues** |  |
 | **Suites** | 5 | **Time** | ~3.2 min | **Score** | B | **Smells** | 0 |
 
-</div>
 
 **Last Updated**: 2025-10-25 10:37:52 UTC
 ## 📊 Quick Status Overview
