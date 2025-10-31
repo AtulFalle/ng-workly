@@ -466,3 +466,70 @@ For enterprise customers, we offer:
 | **Suites** | 5 | **Time** | ~3.2 min | **Score** | B | **Smells** | 0 |
 
 **Last Updated**: 2025-10-31 19:56:24 UTC
+## 🚀 Project Health Dashboard
+
+| 🧪 **Testing** | 🏗️ **Build** | 🔒 **Security** | 📊 **Quality** |
+|:---:|:---:|:---:|:---:|
+| **Status** | ❌ FAIL | ❌ FAIL | ✅ PASS | ✅ PASS |
+| **Coverage** | N/A% | **Projects** | 4 | **Vulnerabilities** | 9 | **Issues** | 0 |
+| **Suites** | 0 | **Time** | 0ss | **Score** | B | **Smells** | 0
+0 |
+
+### 📈 Detailed Metrics
+
+<table>
+<tr>
+<td width="50%">
+
+#### 🧪 Test Coverage
+- **Unit Tests**: N/A% coverage
+- **Integration Tests**: N/A (not configured)
+- **E2E Tests**: N/A (not configured)
+- **Total Suites**: 0
+
+#### 🏗️ Build Information
+- **Projects Built**: 4
+- **Build Time**: 0s seconds
+- **Bundle Size**: 
+- **Dependencies**: 82 packages
+
+</td>
+<td width="50%">
+
+#### 🔒 Security Status
+- **Vulnerabilities**: 9
+- **High/Critical**: Check report
+- **Security Score**: B
+- **Last Audit**: 2025-10-31
+
+#### 📊 Quality Metrics
+- **Lint Issues**: 0
+- **Code Smells**: 0
+0
+- **Complexity Issues**: 0
+0
+- **Duplicates**: N/A (not configured)
+
+</td>
+</tr>
+</table>
+
+### 🔍 System Information
+
+| Component | Version | Status |
+|-----------|---------|--------|
+| **Node.js** | v20.19.5 | ✅ Active |
+| **NPM** | 10.8.2 | ✅ Active |
+| **Nx** | Nx Version:
+- Local: v21.6.6
+- Global: Not found | ✅ Active |
+| **Angular** | 20.3.9 | ✅ Active |
+| **TypeScript** |  | ✅ Active |
+
+### 📅 Last Updated
+**Date**: 2025-10-31 20:54:23 UTC  
+**Commit**: `89ab3c6e9b8e498ca6b71847ce71b724c49ae3e5`  
+**Branch**: `master`  
+**Workflow**: [View Details](https://github.com/AtulFalle/ng-workly/actions/runs/18984948485)
+
+---
