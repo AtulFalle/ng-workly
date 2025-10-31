@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@workly/design-system": ["dist/libs/src/design-system.scss"],
+      "@workly/design-system": ["shared/ui-component/src/lib/styles/design-system.scss"],
       "@workly/theming": [
         "shared/ui-component/src/lib/theming/theming.module.ts"
       ],

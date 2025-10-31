@@ -59,12 +59,13 @@
         "compodoc": false,
         "styles": [
           "shared/ui-component/src/lib/styles/design-tokens.scss",
-          "dist/libs/src/design-system.scss",
+          "shared/ui-component/src/lib/styles/design-system.scss",
           "primeicons/primeicons.css"
         ],
         "stylePreprocessorOptions": {
           "includePaths": [
-            "dist/libs/src",
+            "shared/ui-component/src/lib/styles",
+            "shared/ui-component/src/lib/theming",
             "node_modules",
             "shared/ui-component/src"
           ]
@@ -86,12 +87,13 @@
         "compodoc": false,
         "styles": [
           "shared/ui-component/src/lib/styles/design-tokens.scss",
-          "dist/libs/src/design-system.scss",
+          "shared/ui-component/src/lib/styles/design-system.scss",
           "primeicons/primeicons.css"
         ],
         "stylePreprocessorOptions": {
           "includePaths": [
-            "dist/libs/src",
+            "shared/ui-component/src/lib/styles",
+            "shared/ui-component/src/lib/theming",
             "node_modules",
             "shared/ui-component/src"
           ]
