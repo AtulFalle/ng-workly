@@ -2,12 +2,13 @@
 <header class="header-container">
   <!-- Left Section -->
   <div class="header-left">
-    <button 
-      class="sidebar-toggle" 
-      (click)="handleToggleSidebar()"
+    <lib-button
+      icon="pi pi-bars"
+      size="small"
+      [text]="true"
+      (clickEvent)="handleToggleSidebar()"
       [attr.aria-label]="'Toggle sidebar'">
-      <i class="pi pi-bars"></i>
-    </button>
+    </lib-button>
     
     <div class="header-title">
       <h1 class="title">{{ title() }}</h1>
@@ -20,16 +21,14 @@
   <!-- Center Section - Search -->
   @if (showSearch()) {
     <div class="header-center">
-      <div class="search-container">
-        <i class="pi pi-search search-icon"></i>
-        <input 
-          type="text" 
-          class="search-input"
-          placeholder="Search..."
-          [(ngModel)]="searchQuery"
-          (keyup.enter)="handleSearch()"
-          (input)="handleSearch()">
-      </div>
+      <lib-input
+        type="text"
+        placeholder="Search..."
+        size="medium"
+        iconLeft="pi pi-search"
+        [value]="searchQueryValue()"
+        (valueChange)="onSearchInputChange($event)">
+      </lib-input>
     </div>
   }
 
@@ -38,23 +37,27 @@
     <!-- Notifications -->
     @if (showNotifications()) {
       <div class="notification-container">
-        <button 
-          class="notification-toggle"
-          (click)="toggleNotificationMenu()"
-          [class.active]="isNotificationMenuOpen"
+        <lib-button
+          icon="pi pi-bell"
+          size="small"
+          [text]="true"
+          [badge]="getUnreadNotificationCount() > 0 ? getUnreadNotificationCount().toString() : undefined"
+          (clickEvent)="toggleNotificationMenu()"
+          [class.active]="isNotificationMenuOpen()"
           [attr.aria-label]="'Notifications'">
-          <i class="pi pi-bell"></i>
-          @if (getUnreadNotificationCount() > 0) {
-            <span class="notification-badge">{{ getUnreadNotificationCount() }}</span>
-          }
-        </button>
+        </lib-button>
 
         <!-- Notification Dropdown -->
-        @if (isNotificationMenuOpen) {
+        @if (isNotificationMenuOpen()) {
           <div class="notification-dropdown">
             <div class="notification-header">
               <h3>Notifications</h3>
-              <button class="mark-all-read">Mark all read</button>
+              <lib-button
+                label="Mark all read"
+                size="small"
+                [text]="true"
+                severity="secondary">
+              </lib-button>
             </div>
             <div class="notification-list">
               @if (notifications().length === 0) {
@@ -98,52 +101,69 @@
     <!-- User Menu -->
     @if (showUserMenu() && userProfile()) {
       <div class="user-menu-container">
-        <button 
-          class="user-menu-toggle"
-          (click)="toggleUserMenu()"
-          [class.active]="isUserMenuOpen">
-          <img 
-            [src]="userProfile()?.avatar || 'https://via.placeholder.com/32'" 
-            [alt]="userProfile()?.name"
-            class="user-avatar">
-          <div class="user-info">
-            <span class="user-name">{{ userProfile()?.name }}</span>
-            <span class="user-role">{{ userProfile()?.role }}</span>
-          </div>
-          <i class="pi pi-chevron-down user-menu-icon"></i>
-        </button>
+        <lib-user-card
+          [user]="{
+            name: userProfile()!.name,
+            subtitle: userProfile()!.role,
+            avatar: userProfile()!.avatar,
+            email: userProfile()!.email
+          }"
+          variant="header"
+          size="small"
+          [clickable]="true"
+          (cardClick)="toggleUserMenu()"
+          [class.active]="isUserMenuOpen()">
+        </lib-user-card>
 
         <!-- User Dropdown -->
-        @if (isUserMenuOpen) {
+        @if (isUserMenuOpen()) {
           <div class="user-dropdown">
             <div class="user-dropdown-header">
-              <img 
-                [src]="userProfile()?.avatar || 'https://via.placeholder.com/40'" 
-                [alt]="userProfile()?.name"
-                class="user-dropdown-avatar">
-              <div class="user-dropdown-info">
-                <h4 class="user-dropdown-name">{{ userProfile()?.name }}</h4>
-                <p class="user-dropdown-email">{{ userProfile()?.email }}</p>
-              </div>
+              <lib-user-card
+                [user]="{
+                  name: userProfile()!.name,
+                  subtitle: userProfile()!.role,
+                  avatar: userProfile()!.avatar,
+                  email: userProfile()!.email
+                }"
+                variant="default"
+                size="medium">
+              </lib-user-card>
             </div>
             <div class="user-dropdown-menu">
-              <a routerLink="/profile" class="dropdown-item">
-                <i class="pi pi-user"></i>
-                <span>Profile</span>
-              </a>
-              <a routerLink="/settings" class="dropdown-item">
-                <i class="pi pi-cog"></i>
-                <span>Settings</span>
-              </a>
-              <a routerLink="/help" class="dropdown-item">
-                <i class="pi pi-question-circle"></i>
-                <span>Help</span>
-              </a>
+              <lib-button
+                label="Profile"
+                icon="pi pi-user"
+                size="small"
+                [text]="true"
+                severity="secondary"
+                (clickEvent)="navigateToProfile()">
+              </lib-button>
+              <lib-button
+                label="Settings"
+                icon="pi pi-cog"
+                size="small"
+                [text]="true"
+                severity="secondary"
+                (clickEvent)="navigateToSettings()">
+              </lib-button>
+              <lib-button
+                label="Help"
+                icon="pi pi-question-circle"
+                size="small"
+                [text]="true"
+                severity="secondary"
+                (clickEvent)="navigateToHelp()">
+              </lib-button>
               <div class="dropdown-divider"></div>
-              <button class="dropdown-item logout-item" (click)="handleLogout()">
-                <i class="pi pi-sign-out"></i>
-                <span>Logout</span>
-              </button>
+              <lib-button
+                label="Logout"
+                icon="pi pi-sign-out"
+                size="small"
+                [text]="true"
+                severity="danger"
+                (clickEvent)="handleLogout()">
+              </lib-button>
             </div>
           </div>
         }

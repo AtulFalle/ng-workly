@@ -22,4 +22,8 @@ export * from './chart/chart.component';
 export * from './chart/chart.types';
 export * from './timeline/timeline.component';
 export * from './timeline/timeline.types';
+export * from './status-chip/status-chip.component';
+export * from './status-chip/status-chip.types';
+export * from './table/table.component';
+export * from './table/table.types';
 

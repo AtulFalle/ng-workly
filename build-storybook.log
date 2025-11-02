@@ -1,0 +1,30 @@
+
+> @workly/source@0.0.0 build-storybook
+> nx build-storybook ui-component --output-dir=C:\Users\atulf\AppData\Local\Temp\chromatic--33740-Yc4GIM3sO8Gs
+
+
+> nx run ui-component:build-storybook --output-dir=C:\Users\atulf\AppData\Local\Temp\chromatic--33740-Yc4GIM3sO8Gs
+
+info
+ => Cleaning outputDir: [36mC:\Users\atulf\AppData\Local\Temp\chromatic--33740-Yc4GIM3sO8Gs[39m
+info => Loading presets
+info
+ => Building manager..
+info => Building preview..
+info Addon-docs: using MDX3
+info
+ => Using implicit CSS loaders
+info
+ => Using angular browser target options from "ui-component:build-storybook"
+info => Using angular project with "tsConfig:D:\CURSOR\workly\shared\ui-component\.storybook\tsconfig.json"
+info => [[38;2;241;97;140m@storybook/addon-styling-webpack[39m] Applying custom Storybook webpack configuration styling.
+info => Using default Webpack5 setup
+info => Output directory: C:\Users\atulf\AppData\Local\Temp\chromatic--33740-Yc4GIM3sO8Gs
+
+
+
+ NX   Successfully ran target build-storybook for project ui-component
+
+
+View logs and investigate cache misses at https://cloud.nx.app/runs/YRmcKmlCTj
+

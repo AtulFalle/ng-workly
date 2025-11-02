@@ -1,0 +1,121 @@
+<div 
+  [class]="cardClass()"
+  [routerLink]="routerLink()"
+  (click)="onCardClick()"
+  [attr.aria-label]="user().name">
+  
+  <!-- Avatar on Left -->
+  @if (avatarPosition() === 'left') {
+    <div class="lib-user-card-avatar" (click)="onAvatarClick($event)">
+      @if (user().avatar) {
+        <img 
+          [src]="user().avatar" 
+          [alt]="user().name"
+          class="lib-user-card-avatar-image"
+          [style.width]="avatarSize()"
+          [style.height]="avatarSize()">
+      } @else {
+        <div 
+          class="lib-user-card-avatar-initials"
+          [style.width]="avatarSize()"
+          [style.height]="avatarSize()">
+          {{ userInitials() }}
+        </div>
+      }
+      
+      @if (badge() && variant() !== 'table') {
+        <span [class]="badgeClass()">
+          {{ badge() }}
+        </span>
+      }
+    </div>
+  }
+
+  <!-- User Info -->
+  <div class="lib-user-card-content">
+    <div class="lib-user-card-header">
+      <div class="lib-user-card-name-wrapper">
+        <h3 class="lib-user-card-name">{{ user().name }}</h3>
+        
+        @if (badge() && variant() === 'table') {
+          <span 
+            class="lib-user-card-badge-inline"
+            [class]="'lib-user-card-badge-inline lib-user-card-badge-inline--' + badgeSeverity()">
+            {{ badge() }}
+          </span>
+        }
+        
+        @if (shouldShowStatus() && user().status) {
+          <span [class]="'lib-user-card-status ' + statusClass()">
+            {{ statusLabel() }}
+          </span>
+        }
+      </div>
+      
+      @if (user().subtitle) {
+        <p class="lib-user-card-subtitle">{{ user().subtitle }}</p>
+      }
+    </div>
+
+    <!-- Additional Details (for detailed variant) -->
+    @if (variant() === 'detailed') {
+      <div class="lib-user-card-details">
+        @if (shouldShowRole() && user().role) {
+          <div class="lib-user-card-detail-item">
+            <i class="pi pi-briefcase lib-user-card-detail-icon"></i>
+            <span class="lib-user-card-detail-text">{{ user().role }}</span>
+          </div>
+        }
+        
+        @if (shouldShowEmail() && user().email) {
+          <div class="lib-user-card-detail-item">
+            <i class="pi pi-envelope lib-user-card-detail-icon"></i>
+            <span class="lib-user-card-detail-text">{{ user().email }}</span>
+          </div>
+        }
+        
+        @if (shouldShowDepartment() && user().department) {
+          <div class="lib-user-card-detail-item">
+            <i class="pi pi-building lib-user-card-detail-icon"></i>
+            <span class="lib-user-card-detail-text">{{ user().department }}</span>
+          </div>
+        }
+        
+        @if (shouldShowEmployeeId() && user().employeeId) {
+          <div class="lib-user-card-detail-item">
+            <i class="pi pi-id-card lib-user-card-detail-icon"></i>
+            <span class="lib-user-card-detail-text">ID: {{ user().employeeId }}</span>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Avatar on Right -->
+  @if (avatarPosition() === 'right') {
+    <div class="lib-user-card-avatar" (click)="onAvatarClick($event)">
+      @if (user().avatar) {
+        <img 
+          [src]="user().avatar" 
+          [alt]="user().name"
+          class="lib-user-card-avatar-image"
+          [style.width]="avatarSize()"
+          [style.height]="avatarSize()">
+      } @else {
+        <div 
+          class="lib-user-card-avatar-initials"
+          [style.width]="avatarSize()"
+          [style.height]="avatarSize()">
+          {{ userInitials() }}
+        </div>
+      }
+      
+      @if (badge() && variant() !== 'table') {
+        <span [class]="badgeClass()">
+          {{ badge() }}
+        </span>
+      }
+    </div>
+  }
+</div>
+

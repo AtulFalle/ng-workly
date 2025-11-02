@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "npm run start:shell",
+    "start": "nx run-many --target=serve --projects=attendance,authenticationUi,workly-ui ",
     "start:shell": "nx serve workly-ui",
     "start:auth": "nx serve authenticationUi",
-    "start:all": "concurrently \"npm run start:shell\" \"npm run start:auth\"",
+    "start:all": "npx nx run workly-ui:serve",
     "build": "npm run build:all",
     "build:shell": "nx build workly-ui",
     "build:auth": "nx build authenticationUi",
@@ -23,7 +23,7 @@
     "clean": "nx reset",
     "dev": "npm run start:all",
     "storybook": "nx storybook ui-component",
-    "build:storybook": "nx build-storybook ui-component",
+    "build-storybook": "nx build-storybook ui-component",
     "quality:smells": "nx run-many -t lint --all --parallel",
     "quality:security": "npm run security:audit && npm run security:check",
     "quality:vulnerabilities": "echo 'Dependency analysis handled by npm audit and audit-ci'",
@@ -41,7 +41,8 @@
     "bundle:analyze": "npx webpack-bundle-analyzer dist/apps/frontend/shell/workly/main.*.js",
     "bundle:size": "npx bundlesize",
     "coverage:check": "nx run-many -t test --all && npm run coverage:threshold",
-    "coverage:threshold": "npx nyc report --reporter=text-summary --check-coverage --lines 80 --functions 80 --branches 80 --statements 80"
+    "coverage:threshold": "npx nyc report --reporter=text-summary --check-coverage --lines 80 --functions 80 --branches 80 --statements 80",
+    "chromatic": "npx chromatic --project-token=chpt_b135eb88a2cdce3"
   },
   "private": true,
   "dependencies": {

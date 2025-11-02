@@ -1,0 +1,373 @@
+// Status Chip Component Styles
+// ===========================
+// Modern status chip styling with design tokens for HRM applications
+
+:host {
+  display: inline-flex;
+}
+
+.lib-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  cursor: default;
+  user-select: none;
+
+  // Variant: Filled (default)
+  &--filled {
+    // Default colors - will be overridden by severity classes
+    background-color: var(--surface-200);
+    color: var(--text-color);
+    border: 1px solid transparent;
+  }
+
+  // Variant: Outlined
+  &--outlined {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+  }
+
+  // Variant: Soft
+  &--soft {
+    background-color: var(--surface-100);
+    color: var(--text-color);
+    border: 1px solid transparent;
+  }
+
+  // Variant: Text
+  &--text {
+    background-color: transparent;
+    border: none;
+    padding: var(--spacing-1) var(--spacing-2);
+  }
+
+  // Size variants
+  &--small {
+    padding: var(--spacing-1) var(--spacing-2);
+    font-size: var(--font-size-xs);
+    gap: var(--spacing-1);
+    
+    .lib-status-chip-icon {
+      font-size: 12px;
+    }
+    
+    .lib-status-chip-dot {
+      width: 6px;
+      height: 6px;
+    }
+  }
+
+  &--medium {
+    padding: var(--spacing-1) var(--spacing-3);
+    font-size: var(--font-size-xs);
+    gap: var(--spacing-2);
+    
+    .lib-status-chip-icon {
+      font-size: 14px;
+    }
+    
+    .lib-status-chip-dot {
+      width: 8px;
+      height: 8px;
+    }
+  }
+
+  &--large {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    gap: var(--spacing-2);
+    
+    .lib-status-chip-icon {
+      font-size: 16px;
+    }
+    
+    .lib-status-chip-dot {
+      width: 10px;
+      height: 10px;
+    }
+  }
+
+  // Severity colors - Filled variant
+  &--success {
+    background-color: var(--success-500);
+    color: var(--surface-0);
+    border-color: var(--success-500);
+    
+    &.lib-status-chip--outlined {
+      background-color: transparent;
+      color: var(--success-700);
+      border-color: var(--success-500);
+    }
+    
+    &.lib-status-chip--soft {
+      background-color: var(--success-100);
+      color: var(--success-700);
+      border-color: transparent;
+    }
+    
+    &.lib-status-chip--text {
+      color: var(--success-700);
+    }
+  }
+
+  &--info {
+    background-color: var(--info-500);
+    color: var(--surface-0);
+    border-color: var(--info-500);
+    
+    &.lib-status-chip--outlined {
+      background-color: transparent;
+      color: var(--info-700);
+      border-color: var(--info-500);
+    }
+    
+    &.lib-status-chip--soft {
+      background-color: var(--info-100);
+      color: var(--info-700);
+      border-color: transparent;
+    }
+    
+    &.lib-status-chip--text {
+      color: var(--info-700);
+    }
+  }
+
+  &--warning {
+    background-color: var(--warning-500);
+    color: var(--surface-0);
+    border-color: var(--warning-500);
+    
+    &.lib-status-chip--outlined {
+      background-color: transparent;
+      color: var(--warning-700);
+      border-color: var(--warning-500);
+    }
+    
+    &.lib-status-chip--soft {
+      background-color: var(--warning-100);
+      color: var(--warning-700);
+      border-color: transparent;
+    }
+    
+    &.lib-status-chip--text {
+      color: var(--warning-700);
+    }
+  }
+
+  &--danger {
+    background-color: var(--error-500);
+    color: var(--surface-0);
+    border-color: var(--error-500);
+    
+    &.lib-status-chip--outlined {
+      background-color: transparent;
+      color: var(--error-700);
+      border-color: var(--error-500);
+    }
+    
+    &.lib-status-chip--soft {
+      background-color: var(--error-100);
+      color: var(--error-700);
+      border-color: transparent;
+    }
+    
+    &.lib-status-chip--text {
+      color: var(--error-700);
+    }
+  }
+
+  &--secondary {
+    background-color: var(--secondary-500);
+    color: var(--surface-0);
+    border-color: var(--secondary-500);
+    
+    &.lib-status-chip--outlined {
+      background-color: transparent;
+      color: var(--secondary-700);
+      border-color: var(--secondary-500);
+    }
+    
+    &.lib-status-chip--soft {
+      background-color: var(--secondary-100);
+      color: var(--secondary-700);
+      border-color: transparent;
+    }
+    
+    &.lib-status-chip--text {
+      color: var(--secondary-700);
+    }
+  }
+
+  // Dot indicator
+  &--with-dot {
+    .lib-status-chip-dot {
+      display: inline-block;
+      border-radius: var(--border-radius-full);
+      flex-shrink: 0;
+    }
+    
+    &.lib-status-chip--success .lib-status-chip-dot {
+      background-color: var(--success-500);
+      
+      &.lib-status-chip--outlined,
+      &.lib-status-chip--soft,
+      &.lib-status-chip--text {
+        background-color: var(--success-500);
+      }
+    }
+    
+    &.lib-status-chip--info .lib-status-chip-dot {
+      background-color: var(--info-500);
+    }
+    
+    &.lib-status-chip--warning .lib-status-chip-dot {
+      background-color: var(--warning-500);
+    }
+    
+    &.lib-status-chip--danger .lib-status-chip-dot {
+      background-color: var(--error-500);
+    }
+    
+    &.lib-status-chip--secondary .lib-status-chip-dot {
+      background-color: var(--secondary-500);
+    }
+  }
+
+  // Icon styling
+  &-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  // Label styling
+  &-label {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  // Dot styling
+  &-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: var(--border-radius-full);
+    flex-shrink: 0;
+    background-color: currentColor;
+  }
+
+  // Remove button
+  &-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: var(--spacing-1);
+    padding: var(--spacing-1);
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+    opacity: 0.7;
+    
+    &:hover {
+      opacity: 1;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    
+    &:focus {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+    }
+    
+    i {
+      font-size: 12px;
+    }
+  }
+
+  // Removable variant
+  &--removable {
+    cursor: pointer;
+    
+    &:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+  }
+
+  // Clickable
+  &:not(.lib-status-chip--removable) {
+    cursor: default;
+  }
+}
+
+// Dark theme support
+:host-context(.p-dark),
+:host-context([data-theme="dark"]) {
+  .lib-status-chip {
+    &--filled {
+      &.lib-status-chip--success {
+        background-color: var(--success-600);
+      }
+      
+      &.lib-status-chip--info {
+        background-color: var(--info-600);
+      }
+      
+      &.lib-status-chip--warning {
+        background-color: var(--warning-600);
+      }
+      
+      &.lib-status-chip--danger {
+        background-color: var(--error-600);
+      }
+      
+      &.lib-status-chip--secondary {
+        background-color: var(--secondary-600);
+      }
+    }
+    
+    &--soft {
+      &.lib-status-chip--success {
+        background-color: var(--success-900);
+        color: var(--success-300);
+      }
+      
+      &.lib-status-chip--info {
+        background-color: var(--info-900);
+        color: var(--info-300);
+      }
+      
+      &.lib-status-chip--warning {
+        background-color: var(--warning-900);
+        color: var(--warning-300);
+      }
+      
+      &.lib-status-chip--danger {
+        background-color: var(--error-900);
+        color: var(--error-300);
+      }
+      
+      &.lib-status-chip--secondary {
+        background-color: var(--secondary-900);
+        color: var(--secondary-300);
+      }
+    }
+    
+    &--outlined {
+      border-color: var(--surface-600);
+    }
+  }
+}
+

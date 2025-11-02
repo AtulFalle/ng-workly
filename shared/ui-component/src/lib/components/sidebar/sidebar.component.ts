@@ -1,17 +1,10 @@
-import { Component, signal, input, output, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, input, output, computed, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
-// PrimeNG Components
-import { PanelModule } from 'primeng/panel';
-import { ButtonModule } from 'primeng/button';
-import { MenuModule } from 'primeng/menu';
-import { DividerModule } from 'primeng/divider';
-import { BadgeModule } from 'primeng/badge';
-import { AvatarModule } from 'primeng/avatar';
-import { InputTextModule } from 'primeng/inputtext';
-import { TooltipModule } from 'primeng/tooltip';
+import { ButtonComponent } from '../../design-system/button/button.component';
+import { InputComponent } from '../../design-system/input/input.component';
+import { UserCardComponent } from '../user-card/user-card.component';
 
 export interface SidebarMenuItem {
   label: string;
@@ -46,20 +39,16 @@ export interface UserProfile {
     CommonModule,
     RouterModule,
     FormsModule,
-    PanelModule,
-    ButtonModule,
-    MenuModule,
-    DividerModule,
-    BadgeModule,
-    AvatarModule,
-    InputTextModule,
-    TooltipModule
+    ButtonComponent,
+    UserCardComponent
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent {
+  private router = inject(Router);
+
   // Inputs using input() function
   sections = input<SidebarSection[]>([]);
   userProfile = input<UserProfile>();
@@ -161,9 +150,16 @@ export class SidebarComponent {
   ];
 
   onMenuClick(item: SidebarMenuItem): void {
+    if (item.disabled) return;
+    
     if (item.command) {
       item.command();
     }
+    
+    if (item.routerLink) {
+      this.router.navigate([item.routerLink]);
+    }
+    
     this.menuClick.emit(item);
     this.activeMenuItem.set(item.routerLink || item.label);
   }
@@ -171,6 +167,13 @@ export class SidebarComponent {
   onUserMenuClick(action: string): void {
     this.userMenuClick.emit(action);
     this.isUserMenuOpen.set(false);
+    
+    // Handle navigation if needed
+    if (action === 'profile') {
+      this.router.navigate(['/profile']);
+    } else if (action === 'settings') {
+      this.router.navigate(['/settings']);
+    }
   }
 
   onSearchChange(): void {

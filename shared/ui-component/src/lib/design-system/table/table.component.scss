@@ -1,0 +1,336 @@
+// Table Component Styles
+// ======================
+// Modern table styling with design tokens for HRM applications
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.lib-table {
+  width: 100%;
+  
+  // Variant: Default
+  &--default {
+    // Default styling
+  }
+  
+  // Variant: Employees
+  &--employees {
+    .lib-table-filter {
+      margin-bottom: var(--spacing-4);
+    }
+  }
+  
+  // Variant: Attendance
+  &--attendance {
+    .lib-table-wrapper {
+      .p-datatable-tbody td {
+        padding: var(--spacing-2) var(--spacing-3);
+      }
+    }
+  }
+  
+  // Variant: Leaves
+  &--leaves {
+    // Leave-specific styling
+  }
+  
+  // Variant: Payroll
+  &--payroll {
+    .lib-table-wrapper {
+      .p-datatable-tbody td:has(.lib-table-currency) {
+        text-align: right;
+        font-weight: var(--font-weight-semibold);
+      }
+    }
+  }
+  
+  // Variant: Compact
+  &--compact {
+    .lib-table-wrapper {
+      .p-datatable-table {
+        th, td {
+          padding: var(--spacing-2) var(--spacing-3);
+          font-size: var(--font-size-sm);
+        }
+      }
+    }
+  }
+  
+  // Size variants
+  &--small {
+    .lib-table-wrapper {
+      .p-datatable-table {
+        th, td {
+          padding: var(--spacing-1) var(--spacing-2);
+          font-size: var(--font-size-xs);
+        }
+        
+        th {
+          font-size: var(--font-size-xs);
+        }
+      }
+    }
+  }
+  
+  &--medium {
+    .lib-table-wrapper {
+      .p-datatable-table {
+        th, td {
+          padding: var(--spacing-3) var(--spacing-4);
+          font-size: var(--font-size-base);
+        }
+      }
+    }
+  }
+  
+  &--large {
+    .lib-table-wrapper {
+      .p-datatable-table {
+        th, td {
+          padding: var(--spacing-4) var(--spacing-5);
+          font-size: var(--font-size-lg);
+        }
+      }
+    }
+  }
+  
+  // Striped variant
+  &--striped {
+    .lib-table-wrapper {
+      .p-datatable-tbody tr:nth-child(even) {
+        background-color: var(--surface-50);
+      }
+    }
+  }
+  
+  // Bordered variant
+  &--bordered {
+    .lib-table-wrapper {
+      .p-datatable-table {
+        th, td {
+          border: 1px solid var(--border-color);
+        }
+      }
+    }
+  }
+  
+  // Hoverable variant
+  &--hoverable {
+    .lib-table-wrapper {
+      .p-datatable-tbody tr {
+        cursor: pointer;
+        transition: background-color var(--transition-fast);
+        
+        &:hover {
+          background-color: var(--surface-100);
+        }
+      }
+    }
+  }
+  
+  // Filter section
+  &-filter {
+    margin-bottom: var(--spacing-4);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    
+    .lib-table-search-input {
+      width: 100%;
+      max-width: 400px;
+    }
+  }
+  
+  // Bulk actions
+  &-bulk-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3) var(--spacing-4);
+    background-color: var(--primary-50);
+    border: 1px solid var(--primary-200);
+    border-radius: var(--border-radius-lg);
+    margin-bottom: var(--spacing-4);
+    
+    .lib-table-selection-count {
+      font-weight: var(--font-weight-semibold);
+      color: var(--primary-700);
+      margin-right: var(--spacing-2);
+    }
+  }
+  
+  // Table wrapper
+  &-wrapper {
+    width: 100%;
+  }
+  
+  // Row selected
+  &-row-selected {
+    background-color: var(--primary-50) !important;
+    
+    td {
+      color: var(--primary-700);
+    }
+  }
+  
+  // Action buttons
+  &-action-buttons {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    flex-wrap: wrap;
+  }
+  
+  // Badge
+  &-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-1) var(--spacing-2);
+    border-radius: var(--border-radius-full);
+    background-color: var(--primary-100);
+    color: var(--primary-700);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+  }
+  
+  // Empty state
+  &-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-8) var(--spacing-4);
+    text-align: center;
+    color: var(--text-color-secondary);
+    
+    i {
+      font-size: var(--font-size-4xl);
+      color: var(--text-color-tertiary);
+      margin-bottom: var(--spacing-4);
+    }
+    
+    p {
+      margin: 0;
+      font-size: var(--font-size-base);
+      color: var(--text-color-secondary);
+    }
+  }
+  
+  // Footer
+  &-footer {
+    padding: var(--spacing-3) var(--spacing-4);
+    background-color: var(--surface-50);
+    border-top: 1px solid var(--border-color);
+    color: var(--text-color-secondary);
+    font-size: var(--font-size-sm);
+    text-align: center;
+  }
+}
+
+// Integration with user-card and status-chip
+.lib-table-wrapper {
+  .p-datatable-tbody {
+    // User card in table
+    lib-user-card {
+      ::ng-deep {
+        .lib-user-card {
+          margin: 0;
+          padding: 0;
+        }
+      }
+    }
+    
+    // Status chip in table
+    lib-status-chip {
+      ::ng-deep {
+        .lib-status-chip {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+// Dark theme support
+:host-context(.p-dark),
+:host-context([data-theme="dark"]) {
+  .lib-table {
+    &-bulk-actions {
+      background-color: var(--primary-900);
+      border-color: var(--primary-700);
+      color: var(--primary-100);
+      
+      .lib-table-selection-count {
+        color: var(--primary-100);
+      }
+    }
+    
+    &-row-selected {
+      background-color: var(--primary-900) !important;
+      
+      td {
+        color: var(--primary-100);
+      }
+    }
+    
+    &-empty {
+      color: var(--text-color-secondary);
+      
+      i {
+        color: var(--text-color-tertiary);
+      }
+      
+      p {
+        color: var(--text-color-secondary);
+      }
+    }
+    
+    &-footer {
+      background-color: var(--surface-700);
+      border-color: var(--surface-600);
+      color: var(--text-color-secondary);
+    }
+    
+    &-badge {
+      background-color: var(--primary-800);
+      color: var(--primary-200);
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .lib-table {
+    &-filter {
+      flex-direction: column;
+      align-items: stretch;
+      
+      .lib-table-search-input {
+        max-width: 100%;
+      }
+    }
+    
+    &-bulk-actions {
+      flex-wrap: wrap;
+    }
+    
+    &-action-buttons {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--spacing-1);
+      
+      p-button {
+        width: 100%;
+        
+        ::ng-deep {
+          .p-button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+

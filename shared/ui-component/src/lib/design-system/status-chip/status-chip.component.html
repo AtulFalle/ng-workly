@@ -1,0 +1,28 @@
+<span
+  [class]="chipClass()"
+  [attr.aria-label]="statusLabel()"
+  (click)="onClick()"
+  role="status">
+  
+  @if (showDot()) {
+    <span class="lib-status-chip-dot"></span>
+  }
+  
+  @if (showIcon() && statusIcon()) {
+    <i [class]="statusIcon()" class="lib-status-chip-icon"></i>
+  }
+  
+  <span class="lib-status-chip-label">{{ statusLabel() }}</span>
+  
+  @if (removable()) {
+    <button
+      type="button"
+      class="lib-status-chip-remove"
+      (click)="onRemove($event)"
+      aria-label="Remove"
+      tabindex="0">
+      <i class="pi pi-times"></i>
+    </button>
+  }
+</span>
+

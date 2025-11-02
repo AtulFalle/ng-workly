@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { ChartComponent, ChartType } from './chart.component';
-import { ChartData, ChartOptions } from 'chart.js';
+import { ChartComponent } from './chart.component';
+import { ChartOptions } from 'chart.js';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { applicationConfig } from '@storybook/angular';
+import { ChartType } from './chart.types';
 
 const meta: Meta<ChartComponent> = {
   title: 'Design System/Chart',

@@ -1,7 +1,10 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ButtonComponent } from '../../design-system/button/button.component';
+import { InputComponent } from '../../design-system/input/input.component';
+import { UserCardComponent } from '../user-card/user-card.component';
 
 export interface UserProfile {
   name: string;
@@ -22,11 +25,19 @@ export interface NotificationItem {
 @Component({
   selector: 'lib-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ButtonComponent,
+    InputComponent,
+    UserCardComponent
+  ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+  private router = inject(Router);
+
   // Inputs
   userProfile = input<UserProfile>();
   notifications = input<NotificationItem[]>([]);
@@ -44,32 +55,52 @@ export class HeaderComponent {
   searchQuery = output<string>();
 
   // Local state
-  isUserMenuOpen = false;
-  isNotificationMenuOpen = false;
-  searchQueryValue = '';
+  isUserMenuOpen = signal(false);
+  isNotificationMenuOpen = signal(false);
+  searchQueryValue = signal('');
 
   toggleUserMenu(): void {
-    this.isUserMenuOpen = !this.isUserMenuOpen;
-    this.isNotificationMenuOpen = false;
+    this.isUserMenuOpen.update(value => !value);
+    this.isNotificationMenuOpen.set(false);
   }
 
   toggleNotificationMenu(): void {
-    this.isNotificationMenuOpen = !this.isNotificationMenuOpen;
-    this.isUserMenuOpen = false;
+    this.isNotificationMenuOpen.update(value => !value);
+    this.isUserMenuOpen.set(false);
   }
 
   handleSearch(): void {
-    this.searchQuery.emit(this.searchQueryValue);
+    this.searchQuery.emit(this.searchQueryValue());
+  }
+
+  onSearchInputChange(value: string): void {
+    this.searchQueryValue.set(value);
+    this.handleSearch();
   }
 
   handleNotificationClick(notification: NotificationItem): void {
     this.notificationClick.emit(notification);
-    this.isNotificationMenuOpen = false;
+    this.isNotificationMenuOpen.set(false);
   }
 
   handleLogout(): void {
     this.logoutClick.emit();
-    this.isUserMenuOpen = false;
+    this.isUserMenuOpen.set(false);
+  }
+
+  navigateToProfile(): void {
+    this.router.navigate(['/profile']);
+    this.isUserMenuOpen.set(false);
+  }
+
+  navigateToSettings(): void {
+    this.router.navigate(['/settings']);
+    this.isUserMenuOpen.set(false);
+  }
+
+  navigateToHelp(): void {
+    this.router.navigate(['/help']);
+    this.isUserMenuOpen.set(false);
   }
 
   handleToggleSidebar(): void {

@@ -1,0 +1,241 @@
+<div [class]="tableClass()">
+  <!-- Global Filter -->
+  @if (tableConfig().filterable) {
+    <div class="lib-table-filter">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          type="text"
+          pInputText
+          [value]="globalFilter()"
+          (input)="globalFilter.set($any($event.target).value)"
+          placeholder="Search..."
+          class="lib-table-search-input" />
+      </span>
+    </div>
+  }
+
+  <!-- Bulk Actions -->
+  @if (hasBulkActions() && selectedRows().length > 0) {
+    <div class="lib-table-bulk-actions">
+      <span class="lib-table-selection-count">{{ selectedRows().length }} selected</span>
+      @for (action of tableConfig().bulkActions; track action.label) {
+        <p-button
+          [label]="action.label"
+          [icon]="action.icon"
+          [severity]="action.severity || 'secondary'"
+          size="small"
+          [disabled]="action.disabled && action.disabled(selectedRows())"
+          (onClick)="onActionClick(action, selectedRows())">
+        </p-button>
+      }
+    </div>
+  }
+
+  <!-- PrimeNG Table -->
+  <p-table
+    [value]="paginatedRows()"
+    [loading]="loading() || tableConfig().loading"
+    [paginator]="tableConfig().pagination"
+    [rows]="rowsPerPage()"
+    [rowsPerPageOptions]="tableConfig().pageSizeOptions"
+    [first]="first()"
+    [globalFilterFields]="globalFilterFields()"
+    [selection]="hasSelection() ? selectedRows() : null"
+    [dataKey]="'id'"
+    [scrollable]="tableConfig().scrollable"
+    [scrollHeight]="tableConfig().scrollHeight"
+    [resizableColumns]="tableConfig().resizable"
+    [stripedRows]="tableConfig().striped"
+    (onRowSelect)="onRowSelect($event)"
+    (onRowUnselect)="onRowUnselect($event)"
+    (onSelectionChange)="onSelectionChange($event)"
+    (onRowClick)="onRowClickHandler($event)"
+    (onRowDblClick)="onRowDblClickHandler($event)"
+    (onSort)="onSortChange($event)"
+    (onFilter)="onFilterChange($event)"
+    (onPage)="onPageChange($event)"
+    styleClass="lib-table-wrapper">
+
+    <!-- Table Header -->
+    @if (tableConfig().showHeader) {
+      <ng-template pTemplate="header">
+        <tr>
+          <!-- Selection Checkbox -->
+          @if (hasSelection() && tableConfig().selection?.mode === 'checkbox') {
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+          }
+          
+          @for (column of columns(); track column.field) {
+            @if (isColumnVisible(column)) {
+              @if (column.sortable !== false) {
+                <th
+                  [pSortableColumn]="column.field"
+                  [style.width]="column.width"
+                  [style.min-width]="column.minWidth"
+                  [style.max-width]="column.maxWidth"
+                  [style.text-align]="column.align || 'left'"
+                  [ngClass]="column.headerClass">
+                  {{ column.header }}
+                  <p-sortIcon [field]="column.field"></p-sortIcon>
+                </th>
+              } @else {
+                <th
+                  [style.width]="column.width"
+                  [style.min-width]="column.minWidth"
+                  [style.max-width]="column.maxWidth"
+                  [style.text-align]="column.align || 'left'"
+                  [ngClass]="column.headerClass">
+                  {{ column.header }}
+                </th>
+              }
+            }
+          }
+          
+          <!-- Actions Column -->
+          @if (hasActions()) {
+            <th style="width: 120px">Actions</th>
+          }
+        </tr>
+      </ng-template>
+    }
+
+    <!-- Table Body -->
+    <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
+      <tr [ngClass]="{'lib-table-row-selected': hasSelection() && selectedRows().includes(row)}">
+        <!-- Selection Checkbox -->
+        @if (hasSelection() && tableConfig().selection?.mode === 'checkbox') {
+          <td>
+            <p-tableCheckbox [value]="row"></p-tableCheckbox>
+          </td>
+        }
+        
+        @for (column of columns(); track column.field) {
+          @if (isColumnVisible(column)) {
+            <td
+              [ngClass]="getCellClass(column, row)"
+              [style.text-align]="column.align || 'left'">
+              
+              <!-- Employee Column -->
+              @if (column.type === 'employee') {
+                <lib-user-card
+                  [user]="getEmployeeData(row, column.field)"
+                  variant="table"
+                  size="small"
+                  [showStatus]="true">
+                </lib-user-card>
+              }
+              
+              <!-- Status Column -->
+              @else if (column.type === 'status') {
+                <lib-status-chip
+                  [status]="getStatusValue(row, column.field)"
+                  variant="soft"
+                  size="small"
+                  [showIcon]="true">
+                </lib-status-chip>
+              }
+              
+              <!-- Date Column -->
+              @else if (column.type === 'date') {
+                <span>{{ formatDate(row[column.field]) }}</span>
+              }
+              
+              <!-- Currency Column -->
+              @else if (column.type === 'currency') {
+                <span>{{ formatCurrency(row[column.field]) }}</span>
+              }
+              
+              <!-- Number Column -->
+              @else if (column.type === 'number') {
+                <span>{{ formatNumber(row[column.field]) }}</span>
+              }
+              
+              <!-- Badge Column -->
+              @else if (column.type === 'badge') {
+                <span class="lib-table-badge-value">{{ row[column.field] }}</span>
+              }
+              
+              <!-- Action Column -->
+              @else if (column.type === 'action') {
+                <div class="lib-table-action-buttons">
+                  @for (action of tableConfig().rowActions; track action.label) {
+                    @if (!action.visible || action.visible(row)) {
+                      <p-button
+                        [icon]="action.icon"
+                        [severity]="action.severity || 'secondary'"
+                        [label]="action.icon ? undefined : action.label"
+                        size="small"
+                        [text]="!!action.icon"
+                        [disabled]="action.disabled && action.disabled(row)"
+                        (onClick)="onActionClick(action, row)"
+                        [pTooltip]="action.icon ? action.label : undefined"
+                        tooltipPosition="top">
+                      </p-button>
+                    }
+                  }
+                </div>
+              }
+              
+              <!-- Default Text Column -->
+              @else {
+                <span>{{ row[column.field] || '-' }}</span>
+              }
+            </td>
+          }
+        }
+        
+        <!-- Actions Column (if no action column type specified) -->
+        @if (hasActions() && !hasActionColumn()) {
+          <td>
+            <div class="lib-table-action-buttons">
+              @for (action of tableConfig().rowActions; track action.label) {
+                @if (!action.visible || action.visible(row)) {
+                  <p-button
+                    [icon]="action.icon"
+                    [severity]="action.severity || 'secondary'"
+                    [label]="action.icon ? undefined : action.label"
+                    size="small"
+                    [text]="!!action.icon"
+                    [disabled]="action.disabled && action.disabled(row)"
+                    (onClick)="onActionClick(action, row)"
+                    [pTooltip]="action.icon ? action.label : undefined"
+                    tooltipPosition="top">
+                  </p-button>
+                }
+              }
+            </div>
+          </td>
+        }
+      </tr>
+    </ng-template>
+
+    <!-- Empty Message -->
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="colspanCount()">
+          <div class="lib-table-empty">
+            <i class="pi pi-inbox"></i>
+            <p>{{ tableConfig().emptyMessage || 'No records found' }}</p>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- Footer -->
+    @if (tableConfig().showFooter) {
+      <ng-template pTemplate="footer">
+        <tr>
+          <td [attr.colspan]="colspanCount()">
+            <div class="lib-table-footer">
+              Total: {{ totalRecords() }} records
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    }
+  </p-table>
+</div>
+

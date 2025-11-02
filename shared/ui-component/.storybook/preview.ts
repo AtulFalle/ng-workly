@@ -43,6 +43,21 @@ const preview: Preview = {
       ],
     },
   },
+  globalTypes: {
+    theme: {
+      description: 'Global theme for components',
+      defaultValue: 'light',
+      toolbar: {
+        title: 'Theme',
+        icon: 'circlehollow',
+        items: [
+          { value: 'light', title: 'Light', icon: 'sun' },
+          { value: 'dark', title: 'Dark', icon: 'moon' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
   decorators: [
     // Provide PrimeNG configuration to generate CSS variables
     applicationConfig({
@@ -67,21 +82,51 @@ const preview: Preview = {
       return story();
     },
   ],
-  globalTypes: {
-    theme: {
-      description: 'Global theme for components',
-      defaultValue: 'light',
-      toolbar: {
-        title: 'Theme',
-        icon: 'circlehollow',
-        items: [
-          { value: 'light', title: 'Light', icon: 'sun' },
-          { value: 'dark', title: 'Dark', icon: 'moon' },
-        ],
-        dynamicTitle: true,
-      },
-    },
-  },
 };
+
+// Override Storybook's default Nunito Sans font with Lato
+// This runs when the preview module loads
+if (typeof window !== 'undefined') {
+  const applyFontOverrides = () => {
+    const style = document.createElement('style');
+    style.id = 'lato-font-override';
+    style.textContent = `
+      body,
+      .sbdocs,
+      .sbdocs-content,
+      .sbdocs-wrapper,
+      .docblock-argstable,
+      [class*="sbdocs"],
+      [class*="docblock"],
+      .os-host,
+      .os-host-textarea,
+      .os-host-textarea > textarea,
+      [class*="sidebar"],
+      [class*="panel"],
+      button,
+      input,
+      select,
+      textarea {
+        font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+      }
+    `;
+    
+    // Remove existing override if present
+    const existing = document.getElementById('lato-font-override');
+    if (existing) {
+      existing.remove();
+    }
+    
+    document.head.appendChild(style);
+  };
+
+  // Apply immediately if DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyFontOverrides);
+  } else {
+    applyFontOverrides();
+  }
+}
 
 export default preview;
