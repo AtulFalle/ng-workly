@@ -1,274 +1,263 @@
 <!-- Attendance Management Dashboard -->
 <div class="attendance-dashboard">
-  <!-- Header Section -->
-  <div class="dashboard-header">
-    <h1 class="dashboard-title">Attendance Management</h1>
-    <p class="dashboard-subtitle">{{ getCurrentDate() }}</p>
-  </div>
-
-  <!-- Stats Cards -->
-  <div class="stats-grid">
-    <p-card class="stat-card">
-      <ng-template pTemplate="header">
-        <div class="stat-card__icon stat-card__icon--primary">
-          <i class="pi pi-users"></i>
-        </div>
-      </ng-template>
-      
-      <div class="stat-card__content">
-        <h3 class="stat-card__value">{{ attendanceStats().totalEmployees }}</h3>
-        <p class="stat-card__label">Total Employees</p>
-      </div>
-    </p-card>
-
-    <p-card class="stat-card">
-      <ng-template pTemplate="header">
-        <div class="stat-card__icon stat-card__icon--success">
-          <i class="pi pi-check-circle"></i>
-        </div>
-      </ng-template>
-      
-      <div class="stat-card__content">
-        <h3 class="stat-card__value">{{ attendanceStats().presentToday }}</h3>
-        <p class="stat-card__label">Present Today</p>
-      </div>
-    </p-card>
-
-    <p-card class="stat-card">
-      <ng-template pTemplate="header">
-        <div class="stat-card__icon stat-card__icon--danger">
-          <i class="pi pi-times-circle"></i>
-        </div>
-      </ng-template>
-      
-      <div class="stat-card__content">
-        <h3 class="stat-card__value">{{ attendanceStats().absentToday }}</h3>
-        <p class="stat-card__label">Absent Today</p>
-      </div>
-    </p-card>
-
-    <p-card class="stat-card">
-      <ng-template pTemplate="header">
-        <div class="stat-card__icon stat-card__icon--warning">
-          <i class="pi pi-clock"></i>
-        </div>
-      </ng-template>
-      
-      <div class="stat-card__content">
-        <h3 class="stat-card__value">{{ attendanceStats().lateToday }}</h3>
-        <p class="stat-card__label">Late Today</p>
-      </div>
-    </p-card>
-
-    <p-card class="stat-card">
-      <ng-template pTemplate="header">
-        <div class="stat-card__icon stat-card__icon--info">
-          <i class="pi pi-chart-line"></i>
-        </div>
-      </ng-template>
-      
-      <div class="stat-card__content">
-        <h3 class="stat-card__value">{{ attendanceStats().averageHours }}h</h3>
-        <p class="stat-card__label">Avg Hours</p>
-      </div>
-    </p-card>
-
-    <p-card class="stat-card">
-      <ng-template pTemplate="header">
-        <div class="stat-card__icon stat-card__icon--secondary">
-          <i class="pi pi-percentage"></i>
-        </div>
-      </ng-template>
-      
-      <div class="stat-card__content">
-        <h3 class="stat-card__value">{{ attendanceStats().attendanceRate }}%</h3>
-        <p class="stat-card__label">Attendance Rate</p>
-      </div>
-    </p-card>
-  </div>
-
-  <!-- Main Content Grid -->
+  <!-- Top Section: Punch Card and Stats -->
   <div class="dashboard-grid">
-    <!-- Check-in/Check-out Section -->
-    <div class="dashboard-column dashboard-column--left">
-      <p-card class="checkin-card">
-        <ng-template pTemplate="header">
-          <div class="card-header">
-            <h2 class="card-title">My Attendance</h2>
-            <p-badge 
-              [value]="getStatusLabel(currentUserAttendance()?.status || 'absent')" 
-              [severity]="getStatusSeverity(currentUserAttendance()?.status || 'absent')"
-              size="small">
-            </p-badge>
-          </div>
-        </ng-template>
-
-        @if (userAttendanceLoading()) {
-          <div class="loading-state">
-            <i class="pi pi-spinner pi-spin"></i>
-            <p>Loading attendance data...</p>
-          </div>
-        } @else if (currentUserAttendance()) {
-          <div class="attendance-details">
-            <div class="attendance-row">
-              <span class="attendance-label">Check-in:</span>
-              <span class="attendance-value">{{ formatTime(currentUserAttendance()!.checkIn) }}</span>
-            </div>
-            <div class="attendance-row">
-              <span class="attendance-label">Check-out:</span>
-              <span class="attendance-value">{{ formatTime(currentUserAttendance()!.checkOut) }}</span>
-            </div>
-            <div class="attendance-row">
-              <span class="attendance-label">Total Hours:</span>
-              <span class="attendance-value">{{ formatDuration(currentUserAttendance()!.totalHours) }}</span>
-            </div>
-            @if (currentUserAttendance()!.location) {
-              <div class="attendance-row">
-                <span class="attendance-label">Location:</span>
-                <span class="attendance-value">{{ currentUserAttendance()!.location }}</span>
-              </div>
-            }
-          </div>
-
-          <p-divider></p-divider>
-
-          <div class="checkin-actions">
-            @if (canCheckIn()) {
-              <p-button 
-                label="Check In" 
-                icon="pi pi-sign-in"
-                [loading]="isCheckingIn()"
-                (onClick)="handleCheckIn()"
-                class="checkin-button">
-              </p-button>
-            }
-            
-            @if (canCheckOut()) {
-              <p-button 
-                label="Check Out" 
-                icon="pi pi-sign-out"
-                [loading]="isCheckingOut()"
-                (onClick)="handleCheckOut()"
-                class="checkout-button">
-              </p-button>
-            }
-          </div>
-        }
-      </p-card>
+    <!-- Left Column: Attendance Punch Card -->
+    <div class="dashboard-column dashboard-column-punch-card">
+      <lib-attendance-punch-card
+        [data]="attendancePunchCardData()"
+        [config]="attendancePunchCardConfig"
+        [loading]="userAttendanceLoading()"
+        [showActions]="true"
+        (checkIn)="onPunchCardCheckIn()"
+        (checkOut)="onPunchCardCheckOut()">
+      </lib-attendance-punch-card>
     </div>
 
-    <!-- Today's Attendance Overview -->
-    <div class="dashboard-column dashboard-column--right">
-      <p-card class="attendance-overview">
-        <ng-template pTemplate="header">
-          <div class="card-header">
-            <h2 class="card-title">Today's Attendance</h2>
-            <p-button 
-              label="View All" 
-              icon="pi pi-list"
-              [text]="true"
-              size="small"
-              (onClick)="handleViewAttendance()">
-            </p-button>
-          </div>
-        </ng-template>
+    <!-- Right Column: Stats Cards -->
+    <div class="dashboard-column dashboard-column-stats">
+      <div class="stats-grid">
+        <lib-stat-card 
+          title="Total Employees" 
+          [value]="attendanceStats().totalEmployees" 
+          icon="pi pi-users"
+          variant="primary" 
+          size="medium" 
+          subtitle="Active employees" 
+          [loading]="statsLoading()">
+        </lib-stat-card>
 
-        @if (attendanceLoading()) {
-          <div class="loading-state">
-            <i class="pi pi-spinner pi-spin"></i>
-            <p>Loading attendance data...</p>
-          </div>
-        } @else {
-          <div class="attendance-list">
-            @for (record of todayAttendance(); track record.id) {
-              <div class="attendance-item">
-                <div class="attendance-item__info">
-                  <h4 class="attendance-item__name">{{ record.employeeName }}</h4>
-                  <p class="attendance-item__id">{{ record.employeeId }}</p>
-                </div>
-                
-                <div class="attendance-item__times">
-                  <div class="time-row">
-                    <span class="time-label">In:</span>
-                    <span class="time-value">{{ formatTime(record.checkIn) }}</span>
-                  </div>
-                  <div class="time-row">
-                    <span class="time-label">Out:</span>
-                    <span class="time-value">{{ formatTime(record.checkOut) }}</span>
-                  </div>
-                  <div class="time-row">
-                    <span class="time-label">Hours:</span>
-                    <span class="time-value">{{ formatDuration(record.totalHours) }}</span>
-                  </div>
-                </div>
+        <lib-stat-card 
+          title="Present Today" 
+          [value]="attendanceStats().presentToday" 
+          icon="pi pi-check-circle"
+          variant="success" 
+          size="medium" 
+          subtitle="{{ attendanceStats().attendanceRate }}% attendance rate"
+          [loading]="statsLoading()">
+        </lib-stat-card>
 
-                <div class="attendance-item__status">
-                  <p-badge 
-                    [value]="getStatusLabel(record.status)" 
-                    [severity]="getStatusSeverity(record.status)"
-                    size="small">
-                  </p-badge>
-                </div>
-              </div>
-            }
-          </div>
-        }
-      </p-card>
+        <lib-stat-card 
+          title="Absent Today" 
+          [value]="attendanceStats().absentToday" 
+          icon="pi pi-times-circle"
+          variant="danger" 
+          size="medium" 
+          subtitle="Not checked in" 
+          [loading]="statsLoading()">
+        </lib-stat-card>
+
+        <lib-stat-card 
+          title="Late Today" 
+          [value]="attendanceStats().lateToday" 
+          icon="pi pi-clock" 
+          variant="warning"
+          size="medium" 
+          subtitle="Arrived after 9:00 AM" 
+          [loading]="statsLoading()">
+        </lib-stat-card>
+
+        <lib-stat-card 
+          title="Avg Hours" 
+          [value]="attendanceStats().averageHours + 'h'" 
+          icon="pi pi-hourglass"
+          variant="info" 
+          size="medium" 
+          subtitle="Daily average" 
+          [loading]="statsLoading()">
+        </lib-stat-card>
+      </div>
     </div>
+  </div>
+
+  <!-- Today's Attendance Overview -->
+  <lib-card title="Today's Attendance" subtitle="Real-time attendance overview" shadow="md">
+    <div class="card-header-content">
+      <lib-button 
+        label="View All" 
+        icon="pi pi-list" 
+        size="small" 
+        severity="secondary" 
+        [text]="true"
+        routerLink="list">
+      </lib-button>
+    </div>
+
+    @if (attendanceLoading()) {
+      <div class="loading-state">
+        <i class="pi pi-spinner pi-spin"></i>
+        <p>Loading attendance data...</p>
+      </div>
+    } @else {
+      <lib-table
+        [columns]="attendanceTableColumns"
+        [rows]="attendanceTableRows()"
+        [config]="attendanceTableConfig"
+        variant="attendance"
+        size="medium"
+        [loading]="attendanceLoading()"
+        (rowClick)="onAttendanceRowClick($event)">
+      </lib-table>
+    }
+  </lib-card>
+
+  <!-- Main Content Grid: Charts -->
+  <div class="dashboard-grid">
+    <!-- Left Column -->
+    <div class="dashboard-column">
+      <!-- Weekly Attendance Chart -->
+      <lib-card 
+        title="Weekly Attendance Trend" 
+        subtitle="Present, Absent, and Late employees for the week" 
+        shadow="md">
+        <div class="chart-container">
+          <lib-chart 
+            type="bar" 
+            [data]="weeklyAttendanceChartData()" 
+            [options]="weeklyAttendanceChartOptions"
+            height="300px">
+          </lib-chart>
+        </div>
+      </lib-card>
+    </div>
+
+    <!-- Right Column -->
+    <div class="dashboard-column">
+      <!-- Monthly Attendance Trend -->
+      <lib-card 
+        title="Monthly Attendance Trend" 
+        subtitle="Attendance rate over the last 6 months" 
+        shadow="md">
+        <div class="chart-container">
+          <lib-chart 
+            type="line" 
+            [data]="monthlyAttendanceChartData()" 
+            [options]="monthlyAttendanceChartOptions"
+            height="300px">
+          </lib-chart>
+        </div>
+      </lib-card>
+    </div>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="dashboard-grid-secondary">
+    <!-- Department Attendance Distribution -->
+    <lib-card title="Department Attendance Distribution" subtitle="Present employees by department" shadow="md">
+      <div class="chart-container">
+        <lib-chart type="pie" [data]="departmentAttendanceChartData()" [options]="departmentAttendanceChartOptions"
+          height="350px">
+        </lib-chart>
+      </div>
+    </lib-card>
+
+    <!-- Check-in Time Distribution -->
+    <lib-card title="Check-in Time Distribution" subtitle="Employee check-ins by time slot" shadow="md">
+      <div class="chart-container">
+        <lib-chart type="bar" [data]="checkInTimeChartData()" [options]="checkInTimeChartOptions" height="350px">
+        </lib-chart>
+      </div>
+    </lib-card>
   </div>
 
   <!-- Quick Actions -->
-  <div class="quick-actions">
-    <p-card class="actions-card">
-      <ng-template pTemplate="header">
-        <h2 class="card-title">Quick Actions</h2>
-      </ng-template>
-
-      <div class="actions-grid">
-        <p-button 
-          label="View Attendance List" 
-          icon="pi pi-list"
-          [outlined]="true"
-          routerLink="list">
-        </p-button>
-        
-        <p-button 
-          label="View Reports" 
-          icon="pi pi-chart-bar"
-          [outlined]="true"
-          routerLink="reports">
-        </p-button>
-        
-        <p-button 
-          label="Regularization" 
-          icon="pi pi-calendar-plus"
-          [outlined]="true"
-          routerLink="regularization">
-        </p-button>
-        
-        <p-button 
-          label="Request Leave" 
-          icon="pi pi-calendar-minus"
-          [outlined]="true"
-          routerLink="leave-request">
-        </p-button>
-        
-        <p-button 
-          label="Approve Leave" 
-          icon="pi pi-check-circle"
-          [outlined]="true"
-          routerLink="leave-approval">
-        </p-button>
-        
-        <p-button 
-          label="Export Data" 
-          icon="pi pi-download"
-          [outlined]="true"
-          (onClick)="handleExportData()">
-        </p-button>
+  <div class="quick-actions-section">
+    <div class="section-header">
+      <div>
+        <h2>Quick Actions</h2>
+        <p>Frequently used attendance management actions</p>
       </div>
-    </p-card>
+    </div>
+    <div class="actions-grid">
+      <lib-card shadow="md">
+        <div class="action-card-content">
+          <div class="action-card-icon action-card-icon--primary">
+            <i class="pi pi-list"></i>
+          </div>
+          <div class="action-card-body">
+            <h3>View Attendance List</h3>
+            <p>View and manage all attendance records</p>
+          </div>
+          <lib-button label="View List" icon="pi pi-arrow-right" size="small" severity="primary" [outlined]="true"
+            routerLink="list">
+          </lib-button>
+        </div>
+      </lib-card>
+
+      <lib-card shadow="md">
+        <div class="action-card-content">
+          <div class="action-card-icon action-card-icon--info">
+            <i class="pi pi-chart-bar"></i>
+          </div>
+          <div class="action-card-body">
+            <h3>View Reports</h3>
+            <p>Generate and view attendance reports</p>
+          </div>
+          <lib-button label="View Reports" icon="pi pi-arrow-right" size="small" severity="primary" [outlined]="true"
+            routerLink="reports">
+          </lib-button>
+        </div>
+      </lib-card>
+
+      <lib-card shadow="md">
+        <div class="action-card-content">
+          <div class="action-card-icon action-card-icon--warning">
+            <i class="pi pi-calendar-plus"></i>
+          </div>
+          <div class="action-card-body">
+            <h3>Regularization</h3>
+            <p>Request attendance regularization</p>
+          </div>
+          <lib-button label="Request" icon="pi pi-arrow-right" size="small" severity="primary" [outlined]="true"
+            routerLink="regularization">
+          </lib-button>
+        </div>
+      </lib-card>
+
+      <lib-card shadow="md">
+        <div class="action-card-content">
+          <div class="action-card-icon action-card-icon--success">
+            <i class="pi pi-calendar-minus"></i>
+          </div>
+          <div class="action-card-body">
+            <h3>Request Leave</h3>
+            <p>Submit a new leave request</p>
+          </div>
+          <lib-button label="Request Leave" icon="pi pi-arrow-right" size="small" severity="primary" [outlined]="true"
+            routerLink="leave-request">
+          </lib-button>
+        </div>
+      </lib-card>
+
+      <lib-card shadow="md">
+        <div class="action-card-content">
+          <div class="action-card-icon action-card-icon--danger">
+            <i class="pi pi-check-circle"></i>
+          </div>
+          <div class="action-card-body">
+            <h3>Approve Leave</h3>
+            <p>Review and approve leave requests</p>
+          </div>
+          <lib-button label="Approve" icon="pi pi-arrow-right" size="small" severity="primary" [outlined]="true"
+            routerLink="leave-approval">
+          </lib-button>
+        </div>
+      </lib-card>
+
+      <lib-card shadow="md">
+        <div class="action-card-content">
+          <div class="action-card-icon action-card-icon--secondary">
+            <i class="pi pi-download"></i>
+          </div>
+          <div class="action-card-body">
+            <h3>Export Data</h3>
+            <p>Export attendance data to Excel/PDF</p>
+          </div>
+          <lib-button label="Export" icon="pi pi-download" size="small" severity="primary" [outlined]="true"
+            (clickEvent)="handleExportData()">
+          </lib-button>
+        </div>
+      </lib-card>
+    </div>
   </div>
 </div>
-
-<p-toast></p-toast>

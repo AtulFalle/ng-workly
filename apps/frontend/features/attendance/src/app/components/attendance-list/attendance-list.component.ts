@@ -9,7 +9,6 @@ import { BadgeModule } from 'primeng/badge';
 // import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 import { FormsModule } from '@angular/forms';
 import { AttendanceListDataService } from '../../services/attendance-list-data.service';
 
@@ -55,8 +54,7 @@ export interface AttendanceFilter {
     BadgeModule,
     // CalendarModule,
     // DropdownModule,
-    InputTextModule,
-    ToastModule
+    InputTextModule
   ],
   providers: [MessageService],
   templateUrl: './attendance-list.component.html',

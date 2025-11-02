@@ -1,90 +1,87 @@
-<div [class]="timelineClass">
-  @for (item of items(); track item.id; let i = $index) {
-    <div [class]="getItemClass(item, i)">
-      <!-- Timeline line -->
-      @if (i < items().length - 1) {
-        <div class="lib-timeline-line"></div>
+<p-timeline 
+  [value]="items()" 
+  [align]="alignValue"
+  [class]="timelineClass"
+  [styleClass]="styleClass()">
+  
+  <!-- Marker template for custom icons/styling -->
+  <ng-template #marker let-event>
+    <div class="lib-timeline-marker" [class]="getItemClass(event, 0)">
+      @if (showIcons()) {
+        <i [class]="getItemIcon(event)"></i>
+      } @else {
+        <div class="lib-timeline-dot"></div>
       }
-      
-      <!-- Timeline marker/icon -->
-      <div class="lib-timeline-marker">
-        @if (showIcons()) {
-          <i [class]="getItemIcon(item)"></i>
-        } @else {
-          <div class="lib-timeline-dot"></div>
-        }
+    </div>
+  </ng-template>
+
+  <!-- Opposite template for dates -->
+  @if (showDates()) {
+    <ng-template #opposite let-event>
+      <div class="lib-timeline-opposite">
+        <span class="lib-timeline-date-relative">{{ formatDate(event.timestamp) }}</span>
+        <span class="lib-timeline-date-full">{{ formatDateFull(event.timestamp) }}</span>
       </div>
-      
-      <!-- Timeline content -->
-      <div class="lib-timeline-content">
-        <!-- Content header -->
-        <div class="lib-timeline-header">
-          @if (showAvatars() && (item.avatar || item.user?.avatar)) {
-            <img 
-              [src]="item.avatar || item.user?.avatar" 
-              [alt]="item.user?.name || 'User'"
-              class="lib-timeline-avatar">
-          }
-          
-          <div class="lib-timeline-title-section">
-            <div class="lib-timeline-title">{{ item.title }}</div>
-            @if (item.user; as user) {
-              <div class="lib-timeline-user">
-                <span class="lib-timeline-user-name">{{ user.name }}</span>
-                @if (user.role) {
-                  <span class="lib-timeline-user-role">{{ user.role }}</span>
-                }
-              </div>
-            }
-          </div>
-          
-          @if (showDates()) {
-            <div class="lib-timeline-date">
-              <span class="lib-timeline-date-relative">{{ formatDate(item.timestamp) }}</span>
-              <span class="lib-timeline-date-full">{{ formatDateFull(item.timestamp) }}</span>
+    </ng-template>
+  }
+
+  <!-- Content template -->
+  <ng-template #content let-event>
+    <div class="lib-timeline-content" [class]="getItemClass(event, 0)">
+      <!-- Content header -->
+      <div class="lib-timeline-header">
+        @if (showAvatars() && (event.avatar || event.user?.avatar)) {
+          <img 
+            [src]="event.avatar || event.user?.avatar" 
+            [alt]="event.user?.name || 'User'"
+            class="lib-timeline-avatar">
+        }
+        
+        <div class="lib-timeline-title-section">
+          <div class="lib-timeline-title">{{ event.title }}</div>
+          @if (event.user; as user) {
+            <div class="lib-timeline-user">
+              <span class="lib-timeline-user-name">{{ user.name }}</span>
+              @if (user.role) {
+                <span class="lib-timeline-user-role">{{ user.role }}</span>
+              }
             </div>
           }
         </div>
-        
-        <!-- Content body -->
-        @if (item.description) {
-          <div class="lib-timeline-description">{{ item.description }}</div>
-        }
-        
-        <!-- Content metadata -->
-        @if (item.metadata) {
-          <div class="lib-timeline-metadata">
-            @for (metadataEntry of getMetadataEntries(item.metadata); track metadataEntry.key) {
-              <div class="lib-timeline-metadata-item">
-                <span class="lib-timeline-metadata-key">{{ metadataEntry.key }}:</span>
-                <span class="lib-timeline-metadata-value">{{ metadataEntry.value }}</span>
-              </div>
-            }
-          </div>
-        }
-        
-        <!-- Content actions -->
-        @if (showActions() && item.actions && item.actions.length > 0) {
-          <div class="lib-timeline-actions">
-            @for (action of item.actions; track action.label) {
-              <button 
-                type="button"
-                class="lib-timeline-action"
-                [class]="'lib-timeline-action--' + (action.variant || 'secondary')"
-                (click)="handleAction(action, $event)">
-                @if (action.icon) {
-                  <i [class]="action.icon"></i>
-                }
-                <span>{{ action.label }}</span>
-              </button>
-            }
-          </div>
-        }
       </div>
+      
+      <!-- Content body -->
+      @if (event.description) {
+        <div class="lib-timeline-description">{{ event.description }}</div>
+      }
+      
+      <!-- Content metadata -->
+      @if (event.metadata) {
+        <div class="lib-timeline-metadata">
+          @for (metadataEntry of getMetadataEntries(event.metadata); track metadataEntry.key) {
+            <div class="lib-timeline-metadata-item">
+              <span class="lib-timeline-metadata-key">{{ metadataEntry.key }}:</span>
+              <span class="lib-timeline-metadata-value">{{ metadataEntry.value }}</span>
+            </div>
+          }
+        </div>
+      }
+      
+      <!-- Content actions -->
+      @if (showActions() && event.actions && event.actions.length > 0) {
+        <div class="lib-timeline-actions">
+          @for (action of event.actions; track action.label) {
+            <lib-button
+              [label]="action.label"
+              [icon]="action.icon"
+              [size]="'small'"
+              [severity]="action.variant || 'secondary'"
+              [text]="true"
+              (clickEvent)="handleAction(action, $event)">
+            </lib-button>
+          }
+        </div>
+      }
     </div>
-  } @empty {
-    <div class="lib-timeline-empty">
-      <p>No timeline items available</p>
-    </div>
-  }
-</div>
+  </ng-template>
+</p-timeline>

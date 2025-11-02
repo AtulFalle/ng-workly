@@ -1,349 +1,462 @@
-// Attendance Management Dashboard Styles
+// Attendance Dashboard Component - Layout Only
+// All component styling is handled by design system components
+
 .attendance-dashboard {
-  max-width: 1400px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
   padding: var(--spacing-6);
-  height: 100%;
-  overflow-y: auto;
+  width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
-  
-  // Custom scrollbar
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
+  overflow-x: hidden;
+  min-width: 0;
 
-  &::-webkit-scrollbar-track {
-    background: var(--surface-100);
-    border-radius: var(--border-radius-sm);
-  }
+  // Welcome Content - Layout Only
+  .welcome-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-4);
+    padding: var(--spacing-4) var(--spacing-5);
 
-  &::-webkit-scrollbar-thumb {
-    background: var(--surface-300);
-    border-radius: var(--border-radius-sm);
-
-    &:hover {
-      background: var(--surface-400);
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: var(--spacing-3);
     }
   }
-}
 
-// Dashboard Header
-.dashboard-header {
-  margin-bottom: var(--spacing-8);
-  text-align: center;
-
-  .dashboard-title {
-    font-size: var(--font-size-4xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--text-color);
-    margin: 0 0 var(--spacing-2) 0;
+  // Stats Grid - Layout Only
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-4);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
-  .dashboard-subtitle {
-    font-size: var(--font-size-lg);
+  // Dashboard Grid - Layout Only
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-6);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .dashboard-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  // Punch Card Column - Optimized for punch card display
+  .dashboard-column-punch-card {
+    min-width: 0;
+    max-width: 100%;
+    
+    // Ensure punch card takes full width of its container
+    ::ng-deep lib-attendance-punch-card {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+
+  // Stats Column - Optimized for stat cards
+  .dashboard-column-stats {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  // Secondary Grid - Layout Only
+  .dashboard-grid-secondary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-6);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // Chart Container - Layout Only
+  .chart-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    height: 100%;
+    padding: var(--spacing-4);
+    box-sizing: border-box;
+    overflow: hidden;
+
+    // Ensure chart respects container
+    ::ng-deep canvas {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+  }
+
+  // Card Header Content - Layout Only
+  .card-header-content {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--spacing-3);
+    margin-bottom: var(--spacing-4);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  // Attendance Details - Layout Only
+  .attendance-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    margin-bottom: var(--spacing-4);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .attendance-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-2) 0;
+    border-bottom: 1px solid var(--surface-200);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .attendance-label {
+      font-size: var(--font-size-sm);
+      color: var(--text-color-secondary);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .attendance-value {
+      font-size: var(--font-size-base);
+      color: var(--text-color);
+      font-weight: var(--font-weight-semibold);
+    }
+  }
+
+  // Check-in Actions - Layout Only
+  .checkin-actions {
+    display: flex;
+    gap: var(--spacing-3);
+    justify-content: center;
+    margin-top: var(--spacing-4);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  // Attendance List - Layout Only
+  .attendance-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    max-height: 400px;
+    overflow-y: auto;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .attendance-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3);
+    border-bottom: 1px solid var(--surface-200);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .attendance-item-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+
+    h4 {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--text-color);
+      margin: 0;
+    }
+
+    p {
+      font-size: var(--font-size-xs);
+      color: var(--text-color-secondary);
+      margin: 0;
+    }
+  }
+
+  .attendance-item-times {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+    min-width: 0;
+  }
+
+  .time-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-xs);
     color: var(--text-color-secondary);
-    margin: 0;
+
+    span:last-child {
+      font-weight: var(--font-weight-medium);
+      color: var(--text-color);
+    }
   }
-}
 
-// Stats Grid
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-4);
-  margin-bottom: var(--spacing-8);
-}
+  .attendance-item-status {
+    flex-shrink: 0;
+    margin-left: var(--spacing-3);
+  }
 
-.stat-card {
-  .stat-card__icon {
-    width: 48px;
-    height: 48px;
-    border-radius: var(--border-radius-lg);
+  // Quick Actions Section - Layout Only
+  .quick-actions-section {
+    margin-bottom: var(--spacing-4);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--spacing-4);
+      margin-bottom: var(--spacing-5);
+      min-width: 0;
+      box-sizing: border-box;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      h2 {
+        font-size: var(--font-size-2xl);
+        font-weight: var(--font-weight-bold);
+        color: var(--text-color);
+        margin: 0 0 var(--spacing-1) 0;
+      }
+
+      p {
+        font-size: var(--font-size-sm);
+        color: var(--text-color-secondary);
+        margin: 0;
+      }
+    }
+  }
+
+  .actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-4);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .action-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--spacing-4);
+    padding: var(--spacing-5);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .action-card-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: var(--font-size-xl);
-    color: white;
-    margin-bottom: var(--spacing-3);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--border-radius-lg);
+    font-size: 20px;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+
+    i {
+      color: var(--surface-0);
+    }
 
     &--primary {
       background: var(--primary-500);
+      color: var(--primary-50);
     }
 
     &--success {
       background: var(--success-500);
-    }
-
-    &--danger {
-      background: var(--error-500);
-    }
-
-    &--warning {
-      background: var(--warning-500);
+      color: var(--success-50);
     }
 
     &--info {
       background: var(--info-500);
+      color: var(--info-50);
+    }
+
+    &--warning {
+      background: var(--warning-500);
+      color: var(--warning-50);
+    }
+
+    &--danger {
+      background: var(--error-500);
+      color: var(--error-50);
     }
 
     &--secondary {
-      background: var(--surface-500);
+      background: var(--secondary-500);
+      color: var(--secondary-50);
     }
   }
 
-  .stat-card__content {
-    text-align: center;
+  .action-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    min-width: 0;
+    width: 100%;
 
-    .stat-card__value {
-      font-size: var(--font-size-3xl);
-      font-weight: var(--font-weight-bold);
+    h3 {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
       color: var(--text-color);
-      margin: 0 0 var(--spacing-1) 0;
+      margin: 0;
     }
 
-    .stat-card__label {
+    p {
       font-size: var(--font-size-sm);
       color: var(--text-color-secondary);
       margin: 0;
     }
   }
-}
 
-// Dashboard Grid
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-6);
-  margin-bottom: var(--spacing-8);
-
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.dashboard-column {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-4);
-}
-
-// Card Styles
-.card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-
-  .card-title {
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-color);
-    margin: 0;
-  }
-}
-
-// Check-in Card
-.checkin-card {
-  .attendance-details {
-    .attendance-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: var(--spacing-2) 0;
-      border-bottom: 1px solid var(--surface-200);
-
-      &:last-child {
-        border-bottom: none;
-      }
-
-      .attendance-label {
-        font-weight: var(--font-weight-medium);
-        color: var(--text-color-secondary);
-      }
-
-      .attendance-value {
-        font-weight: var(--font-weight-semibold);
-        color: var(--text-color);
-      }
-    }
-  }
-
-  .checkin-actions {
+  // Loading State - Layout Only
+  .loading-state {
     display: flex;
-    gap: var(--spacing-3);
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-
-    .checkin-button {
-      flex: 1;
-    }
-
-    .checkout-button {
-      flex: 1;
-    }
+    padding: var(--spacing-8);
+    gap: var(--spacing-3);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
-}
 
-// Attendance Overview
-.attendance-overview {
-  .attendance-list {
-    max-height: 400px;
-    overflow-y: auto;
+  // Responsive Layout
+  @media (max-width: 768px) {
+    padding: var(--spacing-4);
 
-    .attendance-item {
-      display: flex;
-      align-items: center;
-      padding: var(--spacing-3);
-      border-bottom: 1px solid var(--surface-200);
-      transition: background-color var(--transition-normal);
-
-      &:hover {
-        background-color: var(--surface-50);
-      }
-
-      &:last-child {
-        border-bottom: none;
-      }
-
-      .attendance-item__info {
-        flex: 1;
-        min-width: 0;
-
-        .attendance-item__name {
-          font-weight: var(--font-weight-semibold);
-          color: var(--text-color);
-          margin: 0 0 var(--spacing-1) 0;
-          font-size: var(--font-size-sm);
-        }
-
-        .attendance-item__id {
-          font-size: var(--font-size-xs);
-          color: var(--text-color-secondary);
-          margin: 0;
-        }
-      }
-
-      .attendance-item__times {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-1);
-
-        .time-row {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          font-size: var(--font-size-xs);
-
-          .time-label {
-            color: var(--text-color-secondary);
-            font-weight: var(--font-weight-medium);
-          }
-
-          .time-value {
-            color: var(--text-color);
-            font-weight: var(--font-weight-semibold);
-          }
-        }
-      }
-
-      .attendance-item__status {
-        margin-left: var(--spacing-3);
-      }
+    .stats-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
+      gap: var(--spacing-3);
     }
-  }
-}
 
-// Quick Actions
-.quick-actions {
-  .actions-card {
-    .actions-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    .dashboard-grid {
       gap: var(--spacing-4);
     }
-  }
-}
 
-// Loading State
-.loading-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-8);
-  color: var(--text-color-secondary);
+    .dashboard-grid-secondary {
+      gap: var(--spacing-4);
+    }
 
-  i {
-    font-size: var(--font-size-2xl);
-    margin-bottom: var(--spacing-3);
-  }
+    .chart-container {
+      padding: var(--spacing-2);
+    }
 
-  p {
-    margin: 0;
-    font-size: var(--font-size-sm);
-  }
-}
+    .attendance-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-2);
+    }
 
-// Responsive Design
-@media (max-width: 768px) {
-  .attendance-dashboard {
-    padding: var(--spacing-4);
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: var(--spacing-3);
-  }
-
-  .dashboard-grid {
-    gap: var(--spacing-4);
-  }
-
-  .attendance-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--spacing-2);
-
-    .attendance-item__times {
+    .attendance-item-times {
       width: 100%;
     }
 
-    .attendance-item__status {
-      margin-left: 0;
+    .attendance-item-status {
       align-self: flex-end;
+      margin-left: 0;
+    }
+
+    .checkin-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .actions-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .action-card-content {
+      padding: var(--spacing-4);
     }
   }
-}
 
-@media (max-width: 480px) {
-  .attendance-dashboard {
+  @media (max-width: 480px) {
     padding: var(--spacing-2);
-  }
 
-  .dashboard-header {
-    margin-bottom: var(--spacing-6);
-
-    .dashboard-title {
-      font-size: var(--font-size-3xl);
+    .stats-grid {
+      grid-template-columns: 1fr;
     }
 
-    .dashboard-subtitle {
-      font-size: var(--font-size-base);
+    .actions-grid {
+      grid-template-columns: 1fr;
     }
   }
 
-  .stats-grid {
-    grid-template-columns: 1fr;
+  // Ensure all cards respect container width
+  ::ng-deep lib-card,
+  ::ng-deep lib-stat-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
-  .checkin-actions {
-    flex-direction: column;
-  }
-}
-
-// Dark theme support
-.attendance-dashboard.dark-theme {
-  .attendance-item:hover {
-    background-color: var(--surface-800);
+  // Prevent horizontal overflow
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
   }
 }

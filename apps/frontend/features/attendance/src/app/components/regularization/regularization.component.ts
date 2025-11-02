@@ -11,7 +11,6 @@ import { TextareaModule } from 'primeng/textarea';
 // import { CalendarModule } from 'primeng/calendar';
 // import { DropdownModule } from 'primeng/dropdown';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 import { FormsModule } from '@angular/forms';
 import { RegularizationDataService } from '../../services/regularization-data.service';
 import { RegularizationUtilsService } from '../../services/regularization-utils.service';
@@ -62,8 +61,7 @@ export interface RegularizationForm {
     InputTextModule,
     TextareaModule,
     // CalendarModule,
-    // DropdownModule,
-    ToastModule
+    // DropdownModule
   ],
   providers: [MessageService],
   templateUrl: './regularization.component.html',

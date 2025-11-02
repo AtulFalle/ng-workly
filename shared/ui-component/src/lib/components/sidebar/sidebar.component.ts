@@ -2,9 +2,6 @@ import { Component, signal, input, output, computed, ChangeDetectionStrategy, in
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ButtonComponent } from '../../design-system/button/button.component';
-import { InputComponent } from '../../design-system/input/input.component';
-import { UserCardComponent } from '../user-card/user-card.component';
 
 export interface SidebarMenuItem {
   label: string;
@@ -38,9 +35,7 @@ export interface UserProfile {
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule,
-    ButtonComponent,
-    UserCardComponent
+    FormsModule
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',

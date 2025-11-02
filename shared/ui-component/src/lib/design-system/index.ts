@@ -26,4 +26,6 @@ export * from './status-chip/status-chip.component';
 export * from './status-chip/status-chip.types';
 export * from './table/table.component';
 export * from './table/table.types';
+export * from './attendance-punch-card/attendance-punch-card.component';
+export * from './attendance-punch-card/attendance-punch-card.types';
 

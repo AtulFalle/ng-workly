@@ -1,74 +1,56 @@
 // Timeline Component Styles
 // ==========================
 // Standardized timeline styling with HRM variants
+// Uses PrimeNG Timeline component structure
 
 .lib-timeline {
-  position: relative;
-  padding: var(--spacing-4) 0;
   width: 100%;
+
+  // Override PrimeNG timeline styles with design system tokens
+  ::ng-deep {
+    .p-timeline {
+      padding: 0;
+    }
+
+    .p-timeline-event {
+      padding: var(--spacing-4) 0;
+    }
+
+    .p-timeline-event-opposite {
+      padding: var(--spacing-2) var(--spacing-4);
+      min-width: 150px;
+      
+      @media (max-width: 768px) {
+        min-width: auto;
+      }
+    }
+
+    .p-timeline-event-content {
+      padding: 0 var(--spacing-4);
+    }
+
+    .p-timeline-event-separator {
+      margin: 0 var(--spacing-4);
+    }
+  }
 
   // Alignment variants
   &--left {
-    .lib-timeline-item {
-      padding-left: calc(var(--spacing-12) + var(--spacing-4));
-    }
-
-    .lib-timeline-marker {
-      left: 0;
-    }
-
-    .lib-timeline-content {
-      margin-left: 0;
+    ::ng-deep .p-timeline-event-opposite {
+      min-width: 120px;
+      text-align: right;
     }
   }
 
   &--right {
-    .lib-timeline-item {
-      padding-right: calc(var(--spacing-12) + var(--spacing-4));
-      text-align: right;
-    }
-
-    .lib-timeline-marker {
-      right: 0;
-      left: auto;
-    }
-
-    .lib-timeline-content {
-      margin-left: auto;
-      margin-right: 0;
+    ::ng-deep .p-timeline-event-opposite {
+      min-width: 120px;
+      text-align: left;
     }
   }
 
   &--alternate {
-    .lib-timeline-item {
-      padding-left: calc(var(--spacing-12) + var(--spacing-4));
-      padding-right: calc(var(--spacing-12) + var(--spacing-4));
-      
-      &--right {
-        text-align: right;
-        padding-left: var(--spacing-4);
-        padding-right: calc(var(--spacing-12) + var(--spacing-4));
-
-        .lib-timeline-marker {
-          right: 0;
-          left: auto;
-        }
-
-        .lib-timeline-content {
-          margin-left: auto;
-          margin-right: 0;
-        }
-      }
-    }
-
-    .lib-timeline-marker {
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .lib-timeline-item--right .lib-timeline-marker {
-      transform: translateX(50%);
-    }
+    // PrimeNG handles alternate alignment automatically
   }
 
   // Size variants
@@ -121,58 +103,36 @@
   }
 }
 
-// Timeline item
-.lib-timeline-item {
-  position: relative;
-  padding-bottom: var(--spacing-6);
-  display: flex;
-  align-items: flex-start;
-  gap: var(--spacing-3);
-
-  &:last-child {
-    padding-bottom: 0;
-
-    .lib-timeline-line {
-      display: none;
-    }
-  }
-}
-
-// Timeline line
-.lib-timeline-line {
-  position: absolute;
-  left: 0;
-  top: var(--spacing-12);
-  bottom: calc(var(--spacing-12) * -1);
-  width: 2px;
-  background: var(--border-color);
-  z-index: 0;
-
-  .lib-timeline--alternate & {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
-
-// Timeline marker
+// Timeline marker (from marker template)
 .lib-timeline-marker {
-  position: absolute;
-  left: 0;
-  top: var(--spacing-1);
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--surface-0);
   border: 2px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
   flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
 
   i {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--text-color);
+  }
+}
+
+// Timeline opposite (for dates)
+.lib-timeline-opposite {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  gap: var(--spacing-0-5);
+
+  @media (max-width: 768px) {
+    align-items: flex-start;
+    text-align: left;
   }
 }
 
@@ -305,71 +265,7 @@
   display: flex;
   gap: var(--spacing-2);
   margin-top: var(--spacing-2);
-}
-
-.lib-timeline-action {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-1);
-  padding: var(--spacing-1) var(--spacing-2);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  background: var(--surface-0);
-  color: var(--text-color);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: var(--surface-100);
-    border-color: var(--primary-500);
-    color: var(--primary-600);
-  }
-
-  &--primary {
-    background: var(--primary-500);
-    border-color: var(--primary-500);
-    color: var(--primary-50);
-
-    &:hover {
-      background: var(--primary-600);
-      border-color: var(--primary-600);
-    }
-  }
-
-  &--success {
-    background: var(--success-500);
-    border-color: var(--success-500);
-    color: var(--success-50);
-
-    &:hover {
-      background: var(--success-600);
-      border-color: var(--success-600);
-    }
-  }
-
-  &--warning {
-    background: var(--warning-500);
-    border-color: var(--warning-500);
-    color: var(--warning-50);
-
-    &:hover {
-      background: var(--warning-600);
-      border-color: var(--warning-600);
-    }
-  }
-
-  &--danger {
-    background: var(--error-500);
-    border-color: var(--error-500);
-    color: var(--error-50);
-
-    &:hover {
-      background: var(--error-600);
-      border-color: var(--error-600);
-    }
-  }
+  flex-wrap: wrap;
 }
 
 // Status variants
@@ -523,36 +419,18 @@
 // Responsive design
 @media (max-width: 768px) {
   .lib-timeline {
-    &--alternate {
-      .lib-timeline-item {
-        padding-left: calc(var(--spacing-12) + var(--spacing-4));
-        padding-right: var(--spacing-4);
-
-        &--right {
-          padding-left: calc(var(--spacing-12) + var(--spacing-4));
-          padding-right: var(--spacing-4);
-
-          .lib-timeline-marker {
-            left: 0;
-            right: auto;
-            transform: none;
-          }
-
-          .lib-timeline-content {
-            margin-left: 0;
-            margin-right: auto;
-          }
-        }
+    ::ng-deep {
+      .p-timeline-event-opposite {
+        min-width: auto;
+        padding: var(--spacing-2);
       }
 
-      .lib-timeline-marker {
-        left: 0;
-        transform: none;
+      .p-timeline-event-content {
+        padding: 0 var(--spacing-2);
       }
 
-      .lib-timeline-line {
-        left: 0;
-        transform: none;
+      .p-timeline-event-separator {
+        margin: 0 var(--spacing-2);
       }
     }
   }
@@ -562,12 +440,12 @@
     align-items: flex-start;
   }
 
-  .lib-timeline-date {
-    align-items: flex-start;
-    text-align: left;
-  }
-
   .lib-timeline-actions {
     flex-direction: column;
+  }
+
+  .lib-timeline-opposite {
+    align-items: flex-start;
+    text-align: left;
   }
 }

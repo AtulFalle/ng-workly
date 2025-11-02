@@ -2,7 +2,7 @@
 // =============
 // Service wrapper for PrimeNG MessageService with standardized configuration
 
-import { Injectable } from '@angular/core';
+import { ApplicationRef, inject, Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
 
 export interface ToastMessage {
@@ -28,11 +28,10 @@ export interface ToastConfig {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: ApplicationRef
 })
 export class ToastService {
-  constructor(private messageService: MessageService) {}
-
+  messageService = inject(MessageService);
   /**
    * Show a toast message
    */

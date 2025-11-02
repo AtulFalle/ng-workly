@@ -1,0 +1,155 @@
+<div [class]="cardClass()">
+  <lib-card [shadow]="cardConfig().variant === 'minimal' ? 'none' : 'md'"
+    [elevation]="cardConfig().variant !== 'minimal'">
+
+    @if (loading()) {
+    <div class="lib-attendance-punch-card-loading">
+      <i class="pi pi-spinner pi-spin"></i>
+      <p>Loading attendance...</p>
+    </div>
+    } @else if (!data()) {
+    <div class="lib-attendance-punch-card-empty">
+      <div class="empty-icon">
+        <i class="pi pi-clock"></i>
+      </div>
+      <h3>Ready to Start</h3>
+      <p>Begin your day by checking in</p>
+      @if (showActions() && canCheckIn()) {
+      <div class="empty-actions">
+        <button class="attendance-action-button attendance-action-button--checkin attendance-action-button--empty"
+          type="button" (click)="onCheckIn()">
+          <div class="action-button-icon-wrapper">
+            <i class="pi pi-check-circle"></i>
+          </div>
+          <div class="action-button-content">
+            <span class="action-button-label">Check In Now</span>
+            <span class="action-button-hint">Begin your work day</span>
+          </div>
+          <i class="pi pi-arrow-right action-button-arrow"></i>
+        </button>
+      </div>
+      }
+    </div>
+    } @else {
+    <div class="lib-attendance-punch-card-content">
+      <!-- Status Header -->
+      <div class="lib-attendance-punch-card-header">
+        <div class="header-info">
+          @if (cardConfig().showLocation && data()!.location) {
+          <div class="header-info-item">
+            <i class="pi pi-map-marker"></i>
+            <span>{{ data()!.location }}</span>
+          </div>
+          }
+          <!-- Additional Info (Device Only) -->
+          @if (cardConfig().showDevice && data()!.device) {
+          <div class="lib-attendance-punch-card-info">
+            <div class="info-item">
+              <i class="pi pi-mobile"></i>
+              <span>{{ data()!.device }}</span>
+            </div>
+          </div>
+          }
+          @if (cardConfig().showOvertime && data()!.overtimeHours && data()?.overtimeHours) {
+          <div class="header-info-item header-info-item--overtime">
+            <i class="pi pi-clock"></i>
+            <span>Overtime: {{ formatDuration(data()?.overtimeHours || 0) }}</span>
+          </div>
+          }
+        </div>
+        <lib-status-chip [status]="statusChipStatus()" [label]="statusLabel()" variant="soft" size="medium">
+        </lib-status-chip>
+
+      </div>
+
+      <!-- Time Display Grid -->
+      <div class="lib-attendance-punch-card-times">
+        <div class="time-block time-block-checkin">
+          <div class="time-block-icon">
+            <i class="pi pi-sign-in"></i>
+          </div>
+          <div class="time-block-content">
+            <span class="time-block-label">Check In</span>
+            <span class="time-block-value">{{ formatTime(data()!.checkIn) }}</span>
+            @if (cardConfig().showScheduledTime && data()!.scheduledTime) {
+            <span class="time-block-scheduled">Scheduled: {{ formatTime(data()!.scheduledTime) }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="time-block time-block-checkout">
+          <div class="time-block-icon">
+            <i class="pi pi-sign-out"></i>
+          </div>
+          <div class="time-block-content">
+            <span class="time-block-label">Check Out</span>
+            <span class="time-block-value">{{ formatTime(data()!.checkOut) }}</span>
+          </div>
+        </div>
+
+        @if (data()!.totalHours !== undefined && data()!.totalHours !== null) {
+        <div class="time-block time-block-hours">
+          <div class="time-block-icon">
+            <i class="pi pi-hourglass"></i>
+          </div>
+          <div class="time-block-content">
+            <span class="time-block-label">Total Hours</span>
+            <span class="time-block-value">{{ formatDuration(data()!.totalHours) }}</span>
+          </div>
+        </div>
+        }
+      </div>
+
+      <!-- Action Buttons - Integrated with time blocks when applicable -->
+      @if (showActions() && (canCheckIn() || canCheckOut())) {
+      <div class="lib-attendance-punch-card-actions-primary" style="width: 50%;">
+        @if (canCheckIn()) {
+        <button class="attendance-action-button attendance-action-button--checkin" type="button" (click)="onCheckIn()">
+          <div class="action-button-icon-wrapper">
+            <i class="pi pi-check-circle"></i>
+          </div>
+          <div class="action-button-content">
+            <span class="action-button-label">Check In</span>
+            <span class="action-button-hint">Start your work day</span>
+          </div>
+          <i class="pi pi-arrow-right action-button-arrow"></i>
+        </button>
+        }
+
+        @if (canCheckOut()) {
+        <button class="attendance-action-button attendance-action-button--checkout" type="button"
+          (click)="onCheckOut()">
+          <div class="action-button-icon-wrapper">
+            <i class="pi pi-stop-circle"></i>
+          </div>
+          <div class="action-button-content">
+            <span class="action-button-label">Check Out</span>
+            <span class="action-button-hint">End your work day</span>
+          </div>
+          <i class="pi pi-arrow-right action-button-arrow"></i>
+        </button>
+        }
+      </div>
+      }
+
+
+      <!-- Secondary Actions (Break actions) -->
+      @if (showActions() && cardConfig().allowBreakActions) {
+      <div class="lib-attendance-punch-card-actions-secondary">
+        @if (data()!.status === 'checked-in') {
+        <lib-button label="Start Break" icon="pi pi-pause" size="small" severity="secondary" [text]="true"
+          (clickEvent)="onBreakStart()">
+        </lib-button>
+        }
+
+        @if (data()!.status === 'on-break') {
+        <lib-button label="End Break" icon="pi pi-play" size="small" severity="secondary" [text]="true"
+          (clickEvent)="onBreakEnd()">
+        </lib-button>
+        }
+      </div>
+      }
+    </div>
+    }
+  </lib-card>
+</div>

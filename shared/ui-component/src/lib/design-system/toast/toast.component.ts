@@ -8,7 +8,8 @@ import { MessageService } from 'primeng/api';
   imports: [CommonModule, ToastModule],
   templateUrl: './toast.component.html',
   styleUrl: './toast.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [MessageService]
 })
 export class ToastComponent {
   // This component provides the PrimeNG toast structure

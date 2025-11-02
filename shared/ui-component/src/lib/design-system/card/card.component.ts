@@ -19,11 +19,13 @@ export class CardComponent {
   padding = input<boolean>(true);
   shadow = input<'none' | 'sm' | 'md' | 'lg'>('md');
   border = input<boolean>(true);
+  compact = input<boolean>(false);
 
   // Computed styles
   get cardClass(): string {
     const classes = ['lib-card'];
-    if (!this.padding()) classes.push('lib-card-no-padding');
+    if (!this.padding() && !this.compact()) classes.push('lib-card-no-padding');
+    if (this.compact()) classes.push('lib-card-compact');
     if (this.elevation()) classes.push('lib-card-elevated');
     classes.push(`lib-card-shadow-${this.shadow()}`);
     if (this.border()) classes.push('lib-card-bordered');

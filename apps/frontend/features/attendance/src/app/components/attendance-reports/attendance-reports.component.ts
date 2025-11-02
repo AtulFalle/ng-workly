@@ -6,7 +6,6 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { BadgeModule } from 'primeng/badge';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 
 export interface AttendanceReport {
   id: string;
@@ -27,8 +26,7 @@ export interface AttendanceReport {
     CardModule,
     ButtonModule,
     TableModule,
-    BadgeModule,
-    ToastModule
+    BadgeModule
   ],
   providers: [MessageService],
   templateUrl: './attendance-reports.component.html',

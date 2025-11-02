@@ -78,6 +78,7 @@ export interface DynamicFormConfig {
   spacing?: 'none' | 'compact' | 'comfortable';
   showLabels?: boolean;
   showValidation?: boolean;
+  showActions?: boolean;          // Show default submit/reset buttons (default: true)
   gridColumns?: number;          // For grid layout (default: 12)
   className?: string;
   controls: FormControlConfig[];
