@@ -67,18 +67,33 @@
   &.lib-dynamic-form-grid {
     .lib-dynamic-form-grid {
       display: grid;
-      gap: var(--spacing-4) !important; // 16px - Standardized grid gap - Force override
+      gap: var(--spacing-5) !important; // 20px - Better grid gap
       width: 100%;
-      row-gap: var(--spacing-4) !important; // 16px - Explicit row gap
+      max-width: 100%;
+      min-width: 0;
+      row-gap: var(--spacing-5) !important; // 20px - Explicit row gap
       column-gap: var(--spacing-4) !important; // 16px - Explicit column gap
+      box-sizing: border-box;
 
       lib-form-field {
         margin: 0 !important; // Ensure no margins override gap
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+      }
+
+      // Ensure proper grid column behavior
+      lib-form-field[class*="lib-form-field-col-"] {
+        width: 100%;
+        max-width: 100%;
       }
 
       // Responsive grid adjustments
       @media (max-width: 768px) {
         grid-template-columns: 1fr !important;
+        gap: var(--spacing-4) !important;
+        row-gap: var(--spacing-4) !important;
       }
     }
   }

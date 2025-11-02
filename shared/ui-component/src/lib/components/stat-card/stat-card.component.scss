@@ -5,13 +5,20 @@
 :host {
   display: block;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .lib-stat-card {
   height: 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   transition: all 0.3s ease;
   border-radius: var(--border-radius-xl);
   overflow: hidden;
+  box-sizing: border-box;
 
   &:hover {
     transform: translateY(-2px);
@@ -211,6 +218,63 @@
   flex-direction: column;
   gap: var(--spacing-3);
   height: 100%;
+}
+
+// Compact variant - override card padding
+.lib-stat-card--compact {
+  ::ng-deep {
+    .p-card-body {
+      padding: var(--spacing-4) !important;
+    }
+
+    .p-card-content {
+      padding: var(--spacing-1) !important;
+    }
+
+    .p-card-header {
+      padding: var(--spacing-1) !important;
+      margin-bottom: var(--spacing-1) !important;
+    }
+
+    .p-card-footer {
+      padding: var(--spacing-1) !important;
+      margin-top: var(--spacing-1) !important;
+    }
+  }
+
+  .lib-stat-card-container {
+    padding: 0;
+    gap: var(--spacing-2);
+  }
+
+  .lib-stat-card-header {
+    gap: var(--spacing-1);
+  }
+
+  .lib-stat-card-header-left {
+    gap: var(--spacing-2);
+  }
+
+  .lib-stat-card-icon-wrapper {
+    width: 32px;
+    height: 32px;
+
+    i {
+      font-size: 16px;
+    }
+  }
+
+  .lib-stat-card-title {
+    font-size: var(--font-size-sm);
+  }
+
+  .lib-stat-card-value {
+    font-size: var(--font-size-xl);
+  }
+
+  .lib-stat-card-subtitle {
+    font-size: var(--font-size-xs);
+  }
 }
 
 // Header

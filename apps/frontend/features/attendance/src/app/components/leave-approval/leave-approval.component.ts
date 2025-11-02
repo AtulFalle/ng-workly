@@ -9,7 +9,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { ToastModule } from 'primeng/toast';
 import { DividerModule } from 'primeng/divider';
 import { BadgeModule } from 'primeng/badge';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -30,7 +29,6 @@ import { LeaveRequest } from '../leave-request/leave-request.component';
     TextareaModule,
     TableModule,
     TagModule,
-    ToastModule,
     DividerModule,
     BadgeModule,
     ProgressSpinnerModule,

@@ -14,10 +14,11 @@
     </div>
   }
 
-  <form 
-    [formGroup]="formGroup()!"
-    (ngSubmit)="onSubmit()"
-    class="lib-dynamic-form-content">
+  @if (formGroup; as form) {
+    <form 
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="lib-dynamic-form-content">
     
     <div 
       [class]="isGridLayout ? 'lib-dynamic-form-grid' : 'lib-dynamic-form-fields'"
@@ -33,19 +34,22 @@
       }
     </div>
 
-    <div class="lib-form-actions">
-      <lib-button 
-        label="Reset" 
-        severity="secondary" 
-        type="button"
-        (clickEvent)="onReset()">
-      </lib-button>
-      <lib-button 
-        label="Submit" 
-        type="submit" 
-        severity="primary">
-      </lib-button>
-    </div>
-  </form>
+    @if (shouldShowActions) {
+      <div class="lib-form-actions">
+        <lib-button 
+          label="Reset" 
+          severity="secondary" 
+          type="button"
+          (clickEvent)="onReset()">
+        </lib-button>
+        <lib-button 
+          label="Submit" 
+          type="submit" 
+          severity="primary">
+        </lib-button>
+      </div>
+    }
+    </form>
+  }
 </div>
 

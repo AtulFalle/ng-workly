@@ -25,10 +25,16 @@ export class DynamicFormComponent implements OnInit {
   submit = output<FormValue>();
   valueChange = output<FormValue>();
   reset = output<void>();
+  formGroupReady = output<FormGroup>();
 
-  // Internal state
-  formGroup = signal<FormGroup | null>(null);
+  // Internal state - exposed via getter
+  private _formGroup = signal<FormGroup | null>(null);
   formErrors = signal<FormError>({});
+
+  // Expose formGroup for parent access
+  get formGroup(): FormGroup | null {
+    return this._formGroup();
+  }
   
   private fb = new FormBuilder();
 
@@ -49,7 +55,8 @@ export class DynamicFormComponent implements OnInit {
     });
 
     const form = this.fb.group(formConfig);
-    this.formGroup.set(form);
+    this._formGroup.set(form);
+    this.formGroupReady.emit(form);
 
     // Subscribe to form value changes
     form.valueChanges.subscribe(value => {
@@ -158,7 +165,7 @@ export class DynamicFormComponent implements OnInit {
 
   // Form handlers
   onSubmit(): void {
-    const form = this.formGroup();
+    const form = this._formGroup();
     if (form && form.valid) {
       this.submit.emit(form.value);
     } else {
@@ -171,12 +178,34 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onReset(): void {
-    const form = this.formGroup();
+    const form = this._formGroup();
     if (form) {
       form.reset();
       this.formErrors.set({});
       this.reset.emit();
     }
+  }
+
+  // Public method to get form value
+  getFormValue(): FormValue | null {
+    const form = this._formGroup();
+    return form ? form.value : null;
+  }
+
+  // Public method to check if form is valid
+  isFormValid(): boolean {
+    const form = this._formGroup();
+    return form ? form.valid : false;
+  }
+
+  // Public method to submit form programmatically
+  submitForm(): void {
+    this.onSubmit();
+  }
+
+  // Public method to reset form programmatically
+  resetForm(): void {
+    this.onReset();
   }
 
   // Get sorted controls based on order
@@ -228,12 +257,17 @@ export class DynamicFormComponent implements OnInit {
 
   // Get form control by name (helper for template)
   getFormControl(name: string): FormControl | null {
-    const form = this.formGroup();
+    const form = this._formGroup();
     if (form) {
       const control = form.get(name);
       return control instanceof FormControl ? control : null;
     }
     return null;
+  }
+
+  // Check if actions should be shown
+  get shouldShowActions(): boolean {
+    return this.config().showActions !== false; // Default to true if not specified
   }
 }
 

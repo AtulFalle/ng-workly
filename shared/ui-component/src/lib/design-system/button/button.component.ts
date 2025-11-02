@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 
 export type ButtonSeverity = 'primary' | 'secondary' | 'success' | 'info' | 'danger';
-export type ButtonSize = 'small' | 'large' | undefined;
+export type ButtonSize = 'small' | 'large' | undefined ;
 
 @Component({
   selector: 'lib-button',

@@ -1,10 +1,12 @@
 import { Component, input, computed, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TimelineModule } from 'primeng/timeline';
+import { ButtonComponent } from '../button/button.component';
 import { TimelineItem, TimelineAlignment, TimelineSize, TimelineVariant } from './timeline.types';
 
 @Component({
   selector: 'lib-timeline',
-  imports: [CommonModule],
+  imports: [CommonModule, TimelineModule, ButtonComponent],
   templateUrl: './timeline.component.html',
   styleUrl: './timeline.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -21,7 +23,12 @@ export class TimelineComponent {
   showActions = input<boolean>(true);
   styleClass = input<string>('');
 
-  // Computed properties
+  // Map alignment to PrimeNG align property
+  get alignValue(): 'left' | 'right' | 'alternate' {
+    return this.alignment();
+  }
+
+  // Computed properties for timeline class
   get timelineClass(): string {
     const classes = ['lib-timeline'];
     classes.push(`lib-timeline--${this.alignment()}`);
@@ -40,9 +47,6 @@ export class TimelineComponent {
     }
     if (item.variant) {
       classes.push(`lib-timeline-item--${item.variant}`);
-    }
-    if (this.alignment() === 'alternate' && index % 2 === 1) {
-      classes.push('lib-timeline-item--right');
     }
     return classes.join(' ');
   }

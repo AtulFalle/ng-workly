@@ -1,12 +1,13 @@
 import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule, FormControl } from '@angular/forms';
+import { TextareaModule } from 'primeng/textarea';
 import { InputComponent } from '../../input/input.component';
 import { FormControlConfig } from '../dynamic-form.types';
 
 @Component({
   selector: 'lib-form-field',
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, InputComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, InputComponent, TextareaModule],
   templateUrl: './form-field.component.html',
   styleUrl: './form-field.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -31,12 +32,12 @@ export class FormFieldComponent {
     return !!(control && control.invalid && (control.dirty || control.touched));
   }
 
-  get fieldValue(): string {
+  get fieldValue(): any {
     const control = this.formControl();
     if (control && control.value !== undefined && control.value !== null) {
-      return String(control.value);
+      return control.value;
     }
-    return this.config().value ?? this.config().defaultValue ?? '';
+    return this.config().value ?? this.config().defaultValue ?? (this.config().type === 'select' ? null : '');
   }
 
   get errorMessage(): string | undefined {
@@ -66,12 +67,17 @@ export class FormFieldComponent {
     return config.errorMessage;
   }
 
-  onValueChange(value: string): void {
+  onValueChange(value: any): void {
     const control = this.formControl();
     if (control) {
       control.setValue(value);
       control.markAsTouched();
     }
+  }
+
+  onSelectChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    this.onValueChange(target.value);
   }
 
   onBlur(): void {

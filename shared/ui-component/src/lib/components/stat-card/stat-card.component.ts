@@ -24,12 +24,16 @@ export class StatCardComponent {
   showIcon = input<boolean>(true);
   showTrend = input<boolean>(true);
   loading = input<boolean>(false);
+  compact = input<boolean>(true);
 
   // Computed properties
   get cardClass(): string {
     const classes = ['lib-stat-card'];
     classes.push(`lib-stat-card--${this.variant()}`);
     classes.push(`lib-stat-card--${this.size()}`);
+    if (this.compact()) {
+      classes.push('lib-stat-card--compact');
+    }
     if (this.loading()) {
       classes.push('lib-stat-card--loading');
     }

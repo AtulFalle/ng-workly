@@ -1,332 +1,369 @@
-// HRM Dashboard Component Styles
+// Modern Professional HRM Dashboard - Layout Only
+// All component styling is handled by design system components
+
 .hrm-dashboard {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--spacing-6);
-  height: 100%;
-  overflow-y: auto;
-  box-sizing: border-box;
-  
-  // Custom scrollbar
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: var(--surface-100);
-    border-radius: var(--border-radius-sm);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--surface-300);
-    border-radius: var(--border-radius-sm);
-
-    &:hover {
-      background: var(--surface-400);
-    }
-  }
-}
-
-.welcome-section {
-  margin-bottom: var(--spacing-8);
-
-  .welcome-title {
-    font-size: var(--font-size-3xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--text-color);
-    margin: 0 0 var(--spacing-2) 0;
-    line-height: var(--line-height-tight);
-  }
-
-  .welcome-subtitle {
-    font-size: var(--font-size-lg);
-    color: var(--text-color-secondary);
-    margin: 0;
-    line-height: var(--line-height-normal);
-  }
-}
-
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: var(--spacing-6);
-  margin-bottom: var(--spacing-8);
-
-  .dashboard-column {
-    &--left {
-      min-width: 0;
-    }
-
-    &--right {
-      min-width: 0;
-    }
-  }
-}
-
-.dashboard-sections {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-8);
-}
-
-.dashboard-section {
-  .section-title {
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-color);
-    margin: 0 0 var(--spacing-6) 0;
-    line-height: var(--line-height-tight);
-  }
-
-  .section-content {
-    // Content styles handled by child components
-  }
-}
-
-// Management Cards
-.management-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--spacing-6);
-}
-
-.management-card {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--spacing-4);
   padding: var(--spacing-6);
-  background: var(--surface-0);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-sm);
-  transition: all var(--transition-normal);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  min-width: 0;
 
-  &:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+  // Welcome Content - Layout Only
+  .welcome-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-4);
+    padding: var(--spacing-4) var(--spacing-5);
+    min-width: 0;
+    box-sizing: border-box;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: var(--spacing-3);
+    }
   }
 
-  &__icon {
+  // Stats Grid - Layout Only
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-4);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  // Dashboard Grid - Layout Only
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-6);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .dashboard-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  // Secondary Grid - Layout Only
+  .dashboard-grid-secondary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-6);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // Chart Container - Layout Only
+  .chart-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    height: 100%;
+    padding: var(--spacing-4);
+    box-sizing: border-box;
+    overflow: hidden;
+
+    // Ensure chart respects container
+    ::ng-deep canvas {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+  }
+
+  // Loading State - Layout Only
+  .loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-8);
+    gap: var(--spacing-3);
+  }
+
+  // Quick Actions Grid - Layout Only
+  .quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-3);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .quick-action-button {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  // Dashboard Sections - Layout Only
+  .dashboard-section {
+    margin-bottom: var(--spacing-8);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-5);
+    min-width: 0;
+    box-sizing: border-box;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  // Management Grid - Layout Only
+  .management-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-4);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .management-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--spacing-4);
+    padding: var(--spacing-5);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .management-card-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
-    background: var(--primary-100);
-    color: var(--primary-600);
+    width: 40px;
+    height: 40px;
     border-radius: var(--border-radius-lg);
+    font-size: 20px;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+
+    i {
+      color: var(--surface-0);
+    }
+
+    // Primary variant - similar to stat card primary
+    &--primary {
+      background: var(--primary-500);
+      color: var(--primary-50);
+
+      i {
+        color: var(--primary-50);
+      }
+
+      &:hover {
+        background: var(--primary-600);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+    }
+
+    // Success variant - similar to stat card success
+    &--success {
+      background: var(--success-500);
+      color: var(--success-50);
+
+      i {
+        color: var(--success-50);
+      }
+
+      &:hover {
+        background: var(--success-600);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+    }
+
+    // Info variant - similar to stat card info
+    &--info {
+      background: var(--info-500);
+      color: var(--info-50);
+
+      i {
+        color: var(--info-50);
+      }
+
+      &:hover {
+        background: var(--info-600);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+    }
+
+    // Warning variant - similar to stat card warning
+    &--warning {
+      background: var(--warning-500);
+      color: var(--warning-50);
+
+      i {
+        color: var(--warning-50);
+      }
+
+      &:hover {
+        background: var(--warning-600);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+    }
+  }
+
+  .management-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    min-width: 0;
+    width: 100%;
+  }
+
+  // Attendance Grid - Layout Only
+  .attendance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--spacing-4);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .attendance-stat-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    padding: var(--spacing-4);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .attendance-stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--border-radius-full);
     font-size: var(--font-size-xl);
     flex-shrink: 0;
+    min-width: 56px;
+
+    &--present {
+      background-color: var(--success-100);
+      color: var(--success-600);
+    }
+
+    &--absent {
+      background-color: var(--error-100);
+      color: var(--error-600);
+    }
+
+    &--late {
+      background-color: var(--warning-100);
+      color: var(--warning-600);
+    }
+
+    &--on-leave {
+      background-color: var(--info-100);
+      color: var(--info-600);
+    }
   }
 
-  &__content {
+  .attendance-stat-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
     flex: 1;
     min-width: 0;
-
-    .management-card__title {
-      font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-semibold);
-      color: var(--text-color);
-      margin: 0 0 var(--spacing-2) 0;
-      line-height: var(--line-height-tight);
-    }
-
-    .management-card__description {
-      font-size: var(--font-size-sm);
-      color: var(--text-color-secondary);
-      margin: 0 0 var(--spacing-4) 0;
-      line-height: var(--line-height-normal);
-    }
-
-    .management-card__button {
-      font-size: var(--font-size-sm);
-      color: var(--primary-600);
-      background: var(--primary-50);
-      border: 1px solid var(--primary-200);
-      padding: var(--spacing-2) var(--spacing-4);
-      border-radius: var(--border-radius);
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: all var(--transition-fast);
-
-      &:hover {
-        background: var(--primary-100);
-        color: var(--primary-700);
-        border-color: var(--primary-300);
-      }
-    }
   }
-}
 
-// Attendance Overview
-.attendance-overview {
-  .attendance-card {
-    background: var(--surface-0);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
-    padding: var(--spacing-6);
-    box-shadow: var(--shadow-sm);
-
-    &__header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: var(--spacing-6);
-
-      .attendance-card__title {
-        font-size: var(--font-size-lg);
-        font-weight: var(--font-weight-semibold);
-        color: var(--text-color);
-        margin: 0;
-        line-height: var(--line-height-tight);
-      }
-
-      .attendance-card__date {
-        font-size: var(--font-size-sm);
-        color: var(--text-color-secondary);
-        background: var(--surface-100);
-        padding: var(--spacing-1) var(--spacing-3);
-        border-radius: var(--border-radius);
-      }
-    }
-
-    &__stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--spacing-4);
-      margin-bottom: var(--spacing-6);
-    }
-
-    &__button {
-      font-size: var(--font-size-sm);
-      color: var(--primary-600);
-      background: var(--primary-50);
-      border: 1px solid var(--primary-200);
-      padding: var(--spacing-2) var(--spacing-4);
-      border-radius: var(--border-radius);
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: all var(--transition-fast);
-
-      &:hover {
-        background: var(--primary-100);
-        color: var(--primary-700);
-        border-color: var(--primary-300);
-      }
-    }
-  }
-}
-
-.attendance-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: var(--spacing-4);
-  background: var(--surface-50);
-  border-radius: var(--border-radius-lg);
-
-  &__value {
+  .attendance-stat-value {
     font-size: var(--font-size-2xl);
     font-weight: var(--font-weight-bold);
-    color: var(--text-color);
-    margin-bottom: var(--spacing-1);
-    line-height: var(--line-height-tight);
+    line-height: var(--line-height-none);
   }
 
-  &__label {
+  .attendance-stat-label {
     font-size: var(--font-size-sm);
-    color: var(--text-color-secondary);
-    line-height: var(--line-height-normal);
-  }
-}
-
-// Responsive Design
-@media (max-width: 1024px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
-  .dashboard-column {
-    &--right {
-      order: -1; // Move quick actions to top on mobile
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .hrm-dashboard {
-    padding: var(--spacing-4);
-  }
-
-  .welcome-section {
-    margin-bottom: var(--spacing-6);
-
-    .welcome-title {
-      font-size: var(--font-size-2xl);
-    }
-
-    .welcome-subtitle {
-      font-size: var(--font-size-base);
-    }
-  }
-
-  .dashboard-sections {
-    gap: var(--spacing-6);
-  }
-
-  .management-cards {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-4);
-  }
-
-  .management-card {
-    padding: var(--spacing-4);
-    flex-direction: column;
-    text-align: center;
-
-    &__icon {
-      width: 40px;
-      height: 40px;
-      font-size: var(--font-size-lg);
-    }
-  }
-
-  .attendance-card {
+  // Responsive Layout
+  @media (max-width: 768px) {
     padding: var(--spacing-4);
 
-    &__header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--spacing-2);
+    .stats-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
 
-    &__stats {
+    .management-grid {
       grid-template-columns: 1fr;
-      gap: var(--spacing-3);
+    }
+
+    .attendance-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .quick-actions-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .chart-container {
+      padding: var(--spacing-2);
     }
   }
-}
 
-@media (max-width: 480px) {
-  .hrm-dashboard {
-    padding: var(--spacing-2);
+  // Ensure all cards respect container width
+  ::ng-deep lib-card,
+  ::ng-deep lib-stat-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
-  .welcome-section {
-    .welcome-title {
-      font-size: var(--font-size-xl);
-    }
-  }
-
-  .management-card {
-    &__content {
-      .management-card__title {
-        font-size: var(--font-size-base);
-      }
-    }
+  // Prevent horizontal overflow
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
   }
 }

@@ -6,7 +6,6 @@
   [class.right-position]="position() === 'right'"
   [style.width]="collapsed() ? collapsedWidth() : width()"
 >
-
   <!-- Navigation Sections -->
   <div class="sidebar-content">
     @for (section of displaySections(); track section.title) {
@@ -42,47 +41,48 @@
                 @if (item.separator) {
                   <div class="menu-separator"></div>
                 } @else if (item.visible !== false) {
-                  <div 
+                  <a 
                     class="menu-item"
                     [class.active]="activeMenuItem() === (item.routerLink || item.label)"
                     [class.disabled]="item.disabled"
-                    [class.has-children]="item.items && item.items.length > 0"
-                  >
-                    <!-- Main Menu Item -->
-                    <lib-button
-                      [label]="!collapsed() ? item.label : ''"
-                      [icon]="item.icon ? 'pi ' + item.icon : undefined"
-                      size="small"
-                      [text]="true"
-                      severity="secondary"
-                      [disabled]="item.disabled ?? false"
-                      [badge]="item.badge && !collapsed() ? item.badge : undefined"
-                      [class.menu-link]="true"
-                      [class.active]="activeMenuItem() === (item.routerLink || item.label)"
-                      [class.disabled]="item.disabled ?? false"
-                      (clickEvent)="!item.disabled && onMenuClick(item)">
-                    </lib-button>
-                    
-                    <!-- Submenu Items -->
-                    @if (item.items && item.items.length > 0 && !collapsed()) {
-                      <div class="submenu">
-                        @for (subItem of item.items; track subItem.label) {
-                          <lib-button
-                            [label]="subItem.label"
-                            [icon]="subItem.icon ? 'pi ' + subItem.icon : undefined"
-                            size="small"
-                            [text]="true"
-                            severity="secondary"
-                            [disabled]="subItem.disabled ?? false"
-                            [badge]="subItem.badge"
-                            [class.submenu-link]="true"
-                            [class.disabled]="subItem.disabled ?? false"
-                            (clickEvent)="!subItem.disabled && onMenuClick(subItem)">
-                          </lib-button>
-                        }
-                      </div>
+                    [routerLink]="item.routerLink"
+                    [routerLinkActive]="'active'"
+                    (click)="!item.disabled && onMenuClick(item)"
+                    [attr.aria-disabled]="item.disabled">
+                    @if (item.icon) {
+                      <i [class]="'pi ' + item.icon" class="menu-icon"></i>
                     }
-                  </div>
+                    @if (!collapsed()) {
+                      <span class="menu-label">{{ item.label }}</span>
+                      @if (item.badge) {
+                        <span class="menu-badge">{{ item.badge }}</span>
+                      }
+                    }
+                  </a>
+                  
+                  <!-- Submenu Items -->
+                  @if (item.items && item.items.length > 0 && !collapsed()) {
+                    <div class="submenu">
+                      @for (subItem of item.items; track subItem.label) {
+                        <a 
+                          class="submenu-item"
+                          [class.active]="activeMenuItem() === (subItem.routerLink || subItem.label)"
+                          [class.disabled]="subItem.disabled"
+                          [routerLink]="subItem.routerLink"
+                          [routerLinkActive]="'active'"
+                          (click)="!subItem.disabled && onMenuClick(subItem)"
+                          [attr.aria-disabled]="subItem.disabled">
+                          @if (subItem.icon) {
+                            <i [class]="'pi ' + subItem.icon" class="submenu-icon"></i>
+                          }
+                          <span class="submenu-label">{{ subItem.label }}</span>
+                          @if (subItem.badge) {
+                            <span class="submenu-badge">{{ subItem.badge }}</span>
+                          }
+                        </a>
+                      }
+                    </div>
+                  }
                 }
               }
             </div>
@@ -96,29 +96,38 @@
   @if (showUserProfile() && userProfile()) {
     <div class="sidebar-footer">
       @if (collapsed()) {
-        <lib-user-card
-          [user]="{
-            name: userProfile()!.name,
-            subtitle: userProfile()!.role,
-            avatar: userProfile()!.avatar
-          }"
-          variant="compact"
-          size="small"
-          [clickable]="true"
-          (cardClick)="toggleUserMenu()">
-        </lib-user-card>
+        <div class="user-profile-collapsed" (click)="toggleUserMenu()">
+          <img 
+            *ngIf="userProfile()!.avatar" 
+            [src]="userProfile()!.avatar" 
+            [alt]="userProfile()!.name"
+            class="user-avatar">
+          <div 
+            *ngIf="!userProfile()!.avatar" 
+            class="user-avatar user-avatar-initials">
+            {{ userInitials() }}
+          </div>
+        </div>
       } @else {
-        <lib-user-card
-          [user]="{
-            name: userProfile()!.name,
-            subtitle: userProfile()!.role,
-            avatar: userProfile()!.avatar
-          }"
-          variant="default"
-          size="medium"
-          [clickable]="true"
-          (cardClick)="toggleUserMenu()">
-        </lib-user-card>
+        <div class="user-profile" (click)="toggleUserMenu()">
+          <img 
+            *ngIf="userProfile()!.avatar" 
+            [src]="userProfile()!.avatar" 
+            [alt]="userProfile()!.name"
+            class="user-avatar">
+          <div 
+            *ngIf="!userProfile()!.avatar" 
+            class="user-avatar user-avatar-initials">
+            {{ userInitials() }}
+          </div>
+          <div class="user-info">
+            <span class="user-name">{{ userProfile()!.name }}</span>
+            @if (userProfile()!.role) {
+              <span class="user-role">{{ userProfile()!.role }}</span>
+            }
+          </div>
+          <i class="pi pi-chevron-down user-menu-icon"></i>
+        </div>
       }
       
       <!-- User Menu Dropdown -->
@@ -126,17 +135,16 @@
         <div class="user-menu">
           @for (menuItem of userMenuItems(); track menuItem.label) {
             @if (menuItem.separator) {
-              <div class="menu-separator"></div>
+              <div class="user-menu-separator"></div>
             } @else {
-              <lib-button
-                [label]="menuItem.label ?? ''"
-                [icon]="menuItem.icon ? 'pi ' + menuItem.icon : undefined"
-                size="small"
-                [text]="true"
-                severity="secondary"
-                [class.user-menu-item]="true"
-                (clickEvent)="menuItem.command?.()">
-              </lib-button>
+              <a 
+                class="user-menu-item"
+                (click)="menuItem.command?.()">
+                @if (menuItem.icon) {
+                  <i [class]="'pi ' + menuItem.icon" class="user-menu-icon-item"></i>
+                }
+                <span>{{ menuItem.label }}</span>
+              </a>
             }
           }
         </div>

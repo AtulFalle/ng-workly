@@ -1,238 +1,346 @@
-<!-- Leave Request Form -->
-<div class="leave-request">
+<!-- Leave Management Dashboard -->
+<div class="leave-management">
   <!-- Header Section -->
-  <div class="request-header">
-    <h1 class="page-title">Submit Leave Request</h1>
-    <p class="page-subtitle">Request time off from work</p>
+  <div class="header-section">
+    <div class="header-content">
+      <div>
+        <h1>Leave Management</h1>
+        <p>Manage your leave requests and view balances</p>
+      </div>
+      <lib-button
+        label="Apply Leave"
+        icon="pi pi-plus-circle"
+        severity="primary"
+        (clickEvent)="onOpenApplyLeaveDialog()">
+      </lib-button>
+    </div>
   </div>
 
   <!-- Leave Balance Overview -->
   <div class="balance-section">
-    <p-card class="balance-card">
-      <ng-template pTemplate="header">
-        <div class="card-header">
-          <h2 class="card-title">Leave Balance</h2>
-          <p-badge 
-            [value]="selectedLeaveType() ? getLeaveTypeLabel(selectedLeaveType()) : 'Select Leave Type'" 
-            severity="info">
-          </p-badge>
-        </div>
-      </ng-template>
+    <lib-card title="Leave Balance Overview" subtitle="Your available and remaining leave days" shadow="md">
+      <div class="balance-grid">
+        @for (balance of leaveBalances(); track balance.leaveType) {
+          <lib-stat-card
+            [title]="getLeaveTypeLabel(balance.leaveType)"
+            [value]="balance.remainingDays + ' / ' + balance.totalDays"
+            [icon]="'pi pi-calendar'"
+            [variant]="balance.remainingDays > balance.totalDays * 0.5 ? 'success' : balance.remainingDays > 0 ? 'warning' : 'danger'"
+            size="small"
+            [subtitle]="balance.usedDays + ' days used'">
+          </lib-stat-card>
+        }
+      </div>
 
-      @if (selectedLeaveType()) {
-        <div class="balance-info">
-          @for (balance of leaveBalances(); track balance.leaveType) {
-            @if (balance.leaveType === selectedLeaveType()) {
-              <div class="balance-item">
-                <div class="balance-row">
-                  <span class="balance-label">Total Days:</span>
-                  <span class="balance-value">{{ balance.totalDays }}</span>
-                </div>
-                <div class="balance-row">
-                  <span class="balance-label">Used Days:</span>
-                  <span class="balance-value">{{ balance.usedDays }}</span>
-                </div>
-                <div class="balance-row">
-                  <span class="balance-label">Remaining Days:</span>
-                  <span class="balance-value balance-value--highlight">{{ balance.remainingDays }}</span>
-                </div>
-              </div>
-            }
-          }
+      <!-- Balance Summary -->
+      <div class="balance-summary">
+        <div class="summary-stat">
+          <div class="summary-icon summary-icon--success">
+            <i class="pi pi-check-circle"></i>
+          </div>
+          <div class="summary-content">
+            <div class="summary-value">{{ totalLeaveBalance() }}</div>
+            <div class="summary-label">Total Remaining Days</div>
+          </div>
         </div>
-      } @else {
-        <div class="balance-placeholder">
-          <i class="pi pi-info-circle"></i>
-          <p>Select a leave type to view your balance</p>
+        <div class="summary-stat">
+          <div class="summary-icon summary-icon--info">
+            <i class="pi pi-calendar-check"></i>
+          </div>
+          <div class="summary-content">
+            <div class="summary-value">{{ usedLeaveBalance() }}</div>
+            <div class="summary-label">Total Used Days</div>
+          </div>
         </div>
+      </div>
+    </lib-card>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="content-grid">
+    <!-- Left Column -->
+    <div class="content-column">
+      <!-- Past Leave Applications -->
+      <lib-card title="Past Leave Applications" subtitle="Your previous leave requests" shadow="md">
+        @if (pastLeaveRequests().length === 0) {
+          <div class="empty-state">
+            <i class="pi pi-inbox"></i>
+            <p>No past leave applications</p>
+          </div>
+        } @else {
+          <lib-table
+            [columns]="pastLeaveTableColumns"
+            [rows]="pastLeaveTableRows()"
+            [config]="pastLeaveTableConfig"
+            variant="default"
+            [loading]="isLoading()">
+          </lib-table>
+        }
+      </lib-card>
+
+      <!-- Pending Leave Requests (for approval) -->
+      @if (pendingLeaveRequests().length > 0) {
+        <lib-card title="Pending Leave Requests" subtitle="Leave requests awaiting approval" shadow="md">
+          <lib-table
+            [columns]="pendingLeaveTableColumns"
+            [rows]="pendingLeaveTableRows()"
+            [config]="pendingLeaveTableConfig"
+            variant="default"
+            [loading]="isLoading()"
+            (rowClick)="onPendingLeaveRowClick($event)"
+            (actionClick)="onPendingLeaveActionClick($event)">
+          </lib-table>
+        </lib-card>
       }
-    </p-card>
-  </div>
+    </div>
 
-  <!-- Leave Request Form -->
-  <div class="form-section">
-    <p-card class="form-card">
-      <ng-template pTemplate="header">
-        <div class="card-header">
-          <h2 class="card-title">Leave Request Details</h2>
-          <p-badge 
-            [value]="totalDays() + ' days'" 
-            [severity]="canSubmitRequest() ? 'success' : 'warn'">
-          </p-badge>
-        </div>
-      </ng-template>
-
-      <form [formGroup]="leaveForm()" (ngSubmit)="onSubmit()">
-        <div class="form-grid">
-          <!-- Leave Type -->
-          <div class="form-field">
-            <label for="leaveType" class="field-label">Leave Type *</label>
-            <p-select
-              id="leaveType"
-              formControlName="leaveType"
-              [options]="leaveTypes()"
-              placeholder="Select leave type"
-              (onChange)="onLeaveTypeChange()"
-              class="w-full">
-            </p-select>
-            @if (leaveForm().get('leaveType')?.invalid && leaveForm().get('leaveType')?.touched) {
-              <small class="field-error">Please select a leave type</small>
-            }
-          </div>
-
-          <!-- Start Date -->
-          <div class="form-field">
-            <label for="startDate" class="field-label">Start Date *</label>
-            <p-datepicker
-              id="startDate"
-              formControlName="startDate"
-              placeholder="Select start date"
-              (onSelect)="onDateChange()"
-              class="w-full">
-            </p-datepicker>
-            @if (leaveForm().get('startDate')?.invalid && leaveForm().get('startDate')?.touched) {
-              <small class="field-error">Please select a start date</small>
-            }
-          </div>
-
-          <!-- End Date -->
-          <div class="form-field">
-            <label for="endDate" class="field-label">End Date *</label>
-            <p-datepicker
-              id="endDate"
-              formControlName="endDate"
-              placeholder="Select end date"
-              (onSelect)="onDateChange()"
-              class="w-full">
-            </p-datepicker>
-            @if (leaveForm().get('endDate')?.invalid && leaveForm().get('endDate')?.touched) {
-              <small class="field-error">Please select a valid end date</small>
-            }
-          </div>
-
-          <!-- Total Days Display -->
-          <div class="form-field">
-            <label class="field-label">Total Days</label>
-            <div class="total-days-display">
-              <span class="total-days-value">{{ totalDays() }}</span>
-              <span class="total-days-label">days</span>
+    <!-- Right Column -->
+    <div class="content-column">
+      <!-- Next Public Holiday -->
+      @if (nextHoliday()) {
+        <lib-card title="Next Public Holiday" subtitle="Upcoming holiday information" shadow="md">
+          <div class="holiday-card">
+            <div class="holiday-icon">
+              <i class="pi pi-calendar"></i>
             </div>
-            @if (totalDays() > availableBalance()) {
-              <small class="field-error">Exceeds available balance ({{ availableBalance() }} days)</small>
-            }
+            <div class="holiday-content">
+              <h3>{{ nextHoliday()!.name }}</h3>
+              <p class="holiday-date">{{ formatDate(nextHoliday()!.date) }}</p>
+              <p class="holiday-days">{{ getDaysUntilHoliday(nextHoliday()!) }} days away</p>
+              @if (nextHoliday()!.description) {
+                <p class="holiday-description">{{ nextHoliday()!.description }}</p>
+              }
+            </div>
           </div>
-        </div>
+        </lib-card>
+      }
 
-        <!-- Reason -->
-        <div class="form-field">
-          <label for="reason" class="field-label">Reason for Leave *</label>
-          <textarea
-            id="reason"
-            formControlName="reason"
-            placeholder="Please provide a detailed reason for your leave request..."
-            rows="4"
-            class="w-full">
-          </textarea>
-          @if (leaveForm().get('reason')?.invalid && leaveForm().get('reason')?.touched) {
-            <small class="field-error">Please provide a reason (minimum 10 characters)</small>
+      <!-- Upcoming Holidays -->
+      <lib-card title="Upcoming Holidays" subtitle="Next 5 public and company holidays" shadow="md">
+        <div class="holidays-list">
+          @for (holiday of upcomingHolidays(); track holiday.id) {
+            <div class="holiday-item">
+              <div class="holiday-item-icon" [class.holiday-item-icon--public]="holiday.type === 'public'" [class.holiday-item-icon--company]="holiday.type === 'company'">
+                <i [class]="holiday.type === 'public' ? 'pi pi-globe' : 'pi pi-building'"></i>
+              </div>
+              <div class="holiday-item-content">
+                <div class="holiday-item-name">{{ holiday.name }}</div>
+                <div class="holiday-item-date">{{ formatDate(holiday.date) }}</div>
+                @if (holiday.description) {
+                  <div class="holiday-item-description">{{ holiday.description }}</div>
+                }
+              </div>
+              <div class="holiday-item-days">
+                {{ getDaysUntilHoliday(holiday) }}d
+              </div>
+            </div>
           }
         </div>
-
-        <!-- Emergency Contact -->
-        <div class="form-field">
-          <label for="emergencyContact" class="field-label">Emergency Contact *</label>
-          <input
-            id="emergencyContact"
-            type="text"
-            formControlName="emergencyContact"
-            placeholder="Name and phone number of emergency contact"
-            class="w-full">
-          @if (leaveForm().get('emergencyContact')?.invalid && leaveForm().get('emergencyContact')?.touched) {
-            <small class="field-error">Please provide emergency contact details</small>
-          }
-        </div>
-
-        <!-- Work Handover -->
-        <div class="form-field">
-          <label for="workHandover" class="field-label">Work Handover *</label>
-          <textarea
-            id="workHandover"
-            formControlName="workHandover"
-            placeholder="Describe how your work will be handled during your absence..."
-            rows="3"
-            class="w-full">
-          </textarea>
-          @if (leaveForm().get('workHandover')?.invalid && leaveForm().get('workHandover')?.touched) {
-            <small class="field-error">Please describe work handover arrangements</small>
-          }
-        </div>
-
-        <!-- Form Actions -->
-        <div class="form-actions">
-          <p-button
-            label="Cancel"
-            icon="pi pi-times"
-            [outlined]="true"
-            (onClick)="onCancel()"
-            class="action-button">
-          </p-button>
-          
-          <p-button
-            label="Reset"
-            icon="pi pi-refresh"
-            [outlined]="true"
-            (onClick)="onReset()"
-            class="action-button">
-          </p-button>
-          
-          <p-button
-            label="Submit Request"
-            icon="pi pi-send"
-            type="submit"
-            [loading]="isSubmitting()"
-            [disabled]="!canSubmitRequest()"
-            class="action-button action-button--primary">
-          </p-button>
-        </div>
-      </form>
-    </p-card>
+      </lib-card>
+    </div>
   </div>
 
-  <!-- Request Summary -->
-  @if (selectedLeaveType() && selectedStartDate() && selectedEndDate()) {
-    <div class="summary-section">
-      <p-card class="summary-card">
-        <ng-template pTemplate="header">
-          <h2 class="card-title">Request Summary</h2>
-        </ng-template>
+  <!-- Charts Section -->
+  <div class="charts-section">
+    <div class="charts-grid">
+      <!-- Leave Balance Distribution -->
+      <lib-card title="Leave Balance Distribution" subtitle="Remaining days by leave type" shadow="md">
+        <div class="chart-container">
+          <lib-chart
+            type="doughnut"
+            [data]="leaveBalanceChartData()"
+            [options]="leaveBalanceChartOptions"
+            height="300px">
+          </lib-chart>
+        </div>
+      </lib-card>
 
-        <div class="summary-content">
-          <div class="summary-row">
-            <span class="summary-label">Leave Type:</span>
-            <span class="summary-value">{{ getLeaveTypeLabel(selectedLeaveType()) }}</span>
-          </div>
-          <div class="summary-row">
-            <span class="summary-label">Duration:</span>
-            <span class="summary-value">{{ selectedStartDate() | date:'mediumDate' }} - {{ selectedEndDate() | date:'mediumDate' }}</span>
-          </div>
-          <div class="summary-row">
-            <span class="summary-label">Total Days:</span>
-            <span class="summary-value">{{ totalDays() }} days</span>
-          </div>
-          <div class="summary-row">
-            <span class="summary-label">Available Balance:</span>
-            <span class="summary-value">{{ availableBalance() }} days</span>
-          </div>
-          <div class="summary-row">
-            <span class="summary-label">Status:</span>
-            <span class="summary-value">
-              <p-badge value="Pending Approval" severity="warn"></p-badge>
+      <!-- Leave Usage Trend -->
+      <lib-card title="Leave Usage Trend" subtitle="Used vs remaining days by leave type" shadow="md">
+        <div class="chart-container">
+          <lib-chart
+            type="bar"
+            [data]="leaveUsageChartData()"
+            [options]="leaveUsageChartOptions"
+            height="300px">
+          </lib-chart>
+        </div>
+      </lib-card>
+    </div>
+  </div>
+</div>
+
+<!-- Apply Leave Dialog -->
+<lib-dialog
+  header="Apply for Leave"
+  size="large"
+  [(visible)]="showApplyLeaveDialog"
+  (close)="onCloseApplyLeaveDialog()">
+  
+  <div class="dialog-content">
+    <!-- Dynamic Form -->
+    <lib-dynamic-form
+      [config]="leaveFormConfigComputed()"
+      (submit)="onLeaveFormSubmit($event)"
+      (valueChange)="onLeaveFormValueChange($event)"
+      (formGroupReady)="onDynamicFormReady($event)">
+    </lib-dynamic-form>
+
+    <!-- Total Days Display -->
+    <div class="total-days-card">
+      <div class="total-days-content">
+        <div class="total-days-info">
+          <i class="pi pi-calendar-times"></i>
+          <div>
+            <span class="total-days-label">Total Days</span>
+            <span class="total-days-value" [class.total-days-value--error]="totalDays() > availableBalance() && selectedLeaveType()">
+              {{ totalDays() || 0 }}
             </span>
           </div>
         </div>
-      </p-card>
+        @if (selectedLeaveType() && availableBalance() > 0) {
+          <div class="balance-info">
+            <span class="balance-label">Balance:</span>
+            <span class="balance-value">{{ availableBalance() }} days</span>
+          </div>
+        }
+      </div>
+      @if (totalDays() > availableBalance() && selectedLeaveType()) {
+        <small class="field-error">
+          <i class="pi pi-exclamation-triangle"></i>
+          Exceeds available balance ({{ availableBalance() }} days)
+        </small>
+      }
+      @if (selectedLeaveType() && availableBalance() > 0) {
+        <small class="field-hint">
+          <i class="pi pi-info-circle"></i>
+          Available balance: {{ availableBalance() }} days
+        </small>
+      }
+      @if (selectedLeaveType() && availableBalance() === 0) {
+        <small class="field-error">
+          <i class="pi pi-exclamation-circle"></i>
+          No remaining balance for this leave type
+        </small>
+      }
+    </div>
+
+    <!-- Dialog Actions -->
+    <div class="dialog-actions">
+      <lib-button
+        label="Cancel"
+        icon="pi pi-times"
+        severity="secondary"
+        [outlined]="true"
+        (clickEvent)="onCloseApplyLeaveDialog()">
+      </lib-button>
+      
+      <lib-button
+        label="Submit Request"
+        icon="pi pi-send"
+        severity="primary"
+        [disabled]="!canSubmitRequest()"
+        [loading]="isSubmitting()"
+        (clickEvent)="onSubmitLeaveRequest()">
+      </lib-button>
+    </div>
+  </div>
+</lib-dialog>
+
+<!-- Approval Dialog -->
+<lib-dialog
+  [header]="approvalAction() === 'approve' ? 'Approve Leave Request' : 'Reject Leave Request'"
+  size="large"
+  [(visible)]="showApprovalDialog"
+  (close)="onCloseApprovalDialog()">
+  
+  @if (selectedRequestForApproval()) {
+    <div class="approval-dialog">
+      <!-- Request Summary -->
+      <div class="request-summary">
+        <h4>Request Summary</h4>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <span class="summary-label">Employee:</span>
+            <span class="summary-value">{{ selectedRequestForApproval()!.employeeName }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Employee ID:</span>
+            <span class="summary-value">{{ selectedRequestForApproval()!.employeeId }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Leave Type:</span>
+            <span class="summary-value">{{ getLeaveTypeLabel(selectedRequestForApproval()!.leaveType) }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Duration:</span>
+            <span class="summary-value">{{ formatDate(selectedRequestForApproval()!.startDate) }} - {{ formatDate(selectedRequestForApproval()!.endDate) }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Total Days:</span>
+            <span class="summary-value">{{ selectedRequestForApproval()!.totalDays }} days</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Submitted:</span>
+            <span class="summary-value">{{ formatDate(selectedRequestForApproval()!.submittedDate) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Request Details -->
+      <div class="request-details">
+        <div class="detail-section">
+          <h5>Reason:</h5>
+          <p>{{ selectedRequestForApproval()!.reason }}</p>
+        </div>
+
+        @if (selectedRequestForApproval()!.emergencyContact) {
+          <div class="detail-section">
+            <h5>Emergency Contact:</h5>
+            <p>{{ selectedRequestForApproval()!.emergencyContact }}</p>
+          </div>
+        }
+
+        @if (selectedRequestForApproval()!.workHandover) {
+          <div class="detail-section">
+            <h5>Work Handover:</h5>
+            <p>{{ selectedRequestForApproval()!.workHandover }}</p>
+          </div>
+        }
+      </div>
+
+      <!-- Approval Comments -->
+      <div class="approval-form">
+        <div class="form-field">
+          <label for="approvalComments" class="field-label">Comments</label>
+          <textarea
+            id="approvalComments"
+            [formControl]="approvalCommentsFormControl"
+            placeholder="Add comments for this decision..."
+            rows="4"
+            class="form-textarea">
+          </textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dialog Actions -->
+    <div class="dialog-actions">
+      <lib-button
+        label="Cancel"
+        icon="pi pi-times"
+        severity="secondary"
+        [outlined]="true"
+        (clickEvent)="onCloseApprovalDialog()">
+      </lib-button>
+      
+      <lib-button
+        [label]="approvalAction() === 'approve' ? 'Approve Request' : 'Reject Request'"
+        [icon]="approvalAction() === 'approve' ? 'pi pi-check' : 'pi pi-times'"
+        [severity]="approvalAction() === 'approve' ? 'success' : 'danger'"
+        [loading]="isProcessingApproval()"
+        (clickEvent)="onProcessApproval()">
+      </lib-button>
     </div>
   }
-</div>
-
-<p-toast></p-toast>
+</lib-dialog>

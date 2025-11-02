@@ -1,173 +1,333 @@
-<!-- HRM Dashboard Component -->
+<!-- Modern Professional HRM Dashboard -->
 <div class="hrm-dashboard">
-  <!-- Welcome Section -->
-  <p-card class="welcome-section">
-    <ng-template pTemplate="header">
-      <div class="welcome-header">
-        <h1 class="welcome-title">Welcome back, John Doe!</h1>
-        <p class="welcome-subtitle">Here's what's happening in your HRM system today.</p>
+  <!-- Welcome Header -->
+  <lib-card shadow="lg" [elevation]="true">
+    <div class="welcome-content">
+      <div>
+        <h1>Welcome back, John Doe!</h1>
+        <p>{{ getCurrentDate() }} • Here's what's happening in your HRM system today.</p>
       </div>
-    </ng-template>
-  </p-card>
+      <lib-button
+        label="Refresh"
+        icon="pi pi-refresh"
+        size="small"
+        severity="secondary"
+        [outlined]="true"
+        (clickEvent)="refreshStats()">
+      </lib-button>
+    </div>
+  </lib-card>
 
-  <!-- Stats Cards -->
-  <app-stats-cards
-    [cards]="statsCards()"
-    [loading]="statsLoading()"
-    [showTrends]="true"
-    [columns]="4">
-  </app-stats-cards>
+  <!-- Key Statistics -->
+  <div class="stats-grid">
+    <lib-stat-card
+      title="Total Employees"
+      [value]="156"
+      icon="pi pi-users"
+      variant="primary"
+      size="medium"
+      trend="up"
+      [trendValue]="12"
+      subtitle="Active employees"
+      [loading]="statsLoading()">
+    </lib-stat-card>
 
-  <!-- Main Content Grid -->
+    <lib-stat-card
+      title="Present Today"
+      [value]="142"
+      icon="pi pi-check-circle"
+      variant="success"
+      size="medium"
+      trend="up"
+      [trendValue]="5"
+      subtitle="91% attendance rate"
+      [loading]="statsLoading()">
+    </lib-stat-card>
+
+    <lib-stat-card
+      title="Leave Requests"
+      [value]="8"
+      icon="pi pi-calendar"
+      variant="warning"
+      size="medium"
+      trend="down"
+      [trendValue]="2"
+      subtitle="Pending approval"
+      [loading]="statsLoading()">
+    </lib-stat-card>
+
+    <lib-stat-card
+      title="Monthly Payroll"
+      value="$45,230"
+      icon="pi pi-dollar"
+      variant="info"
+      size="medium"
+      trend="up"
+      [trendValue]="8"
+      subtitle="This month"
+      [loading]="statsLoading()">
+    </lib-stat-card>
+  </div>
+
+  <!-- Main Dashboard Grid -->
   <div class="dashboard-grid">
-    <!-- Left Column - Activity Feed -->
-    <div class="dashboard-column dashboard-column--left">
-      <app-activity-feed
-        [activities]="activities()"
-        [loading]="activitiesLoading()"
-        [maxItems]="5"
-        [showUserInfo]="true"
-        [showActions]="true"
-        title="Recent Activity"
-        (onActivityClick)="onActivityClick($event)"
-        (onActionClick)="onActivityClick($event)">
-      </app-activity-feed>
+    <!-- Left Column -->
+    <div class="dashboard-column">
+      <!-- Weekly Attendance Chart -->
+      <lib-card
+        title="Weekly Attendance Trend"
+        subtitle="Present vs Absent employees for the week"
+        shadow="md">
+        <div class="chart-container">
+          <lib-chart
+            type="bar"
+            [data]="attendanceChartData()"
+            [options]="attendanceChartOptions"
+            height="300px">
+          </lib-chart>
+        </div>
+      </lib-card>
     </div>
 
-    <!-- Right Column - Quick Actions -->
-    <div class="dashboard-column dashboard-column--right">
-      <app-quick-actions
-        [actions]="quickActions()"
-        [loading]="actionsLoading()"
-        [showDescriptions]="true"
-        [columns]="1"
-        title="Quick Actions"
-        (onActionClick)="onActionClick($event)">
-      </app-quick-actions>
+    <!-- Right Column -->
+    <div class="dashboard-column">
+      <!-- Employee Growth Chart -->
+      <lib-card
+        title="Employee Growth"
+        subtitle="Last 6 months hiring trend"
+        shadow="md">
+        <div class="chart-container">
+          <lib-chart
+            type="line"
+            [data]="employeeGrowthChartData()"
+            [options]="employeeGrowthChartOptions"
+            height="300px">
+          </lib-chart>
+        </div>
+      </lib-card>
+
+      <!-- Quick Actions -->
+     
+    </div>
+  </div>
+  <lib-card
+  title="Quick Actions"
+  subtitle="Frequently used actions"
+  shadow="md">
+  <div class="quick-actions-grid">
+    @for (action of quickActions(); track action.id) {
+      <lib-button
+        [label]="action.label"
+        [icon]="action.icon"
+        size="small"
+        [severity]="action.severity"
+        [outlined]="true"
+        [badge]="action.badge"
+        [routerLink]="action.routerLink"
+        class="quick-action-button">
+      </lib-button>
+    }
+  </div>
+</lib-card>
+
+  <!-- Analytics Section -->
+  <div class="dashboard-grid-secondary">
+    <!-- Department Distribution -->
+    <lib-card
+      title="Department Distribution"
+      subtitle="Employees by department"
+      shadow="md">
+      <div class="chart-container">
+        <lib-chart
+          type="pie"
+          [data]="departmentChartData()"
+          [options]="departmentChartOptions"
+          height="350px">
+        </lib-chart>
+      </div>
+    </lib-card>
+
+    <!-- Monthly Payroll Trend -->
+    <lib-card
+      title="Monthly Payroll Trend"
+      subtitle="Last 6 months payroll overview"
+      shadow="md">
+      <div class="chart-container">
+        <lib-chart
+          type="line"
+          [data]="payrollChartData()"
+          [options]="payrollChartOptions"
+          height="350px">
+        </lib-chart>
+      </div>
+    </lib-card>
+  </div>
+
+  <!-- Management Actions -->
+  <div class="dashboard-section">
+    <div class="section-header">
+      <div>
+        <h2>Employee Management</h2>
+        <p>Manage employees, departments, and organizational structure</p>
+      </div>
+      <lib-button
+        label="View All"
+        icon="pi pi-list"
+        size="small"
+        severity="secondary"
+        [outlined]="true"
+        routerLink="/dashboard/employees">
+      </lib-button>
+    </div>
+
+    <div class="management-grid">
+      <lib-card shadow="md">
+        <div class="management-card-content">
+          <div class="management-card-icon management-card-icon--primary">
+            <i class="pi pi-users"></i>
+          </div>
+          <div class="management-card-body">
+            <h3>All Employees</h3>
+            <p>View and manage all employees in the system</p>
+          </div>
+          <lib-button
+            label="View Employees"
+            icon="pi pi-eye"
+            size="small"
+            severity="primary"
+            [outlined]="true"
+            routerLink="/dashboard/employees">
+          </lib-button>
+        </div>
+      </lib-card>
+
+      <lib-card shadow="md">
+        <div class="management-card-content">
+          <div class="management-card-icon management-card-icon--success">
+            <i class="pi pi-user-plus"></i>
+          </div>
+          <div class="management-card-body">
+            <h3>Add Employee</h3>
+            <p>Add new employee to the system</p>
+          </div>
+          <lib-button
+            label="Add Employee"
+            icon="pi pi-plus"
+            size="small"
+            severity="primary"
+            [outlined]="true"
+            routerLink="/dashboard/employees/add">
+          </lib-button>
+        </div>
+      </lib-card>
+
+      <lib-card shadow="md">
+        <div class="management-card-content">
+          <div class="management-card-icon management-card-icon--info">
+            <i class="pi pi-building"></i>
+          </div>
+          <div class="management-card-body">
+            <h3>Departments</h3>
+            <p>Manage departments and teams</p>
+          </div>
+          <lib-button
+            label="Manage Departments"
+            icon="pi pi-cog"
+            size="small"
+            severity="primary"
+            [outlined]="true"
+            routerLink="/dashboard/departments">
+          </lib-button>
+        </div>
+      </lib-card>
+
+      <lib-card shadow="md">
+        <div class="management-card-content">
+          <div class="management-card-icon management-card-icon--warning">
+            <i class="pi pi-chart-line"></i>
+          </div>
+          <div class="management-card-body">
+            <h3>Reports & Analytics</h3>
+            <p>View detailed reports and analytics</p>
+          </div>
+          <lib-button
+            label="View Reports"
+            icon="pi pi-file-pdf"
+            size="small"
+            severity="primary"
+            [outlined]="true"
+            routerLink="/dashboard/reports">
+          </lib-button>
+        </div>
+      </lib-card>
     </div>
   </div>
 
-  <!-- Additional Sections -->
-  <div class="dashboard-sections">
-    <!-- Employee Management Section -->
-    <div class="dashboard-section">
-      <h2 class="section-title">Employee Management</h2>
-      <div class="section-content">
-        <div class="management-cards">
-          <p-card class="management-card">
-            <ng-template pTemplate="header">
-              <div class="management-card__icon">
-                <i class="pi pi-users"></i>
-              </div>
-            </ng-template>
-            
-            <div class="management-card__content">
-              <h3 class="management-card__title">All Employees</h3>
-              <p class="management-card__description">View and manage all employees</p>
-            </div>
-
-            <ng-template pTemplate="footer">
-              <p-button 
-                label="View Employees" 
-                icon="pi pi-eye"
-                [outlined]="true"
-                routerLink="/dashboard/employees">
-              </p-button>
-            </ng-template>
-          </p-card>
-
-          <p-card class="management-card">
-            <ng-template pTemplate="header">
-              <div class="management-card__icon">
-                <i class="pi pi-user-plus"></i>
-              </div>
-            </ng-template>
-            
-            <div class="management-card__content">
-              <h3 class="management-card__title">Add Employee</h3>
-              <p class="management-card__description">Add new employee to the system</p>
-            </div>
-
-            <ng-template pTemplate="footer">
-              <p-button 
-                label="Add Employee" 
-                icon="pi pi-plus"
-                [outlined]="true"
-                routerLink="/dashboard/employees/add">
-              </p-button>
-            </ng-template>
-          </p-card>
-
-          <p-card class="management-card">
-            <ng-template pTemplate="header">
-              <div class="management-card__icon">
-                <i class="pi pi-building"></i>
-              </div>
-            </ng-template>
-            
-            <div class="management-card__content">
-              <h3 class="management-card__title">Departments</h3>
-              <p class="management-card__description">Manage departments and teams</p>
-            </div>
-
-            <ng-template pTemplate="footer">
-              <p-button 
-                label="Manage Departments" 
-                icon="pi pi-cog"
-                [outlined]="true"
-                routerLink="/dashboard/departments">
-              </p-button>
-            </ng-template>
-          </p-card>
-        </div>
+  <!-- Today's Attendance Summary -->
+  <div class="dashboard-section">
+    <div class="section-header">
+      <div>
+        <h2>Today's Attendance Summary</h2>
+        <p>Real-time attendance overview for today</p>
       </div>
+      <lib-button
+        label="View Details"
+        icon="pi pi-chart-bar"
+        size="small"
+        severity="secondary"
+        [outlined]="true"
+        routerLink="/dashboard/attendance">
+      </lib-button>
     </div>
 
-    <p-divider></p-divider>
-
-    <!-- Attendance Section -->
-    <div class="dashboard-section">
-      <h2 class="section-title">Attendance & Time Tracking</h2>
-      <div class="section-content">
-        <div class="attendance-overview">
-          <p-card class="attendance-card">
-            <ng-template pTemplate="header">
-              <div class="attendance-card__header">
-                <h3 class="attendance-card__title">Today's Attendance</h3>
-                <p-badge 
-                  [value]="getCurrentDate()" 
-                  severity="info"
-                  size="small">
-                </p-badge>
-              </div>
-            </ng-template>
-
-            <div class="attendance-card__stats">
-              <div class="attendance-stat">
-                <span class="attendance-stat__value">142</span>
-                <span class="attendance-stat__label">Present</span>
-              </div>
-              <div class="attendance-stat">
-                <span class="attendance-stat__value">8</span>
-                <span class="attendance-stat__label">Absent</span>
-              </div>
-              <div class="attendance-stat">
-                <span class="attendance-stat__value">6</span>
-                <span class="attendance-stat__label">Late</span>
-              </div>
-            </div>
-
-            <ng-template pTemplate="footer">
-              <p-button 
-                label="View Details" 
-                icon="pi pi-chart-bar"
-                [outlined]="true"
-                routerLink="/dashboard/attendance">
-              </p-button>
-            </ng-template>
-          </p-card>
+    <div class="attendance-grid">
+      <lib-card shadow="md">
+        <div class="attendance-stat-content">
+          <div class="attendance-stat-icon attendance-stat-icon--present">
+            <i class="pi pi-check-circle"></i>
+          </div>
+          <div class="attendance-stat-body">
+            <div class="attendance-stat-value">142</div>
+            <div class="attendance-stat-label">Present</div>
+          </div>
         </div>
-      </div>
+      </lib-card>
+
+      <lib-card shadow="md">
+        <div class="attendance-stat-content">
+          <div class="attendance-stat-icon attendance-stat-icon--absent">
+            <i class="pi pi-times-circle"></i>
+          </div>
+          <div class="attendance-stat-body">
+            <div class="attendance-stat-value">8</div>
+            <div class="attendance-stat-label">Absent</div>
+          </div>
+        </div>
+      </lib-card>
+
+      <lib-card shadow="md">
+        <div class="attendance-stat-content">
+          <div class="attendance-stat-icon attendance-stat-icon--late">
+            <i class="pi pi-clock"></i>
+          </div>
+          <div class="attendance-stat-body">
+            <div class="attendance-stat-value">6</div>
+            <div class="attendance-stat-label">Late</div>
+          </div>
+        </div>
+      </lib-card>
+
+      <lib-card shadow="md">
+        <div class="attendance-stat-content">
+          <div class="attendance-stat-icon attendance-stat-icon--on-leave">
+            <i class="pi pi-calendar-minus"></i>
+          </div>
+          <div class="attendance-stat-body">
+            <div class="attendance-stat-value">4</div>
+            <div class="attendance-stat-label">On Leave</div>
+          </div>
+        </div>
+      </lib-card>
     </div>
   </div>
 </div>

@@ -6,6 +6,10 @@
   background-color: var(--surface-0);
   border-radius: var(--border-radius-lg);     // 8px
   transition: all var(--transition-normal);   // 250ms
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 
   // Shadow variants
   &.lib-card-shadow-none {
@@ -44,6 +48,27 @@
 
     ::ng-deep .p-card-content {
       padding: 0;
+    }
+  }
+
+  // Compact variant
+  &.lib-card-compact {
+    ::ng-deep .p-card-body {
+      padding: var(--spacing-1);
+    }
+
+    ::ng-deep .p-card-content {
+      padding: var(--spacing-1);
+    }
+
+    ::ng-deep .p-card-header {
+      padding: var(--spacing-1);
+      margin-bottom: var(--spacing-1);
+    }
+
+    ::ng-deep .p-card-footer {
+      padding: var(--spacing-1);
+      margin-top: var(--spacing-1);
     }
   }
 

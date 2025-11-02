@@ -72,6 +72,90 @@
           [showClear]="config().showClear ?? false">
         </lib-input>
       }
+
+      @case ('textarea') {
+        <div class="lib-form-field-textarea-wrapper">
+          @if (shouldShowLabel) {
+            <label class="lib-form-field-label" [class.lib-form-field-label-required]="isRequired">
+              {{ config().label }}
+            </label>
+          }
+          <textarea
+            pTextarea
+            [ngModel]="fieldValue"
+            (ngModelChange)="onValueChange($event)"
+            (blur)="onBlur()"
+            [placeholder]="config().placeholder || ''"
+            [disabled]="config().disabled ?? false"
+            [readonly]="config().readonly ?? false"
+            [required]="isRequired"
+            [rows]="config().rows || 4"
+            [autoResize]="true"
+            [class.lib-form-field-invalid]="isInvalid"
+            class="lib-form-field-textarea">
+          </textarea>
+          @if (config().hint && !isInvalid) {
+            <span class="lib-form-field-hint">{{ config().hint }}</span>
+          }
+          @if (errorMessage) {
+            <span class="lib-form-field-error">{{ errorMessage }}</span>
+          }
+        </div>
+      }
+
+      @case ('select') {
+        <div class="lib-form-field-select-wrapper">
+          @if (shouldShowLabel) {
+            <label class="lib-form-field-label" [class.lib-form-field-label-required]="isRequired">
+              {{ config().label }}
+            </label>
+          }
+          <div class="lib-form-field-select-container">
+            <select
+              [ngModel]="fieldValue"
+              (ngModelChange)="onValueChange($event)"
+              (blur)="onBlur()"
+              [disabled]="config().disabled ?? false"
+              [required]="isRequired"
+              [class.lib-form-field-invalid]="isInvalid"
+              class="lib-form-field-select">
+              @if (!config().required && config().placeholder) {
+                <option [value]="null">{{ config().placeholder }}</option>
+              }
+              @for (option of config().options || []; track option.value) {
+                <option [value]="option.value" [disabled]="option.disabled">
+                  {{ option.label }}
+                </option>
+              }
+            </select>
+            <i class="pi pi-chevron-down lib-form-field-select-icon"></i>
+          </div>
+          @if (config().hint && !isInvalid) {
+            <span class="lib-form-field-hint">{{ config().hint }}</span>
+          }
+          @if (errorMessage) {
+            <span class="lib-form-field-error">{{ errorMessage }}</span>
+          }
+        </div>
+      }
+
+      @case ('date') {
+        <lib-input
+          [label]="shouldShowLabel ? config().label : undefined"
+          type="date"
+          [placeholder]="config().placeholder || 'Select date'"
+          [ngModel]="fieldValue"
+          (ngModelChange)="onValueChange($event)"
+          (blurEvent)="onBlur()"
+          [disabled]="config().disabled ?? false"
+          [readonly]="config().readonly ?? false"
+          [required]="isRequired"
+          [invalid]="isInvalid"
+          [errorMessage]="errorMessage"
+          [hint]="config().hint"
+          iconLeft="pi pi-calendar">
+        </lib-input>
+      }
       
       @default {
         <!-- Fallback to text input for unsupported types -->
