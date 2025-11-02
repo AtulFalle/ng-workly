@@ -42,6 +42,30 @@ const preview: Preview = {
         },
       ],
     },
+    // Accessibility addon configuration
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: 'color-contrast',
+            enabled: true,
+          },
+          {
+            id: 'keyboard-accessibility',
+            enabled: true,
+          },
+          {
+            id: 'aria-attributes',
+            enabled: true,
+          },
+          {
+            id: 'focus-management',
+            enabled: true,
+          },
+        ],
+      },
+      manual: true,
+    },
   },
   globalTypes: {
     theme: {

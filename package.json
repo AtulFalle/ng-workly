@@ -82,6 +82,7 @@
     "@nx/workspace": "21.6.6",
     "@primeuix/themes": "^1.2.5",
     "@schematics/angular": "~20.3.0",
+    "@storybook/addon-a11y": "^10.0.2",
     "@storybook/addon-backgrounds": "^9.0.8",
     "@storybook/addon-designs": "10.0.2",
     "@storybook/addon-docs": "9.1.3",

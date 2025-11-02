@@ -11,10 +11,14 @@ const config: StorybookConfig = {
     getAbsolutePath('@storybook/addon-docs'),
     getAbsolutePath('@storybook/addon-styling-webpack'),
     getAbsolutePath('@storybook/addon-themes'),
+    getAbsolutePath('@storybook/addon-a11y'),
   ],
   framework: {
     name: getAbsolutePath('@storybook/angular'),
     options: {},
+  },
+  typescript: {
+    check: false,
   },
   webpackFinal: async (config) => {
     // Add SCSS support for design system
