@@ -78,3 +78,9 @@ jobs:
           echo "Build Status: $BUILD_STATUS ($BUILD_COUNT projects) in ${BUILD_DURATION}s"
       - run: npx nx fix-ci
         if: always()
+
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        with:
+          # ⚠️ Make sure to configure a `CHROMATIC_PROJECT_TOKEN` repository secret
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
